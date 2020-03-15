@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Nemo_v2_Api.Filters;
 
 namespace Nemo_v2_Api.Controllers
-{
+{ 
+    [AuthorizationFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
