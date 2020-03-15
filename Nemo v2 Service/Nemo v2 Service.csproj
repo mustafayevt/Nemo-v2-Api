@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>Nemo_v2_Service</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Nemo v2 Data\Nemo v2 Data.csproj" />
+      <ProjectReference Include="..\Nemo v2 Repo\Nemo v2 Repo.csproj" />
+    </ItemGroup>
+
+</Project>
