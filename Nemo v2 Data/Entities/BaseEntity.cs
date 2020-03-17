@@ -6,7 +6,6 @@ namespace Nemo_v2_Data.Entities
     {  
         public long Id { get; set; }  
         public DateTime AddedDate { get; set; }  
-        public DateTime ModifiedDate { get; set; }  
-        public string IPAddress { get; set; }  
+        public DateTime ModifiedDate { get; set; }
     }  
 }
