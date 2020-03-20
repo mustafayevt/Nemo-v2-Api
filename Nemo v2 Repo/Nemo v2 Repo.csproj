@@ -6,6 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Migrations\20200320193936_test.cs" />
+      <Compile Remove="Migrations\20200320193936_test.Designer.cs" />
+      <Compile Remove="Migrations\20200320204217_userRole-Id_PK1.cs" />
+      <Compile Remove="Migrations\20200320204217_userRole-Id_PK1.Designer.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
     </ItemGroup>

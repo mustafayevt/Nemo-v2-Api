@@ -7,7 +7,7 @@ namespace Nemo_v2_Data.Maping
     {  
         public UserMap(EntityTypeBuilder<User> entityBuilder)  
         {  
-            entityBuilder.HasKey(t => t.Id);  
+            entityBuilder.HasKey(t => t.Id);
         }  
     }  
 }

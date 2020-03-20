@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -21,19 +23,21 @@ namespace Nemo_v2_Service.Services
             this._userRoleRepository = userRoleRepository;
         }  
   
-        public IEnumerable<User> GetUsers()  
-        {  
-            return _userRepository.GetAll();  
+        public IEnumerable<User> GetUsers()
+        {
+            return _userRepository.Get();
         }  
   
-        public User GetUser(long id)  
-        {  
-            return _userRepository.Get(id);  
+        public User GetUser(long id)
+        {
+            return _userRepository.Query(user => user.Id == id)
+                .Include(user => user.UserRoles)
+                .ThenInclude(role => role.Role).First();
         }  
   
-        public User InsertUser(User user)  
-        {  
-            return _userRepository.Insert(user);  
+        public User InsertUser(User user)
+        {
+            return _userRepository.Insert(user);
         }  
         public User UpdateUser(User user)  
         {
@@ -52,8 +56,7 @@ namespace Nemo_v2_Service.Services
             // UserProfile userProfile = userProfileRepository.Get(id);  
             // userProfileRepository.Remove(userProfile);  
             User user = GetUser(id);  
-            _userRepository.Remove(user);  
-            _userRepository.SaveChanges();  
+            _userRepository.Delete(user);
         }  
     }  
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nemo_v2_Api.Filters;
+using Nemo_v2_Data.AutoMapper;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Repositories;
@@ -70,6 +72,13 @@ namespace Nemo_v2_Api
                 // c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
             
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
             services.AddTransient<IUserService, UserService>();
         }
