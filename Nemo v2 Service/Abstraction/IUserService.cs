@@ -7,8 +7,8 @@ namespace Nemo_v2_Service.Abstraction
     {  
         IEnumerable<User> GetUsers();  
         User GetUser(long id);  
-        void InsertUser(User user);  
-        void UpdateUser(User user);  
+        User InsertUser(User user);  
+        User UpdateUser(User user);  
         void DeleteUser(long id);  
     }  
 }

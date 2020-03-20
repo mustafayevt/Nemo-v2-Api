@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nemo_v2_Api.Filters;
+using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
+using Nemo_v2_Repo.Repositories;
+using Nemo_v2_Service.Abstraction;
+using Nemo_v2_Service.Services;
 
 namespace Nemo_v2_Api
 {
@@ -64,11 +69,13 @@ namespace Nemo_v2_Api
                 });
                 // c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
-
+            
+            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -79,7 +86,8 @@ namespace Nemo_v2_Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            loggerFactory.AddFile("Logs/Errors/{Date}.txt",LogLevel.Error);
+            loggerFactory.AddFile("Logs/Info/{Date}.txt",LogLevel.Information);
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 

@@ -8,13 +8,13 @@ using Nemo_v2_Repo.DbContexts;
 
 namespace Nemo_v2_Repo.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity  
+    public class EFRepository<T> : IRepository<T> where T : BaseEntity  
     {  
         private readonly ApplicationContext context;  
         private DbSet<T> entities;  
         string errorMessage = string.Empty;  
   
-        public Repository(ApplicationContext context)  
+        public EFRepository(ApplicationContext context)  
         {  
             this.context = context;  
             entities = context.Set<T>();  
@@ -28,23 +28,41 @@ namespace Nemo_v2_Repo.Repositories
         {  
             return entities.SingleOrDefault(s => s.Id == id);  
         }  
-        public void Insert(T entity)  
+        public T Insert(T entity)  
         {  
             if (entity == null)  
             {  
                 throw new ArgumentNullException("entity");  
-            }  
-            entities.Add(entity);  
-            context.SaveChanges();  
+            }
+
+            try
+            {
+                var entityEntry = entities.Add(entity);  
+                context.SaveChanges();
+                return entityEntry.Entity;
+            }
+            catch (Exception e)
+            {
+                throw e.InnerException;
+            }
         }  
   
-        public void Update(T entity)  
+        public T Update(T entity)  
         {  
             if (entity == null)  
             {  
                 throw new ArgumentNullException("entity");  
-            }  
-            context.SaveChanges();  
+            }
+
+            try
+            {
+                context.SaveChanges();
+                return entities.SingleOrDefault(x=>x.Id==entity.Id);
+            }
+            catch (Exception e)
+            {
+                throw e.InnerException;
+            }
         }  
   
         public void Delete(T entity)  

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -7,30 +8,43 @@ namespace Nemo_v2_Service.Services
 {
     public class UserService:IUserService  
     {  
-        private IRepository<User> userRepository;  
+        private IRepository<User> _userRepository;  
+        private IRepository<Role> _roleRepository;  
+        private IRepository<UserRole> _userRoleRepository;  
   
-        public UserService(IRepository<User> userRepository)  
+        public UserService(IRepository<User> userRepository,
+            IRepository<Role> roleRepository,
+            IRepository<UserRole> userRoleRepository)  
         {  
-            this.userRepository = userRepository;  
+            this._userRepository = userRepository;
+            this._roleRepository = roleRepository;
+            this._userRoleRepository = userRoleRepository;
         }  
   
         public IEnumerable<User> GetUsers()  
         {  
-            return userRepository.GetAll();  
+            return _userRepository.GetAll();  
         }  
   
         public User GetUser(long id)  
         {  
-            return userRepository.Get(id);  
+            return _userRepository.Get(id);  
         }  
   
-        public void InsertUser(User user)  
+        public User InsertUser(User user)  
         {  
-            userRepository.Insert(user);  
+            return _userRepository.Insert(user);  
         }  
-        public void UpdateUser(User user)  
-        {  
-            userRepository.Update(user);  
+        public User UpdateUser(User user)  
+        {
+            try
+            {
+                return _userRepository.Update(user);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }  
   
         public void DeleteUser(long id)  
@@ -38,8 +52,8 @@ namespace Nemo_v2_Service.Services
             // UserProfile userProfile = userProfileRepository.Get(id);  
             // userProfileRepository.Remove(userProfile);  
             User user = GetUser(id);  
-            userRepository.Remove(user);  
-            userRepository.SaveChanges();  
+            _userRepository.Remove(user);  
+            _userRepository.SaveChanges();  
         }  
     }  
 }
