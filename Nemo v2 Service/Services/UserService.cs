@@ -26,8 +26,15 @@ namespace Nemo_v2_Service.Services
         public IEnumerable<User> GetUsers()
         {
             return _userRepository.Get();
-        }  
-  
+        }
+
+        public IEnumerable<User> GetUsersByRestaurantId(long RestId)
+        {
+            return _userRepository.Query(user => user.RestaurantId==RestId)
+                .Include(user => user.UserRoles)
+                .ThenInclude(role => role.Role);
+        }
+
         public User GetUser(long id)
         {
             return _userRepository.Query(user => user.Id == id)

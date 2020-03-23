@@ -19,6 +19,6 @@ namespace Nemo_v2_Data.Entities
         public long RestaurantId { get; set; }
 
         public virtual Restaurant Restaurant { get; set; }
-        public IList<UserRole> UserRoles { get; set; }
+        public List<UserRole> UserRoles { get; set; }
     }
 }

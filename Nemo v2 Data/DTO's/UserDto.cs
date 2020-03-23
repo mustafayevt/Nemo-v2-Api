@@ -18,6 +18,6 @@ namespace Nemo_v2_Data
         [Required] 
         public long RestaurantId { get; set; }
 
-        public IList<Role> Roles { get; set; }
+        public List<RoleDto> Roles { get; set; }
     }
 }

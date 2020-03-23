@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,23 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.Message);
             }
         }
+        [HttpGet("RestId/{RestaurantId}")]
+        public IActionResult GetUserByRestaurantId(long RestaurantId)
+        {
+            try
+            {
+                var users = _userService.GetUsersByRestaurantId(RestaurantId);
+                if (users == null) throw new NullReferenceException("User Not Found");
+                var usersDtos =_mapper.Map<List<User>,List<UserDto>>(users.ToList());
+                _logger.LogInformation($"Users Get By Restaurant Id");
+                return Ok(usersDtos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
         
         [HttpPost("Add")]
         public IActionResult AddUser([FromBody]UserDto userDto)
@@ -64,7 +82,7 @@ namespace Nemo_v2_Api.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                return BadRequest(e.Message);
             }
         }
         
