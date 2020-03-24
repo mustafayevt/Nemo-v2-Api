@@ -18,7 +18,7 @@ namespace Nemo_v2_Api.Controllers
     [AuthorizationFilter]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private IUserService _userService;
         private ILogger<UserController> _logger;
@@ -57,7 +57,7 @@ namespace Nemo_v2_Api.Controllers
                 var users = _userService.GetUsersByRestaurantId(RestaurantId);
                 if (users == null) throw new NullReferenceException("User Not Found");
                 var usersDtos =_mapper.Map<List<User>,List<UserDto>>(users.ToList());
-                _logger.LogInformation($"Users Get By Restaurant Id");
+                _logger.LogInformation($"Users Get By Restaurant Id:{RestaurantId}");
                 return Ok(usersDtos);
             }
             catch (Exception e)
