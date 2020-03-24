@@ -107,7 +107,6 @@ namespace Nemo_v2_Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            
         }
     }
 }

@@ -84,37 +84,68 @@ namespace Nemo_v2_Repo.Repositories
         public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<TEntity> query = dbSet;
+            try
+            {
+                IQueryable<TEntity> query = dbSet;
 
-            foreach (Expression<Func<TEntity, object>> include in includes)
-                query = query.Include(include);
+                foreach (Expression<Func<TEntity, object>> include in includes)
+                    query = query.Include(include);
 
-            return query.FirstOrDefault(filter);
+                return query.FirstOrDefault(filter);
+            }
+            catch (Exception e)
+            {
+                throw new NullReferenceException($"{typeof(TEntity).Name} Not Found");
+            }
         }
 
         public virtual TEntity Insert(TEntity entity)
         {
-            var result = dbSet.Add(entity);
-            context.SaveChanges();
-            return result.Entity;
+            try
+            {
+                var result = dbSet.Add(entity);
+                context.SaveChanges();
+                return result.Entity;
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) throw e.InnerException;
+                throw;
+            }
         }
 
         public virtual TEntity Update(TEntity entity)
         {
-            dbSet.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-            return context.Entry(entity).Entity;
+            try
+            {
+                dbSet.Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
+                return context.Entry(entity).Entity;
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) throw e.InnerException;
+                throw;
+            }
         }
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            try
             {
-                dbSet.Attach(entityToDelete);
-            }
+                TEntity entityToDelete = dbSet.Find(id);
+                if (context.Entry(entityToDelete).State == EntityState.Detached)
+                {
+                    dbSet.Attach(entityToDelete);
+                }
 
-            dbSet.Remove(entityToDelete);
+                dbSet.Remove(entityToDelete);
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) throw e.InnerException;
+                throw;
+            }
         }
     }
 }

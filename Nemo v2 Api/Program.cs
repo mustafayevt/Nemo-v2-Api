@@ -19,6 +19,7 @@ namespace Nemo_v2_Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls("https://localhost:4041","http://localhost:4040");
     }
 }

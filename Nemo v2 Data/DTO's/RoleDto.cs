@@ -1,9 +1,13 @@
-﻿namespace Nemo_v2_Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Nemo_v2_Data
 {
     public class RoleDto
     {
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        [Required]
         public long RestaurantId { get; set; }
         
         //permissions
