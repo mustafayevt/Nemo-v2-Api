@@ -18,6 +18,9 @@ namespace Nemo_v2_Data.AutoMapper
             
             //Role
             CreateMap<Role, RoleDto>().ReverseMap();
+            
+            //Restaurant
+            CreateMap<Restaurant, RestaurantDto>().ReverseMap();
         }
     }
 }
