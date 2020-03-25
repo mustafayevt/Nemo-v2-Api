@@ -70,8 +70,6 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var role = _mapper.Map<Role>(roleDto);
-                role.AddedDate = DateTime.Now;
-                role.ModifiedDate = DateTime.Now;
                 var addedRole = _roleService.InsertRole(role);
                 _logger.LogInformation($"Role Added {role.Id}");
                 return Ok(_mapper.Map<UserDto>(addedRole));
@@ -90,7 +88,6 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var updatedRole = _mapper.Map<Role>(roleDto);
-                updatedRole.ModifiedDate = DateTime.Now;
                 var result =_roleService.UpdateRole(updatedRole);
                 _logger.LogInformation($"Role Updated : {updatedRole.Name}");
                 return Ok(_mapper.Map<RoleDto>(result));

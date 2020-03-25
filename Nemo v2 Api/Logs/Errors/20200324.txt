@@ -1,0 +1,325 @@
+2020-03-24T00:52:51.5126141+04:00 0HLUFDGIQFB66:00000001 [ERR] TEntity Not Found (f79e93c1)
+2020-03-24T00:53:27.9178419+04:00 0HLUFDGTHUKEP:00000001 [ERR] Nemo_v2_Data.Entities.User Not Found (0cc04109)
+2020-03-24T00:54:03.4357690+04:00 0HLUFDH80V9ES:00000001 [ERR] User Not Found (afbac79c)
+2020-03-24T03:51:09.5316299+04:00 0HLUFGK2804LF:00000002 [ERR] Failed executing DbCommand ("490"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-24T03:51:10.0141254+04:00 0HLUFGK2804LF:00000002 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Users\" violates foreign key constraint \"FK_Users_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-24T03:51:10.0150875+04:00 0HLUFGK2804LF:00000002 [ERR] An error occurred while updating the entries. See the inner exception for details. (5d65ae99)
+2020-03-24T03:51:34.4357039+04:00 0HLUFGKE823QH:00000001 [ERR] Failed executing DbCommand ("850"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-24T03:51:34.6756541+04:00 0HLUFGKE823QH:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Users\" violates foreign key constraint \"FK_Users_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-24T03:51:34.6763378+04:00 0HLUFGKE823QH:00000001 [ERR] 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId" (c6aaa976)
+2020-03-24T03:52:53.5131269+04:00 0HLUFGL5OIEG4:00000001 [ERR] Failed executing DbCommand ("379"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-24T03:52:53.9537623+04:00 0HLUFGL5OIEG4:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Users\" violates foreign key constraint \"FK_Users_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-24T03:52:53.9546080+04:00 0HLUFGL5OIEG4:00000001 [ERR] 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId" (c6aaa976)
+2020-03-24T16:57:41.0106376+04:00 0HLUFUBK7SI3O:00000003 [ERR] Role Not Found (70be9584)
+2020-03-24T17:00:12.9152605+04:00 0HLUFUD1LU4IC:00000003 [ERR] Role Not Found (70be9584)
+2020-03-24T17:04:05.8153777+04:00 0HLUFUF13BB8P:00000003 [ERR] Failed executing DbCommand ("127"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (DbType = Boolean), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = Boolean), @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = Boolean), @p10='?' (DbType = Boolean), @p11='?', @p12='?' (DbType = DateTime), @p13='?', @p14='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Roles\" (\"AddedDate\", \"CanAddProduct\", \"CanCloseCheck\", \"CanExit\", \"CanFinishDay\", \"CanInsertIngredient\", \"CanMergeInvoices\", \"CanShowProductTransfers\", \"CanShowStock\", \"CanTransferInvoice\", \"CanVoidProduct\", \"Description\", \"ModifiedDate\", \"Name\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Roles" violates foreign key constraint "FK_Roles_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-24T17:04:05.9464288+04:00 0HLUFUF13BB8P:00000003 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Roles\" violates foreign key constraint \"FK_Roles_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Roles" violates foreign key constraint "FK_Roles_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-24T17:04:05.9470724+04:00 0HLUFUF13BB8P:00000003 [ERR] 23503: insert or update on table "Roles" violates foreign key constraint "FK_Roles_Restaurants_RestaurantId" (0b395eff)
+2020-03-24T17:29:52.2744186+04:00 0HLUFUTEHD5FT:00000005 [ERR] Role Not Found (70be9584)
+2020-03-24T17:53:43.1510869+04:00 0HLUFVAREPQKP:00000003 [ERR] Restaurant Not Found (8d1ba17c)
+2020-03-24T17:54:07.8778233+04:00 0HLUFVAREPQKP:00000005 [ERR] Restaurant Not Found (8d1ba17c)
+2020-03-24T17:54:44.8676322+04:00 0HLUFVAREPQKP:00000006 [ERR] Failed executing DbCommand ("127"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (DbType = Int64), @p2='?' (DbType = DateTime), @p3='?'"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Restaurants\" (\"AddedDate\", \"BranchId\", \"ModifiedDate\", \"Name\")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Restaurants" violates foreign key constraint "FK_Restaurants_Restaurants_BranchId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-24T17:54:45.0299640+04:00 0HLUFVAREPQKP:00000006 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Restaurants\" violates foreign key constraint \"FK_Restaurants_Restaurants_BranchId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Restaurants" violates foreign key constraint "FK_Restaurants_Restaurants_BranchId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(TEntity entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 107
+2020-03-24T17:54:45.0310324+04:00 0HLUFVAREPQKP:00000006 [ERR] 23503: insert or update on table "Restaurants" violates foreign key constraint "FK_Restaurants_Restaurants_BranchId" (a77c631e)

@@ -541,3 +541,752 @@ System.InvalidOperationException: An exception has been raised that is likely du
 2020-03-20T20:47:50.5974026+04:00 0HLUCTPD47AHE:00000004 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
 2020-03-20T20:47:50.5975282+04:00 0HLUCTPD47AHE:00000004 [INF] Request finished in 63.2893ms 401 application/problem+json; charset=utf-8 (791a596a)
 2020-03-20T20:47:50.6021191+04:00  [INF] Connection id ""0HLUCTPD47AHE"", Request id ""0HLUCTPD47AHE:00000004"": the application completed without reading the entire request body. (54ac9468)
+2020-03-20T21:32:27.7161677+04:00 0HLUCUIKGIPK9:00000001 [INF] Request starting HTTP/1.1 PUT https://localhost:5001/api/user/update?userId=2&firstname=%22Tural%22&lastname=%22Mustafayev%22&password=%221234%22&restId=1 application/json 2 (ca22a1cb)
+2020-03-20T21:32:27.7548096+04:00 0HLUCUIKGIPK9:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:32:27.7746378+04:00 0HLUCUIKGIPK9:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Int64, System.String, System.String, System.String, Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:32:28.0609519+04:00 0HLUCUIKGIPK9:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:32:28.0791754+04:00 0HLUCUIKGIPK9:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:32:29.1058527+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed DbCommand ("210"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstame\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T21:32:29.2763402+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed DbCommand ("94"ms) [Parameters=["@p2='?' (DbType = Int64), @p0='?' (Size = 30), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE \"Users\" SET \"Firstame\" = @p0, \"ModifiedDate\" = @p1
+WHERE \"Id\" = @p2;" (0723d8ff)
+2020-03-20T21:32:29.5128325+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed DbCommand ("107"ms) [Parameters=["@__entity_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT x.\"Id\", x.\"AddedDate\", x.\"Firstame\", x.\"Lastname\", x.\"ModifiedDate\", x.\"Password\", x.\"RestaurantId\"
+FROM \"Users\" AS x
+WHERE x.\"Id\" = @__entity_Id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T21:32:29.5138608+04:00 0HLUCUIKGIPK9:00000001 [INF] User Updated : Firstname - "Tural" (f85c6b12)
+2020-03-20T21:32:29.5162493+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1434.6789ms. (50a9e262)
+2020-03-20T21:32:29.5209717+04:00 0HLUCUIKGIPK9:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.Entities.User"'. (8a1b66c8)
+2020-03-20T21:32:29.5600611+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 1783.2487ms (afa2e885)
+2020-03-20T21:32:29.5601515+04:00 0HLUCUIKGIPK9:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:32:29.5632569+04:00 0HLUCUIKGIPK9:00000001 [INF] Request finished in 1850.8839ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T21:32:29.5689908+04:00  [INF] Connection id ""0HLUCUIKGIPK9"", Request id ""0HLUCUIKGIPK9:00000001"": the application completed without reading the entire request body. (54ac9468)
+2020-03-20T21:34:10.5870431+04:00 0HLUCUJJ5KEQD:00000001 [INF] Request starting HTTP/1.1 PUT https://localhost:5001/api/user/update?userId=6&firstname=%22Tural%22&lastname=%22Mustafayev%22&password=%221234%22&restId=1 application/json 2 (ca22a1cb)
+2020-03-20T21:34:10.6284516+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:34:10.6522938+04:00 0HLUCUJJ5KEQD:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Int64, System.String, System.String, System.String, Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:34:10.9414932+04:00 0HLUCUJJ5KEQD:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:34:10.9600070+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:34:12.8728543+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed DbCommand ("100"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstame\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T21:34:13.0557424+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed DbCommand ("109"ms) [Parameters=["@p2='?' (DbType = Int64), @p0='?' (Size = 30), @p1='?' (DbType = DateTime)"], CommandType='Text', CommandTimeout='30']"
+""UPDATE \"Users\" SET \"Firstame\" = @p0, \"ModifiedDate\" = @p1
+WHERE \"Id\" = @p2;" (0723d8ff)
+2020-03-20T21:34:13.2902748+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed DbCommand ("84"ms) [Parameters=["@__entity_Id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT x.\"Id\", x.\"AddedDate\", x.\"Firstame\", x.\"Lastname\", x.\"ModifiedDate\", x.\"Password\", x.\"RestaurantId\"
+FROM \"Users\" AS x
+WHERE x.\"Id\" = @__entity_Id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T21:34:13.2912759+04:00 0HLUCUJJ5KEQD:00000001 [INF] User Updated : Firstname - "Tural" (f85c6b12)
+2020-03-20T21:34:13.3026690+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2340.5017ms. (50a9e262)
+2020-03-20T21:34:13.3076116+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T21:34:13.3405982+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 2685.188ms (afa2e885)
+2020-03-20T21:34:13.3406790+04:00 0HLUCUJJ5KEQD:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:34:13.3442968+04:00 0HLUCUJJ5KEQD:00000001 [INF] Request finished in 2760.4544ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T21:34:13.3495582+04:00  [INF] Connection id ""0HLUCUJJ5KEQD"", Request id ""0HLUCUJJ5KEQD:00000001"": the application completed without reading the entire request body. (54ac9468)
+2020-03-20T21:35:37.0378057+04:00 0HLUCUJJ5KEQG:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T21:35:37.1327236+04:00 0HLUCUJJ5KEQG:00000001 [INF] Request finished in 94.9023ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T21:35:37.1369422+04:00 0HLUCUJJ5KEQG:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T21:35:37.1370806+04:00 0HLUCUJJ5KEQE:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T21:35:37.1371701+04:00 0HLUCUJJ5KEQF:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T21:35:37.1425263+04:00 0HLUCUJJ5KEQE:00000001 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T21:35:37.1425263+04:00 0HLUCUJJ5KEQG:00000002 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T21:35:37.1425263+04:00 0HLUCUJJ5KEQF:00000001 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T21:35:37.1448262+04:00 0HLUCUJJ5KEQG:00000002 [INF] Request finished in 7.9157ms 304 text/css (791a596a)
+2020-03-20T21:35:37.1448268+04:00 0HLUCUJJ5KEQF:00000001 [INF] Request finished in 7.604ms 304 application/javascript (791a596a)
+2020-03-20T21:35:37.1448262+04:00 0HLUCUJJ5KEQE:00000001 [INF] Request finished in 7.7016ms 304 application/javascript (791a596a)
+2020-03-20T21:35:37.4070088+04:00 0HLUCUJJ5KEQF:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T21:35:37.4919343+04:00 0HLUCUJJ5KEQF:00000002 [INF] Request finished in 84.9189ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T21:44:25.0962216+04:00 0HLUCUPA9TQQV:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T21:44:25.2280810+04:00 0HLUCUPA9TQQV:00000001 [INF] Request finished in 135.7499ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T21:44:25.2313330+04:00 0HLUCUPA9TQQU:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T21:44:25.2313330+04:00 0HLUCUPA9TQQV:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T21:44:25.2313330+04:00 0HLUCUPA9TQR0:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T21:44:25.2370235+04:00 0HLUCUPA9TQQU:00000001 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T21:44:25.2370235+04:00 0HLUCUPA9TQQV:00000002 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T21:44:25.2370235+04:00 0HLUCUPA9TQR0:00000001 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T21:44:25.2391631+04:00 0HLUCUPA9TQQV:00000002 [INF] Request finished in 7.8072ms 304 text/css (791a596a)
+2020-03-20T21:44:25.2391600+04:00 0HLUCUPA9TQR0:00000001 [INF] Request finished in 7.82ms 304 application/javascript (791a596a)
+2020-03-20T21:44:25.2391576+04:00 0HLUCUPA9TQQU:00000001 [INF] Request finished in 7.8157ms 304 application/javascript (791a596a)
+2020-03-20T21:44:25.4513258+04:00 0HLUCUPA9TQQU:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T21:44:25.5430300+04:00 0HLUCUPA9TQQU:00000002 [INF] Request finished in 91.7154ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T21:47:22.9127213+04:00 0HLUCUQV9NMHA:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T21:47:23.0433366+04:00 0HLUCUQV9NMHA:00000001 [INF] Request finished in 133.7757ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T21:47:23.0460683+04:00 0HLUCUQV9NMH9:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T21:47:23.0460849+04:00 0HLUCUQV9NMHB:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T21:47:23.0460831+04:00 0HLUCUQV9NMHA:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T21:47:23.0509599+04:00 0HLUCUQV9NMHB:00000001 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T21:47:23.0509622+04:00 0HLUCUQV9NMHA:00000002 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T21:47:23.0509597+04:00 0HLUCUQV9NMH9:00000001 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T21:47:23.0533933+04:00 0HLUCUQV9NMH9:00000001 [INF] Request finished in 7.3219ms 304 application/javascript (791a596a)
+2020-03-20T21:47:23.0533933+04:00 0HLUCUQV9NMHB:00000001 [INF] Request finished in 7.3352ms 304 application/javascript (791a596a)
+2020-03-20T21:47:23.0533933+04:00 0HLUCUQV9NMHA:00000002 [INF] Request finished in 7.3634ms 304 text/css (791a596a)
+2020-03-20T21:47:23.2926684+04:00 0HLUCUQV9NMHB:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T21:47:23.3813712+04:00 0HLUCUQV9NMHB:00000002 [INF] Request finished in 88.6965ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T21:48:00.7482883+04:00 0HLUCUQV9NMHB:00000003 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:48:00.7524293+04:00 0HLUCUQV9NMHB:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:48:00.7718856+04:00 0HLUCUQV9NMHB:00000003 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:48:01.0452909+04:00 0HLUCUQV9NMHB:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:48:01.1068083+04:00 0HLUCUQV9NMHB:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:48:01.1226913+04:00 0HLUCUQV9NMHB:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:48:01.1252555+04:00 0HLUCUQV9NMHB:00000003 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 15.9276ms. (50a9e262)
+2020-03-20T21:48:01.1294561+04:00 0HLUCUQV9NMHB:00000003 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:48:01.1321039+04:00 0HLUCUQV9NMHB:00000003 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 358.3774ms (afa2e885)
+2020-03-20T21:48:01.1321415+04:00 0HLUCUQV9NMHB:00000003 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:48:01.1323101+04:00 0HLUCUQV9NMHB:00000003 [INF] Request finished in 384.1095ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:49:00.4956017+04:00 0HLUCURSC0148:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:49:00.5487332+04:00 0HLUCURSC0148:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:49:00.5823532+04:00 0HLUCURSC0148:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:49:01.0215008+04:00 0HLUCURSC0148:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:49:01.1255080+04:00 0HLUCURSC0148:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:49:01.2480665+04:00 0HLUCURSC0148:00000001 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:01.2550149+04:00 0HLUCURSC0148:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 123.3943ms. (50a9e262)
+2020-03-20T21:49:01.2612382+04:00 0HLUCURSC0148:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:49:01.2701138+04:00 0HLUCURSC0148:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 684.5047ms (afa2e885)
+2020-03-20T21:49:01.2719662+04:00 0HLUCURSC0148:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:49:01.2768292+04:00 0HLUCURSC0148:00000001 [INF] Request finished in 785.2264ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:49:04.7291836+04:00 0HLUCURSC0148:00000002 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:49:04.7323856+04:00 0HLUCURSC0148:00000002 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:49:04.7344517+04:00 0HLUCURSC0148:00000002 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:49:04.7425533+04:00 0HLUCURSC0148:00000002 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:49:04.7523579+04:00 0HLUCURSC0148:00000002 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:49:04.7871665+04:00 0HLUCURSC0148:00000002 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:04.7891382+04:00 0HLUCURSC0148:00000002 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 34.8359ms. (50a9e262)
+2020-03-20T21:49:04.7918777+04:00 0HLUCURSC0148:00000002 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:49:04.7948525+04:00 0HLUCURSC0148:00000002 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 57.7331ms (afa2e885)
+2020-03-20T21:49:04.7967329+04:00 0HLUCURSC0148:00000002 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:49:04.7993457+04:00 0HLUCURSC0148:00000002 [INF] Request finished in 70.1309ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:49:06.1259516+04:00 0HLUCURSC0148:00000003 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:49:06.1282147+04:00 0HLUCURSC0148:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:49:06.1307520+04:00 0HLUCURSC0148:00000003 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:49:06.1333109+04:00 0HLUCURSC0148:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:49:06.1362237+04:00 0HLUCURSC0148:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:49:06.1709387+04:00 0HLUCURSC0148:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:06.1734595+04:00 0HLUCURSC0148:00000003 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 34.7334ms. (50a9e262)
+2020-03-20T21:49:06.1752569+04:00 0HLUCURSC0148:00000003 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:49:06.1765262+04:00 0HLUCURSC0148:00000003 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 44.5706ms (afa2e885)
+2020-03-20T21:49:06.1779530+04:00 0HLUCURSC0148:00000003 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:49:06.1796307+04:00 0HLUCURSC0148:00000003 [INF] Request finished in 55.0394ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:49:14.9846294+04:00 0HLUCURSC0148:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T21:49:15.0709955+04:00 0HLUCURSC0148:00000004 [INF] Request finished in 85.6126ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T21:49:15.0759025+04:00 0HLUCURSC014A:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T21:49:15.0778139+04:00 0HLUCURSC0148:00000005 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T21:49:15.0790418+04:00 0HLUCURSC0149:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T21:49:15.0926348+04:00 0HLUCURSC0149:00000001 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T21:49:15.0945357+04:00 0HLUCURSC0148:00000005 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T21:49:15.0956048+04:00 0HLUCURSC014A:00000001 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T21:49:15.0994601+04:00 0HLUCURSC0149:00000001 [INF] Request finished in 24.0897ms 304 application/javascript (791a596a)
+2020-03-20T21:49:15.1002669+04:00 0HLUCURSC0148:00000005 [INF] Request finished in 24.0417ms 304 application/javascript (791a596a)
+2020-03-20T21:49:15.1020726+04:00 0HLUCURSC014A:00000001 [INF] Request finished in 27.9059ms 304 text/css (791a596a)
+2020-03-20T21:49:15.3554850+04:00 0HLUCURSC0149:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T21:49:15.4343895+04:00 0HLUCURSC0149:00000002 [INF] Request finished in 79.5852ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T21:49:28.0548900+04:00 0HLUCURSC0149:00000003 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:49:28.0572597+04:00 0HLUCURSC0149:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:49:28.0600202+04:00 0HLUCURSC0149:00000003 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:49:28.0627446+04:00 0HLUCURSC0149:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:49:28.0659501+04:00 0HLUCURSC0149:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:49:28.0958067+04:00 0HLUCURSC0149:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:28.0973543+04:00 0HLUCURSC0149:00000003 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 29.8973ms. (50a9e262)
+2020-03-20T21:49:28.0987141+04:00 0HLUCURSC0149:00000003 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:49:28.1001555+04:00 0HLUCURSC0149:00000003 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 38.8072ms (afa2e885)
+2020-03-20T21:49:28.1014203+04:00 0HLUCURSC0149:00000003 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:49:28.1031272+04:00 0HLUCURSC0149:00000003 [INF] Request finished in 49.1635ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:49:37.3092364+04:00 0HLUCURSC0149:00000004 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:49:37.3109665+04:00 0HLUCURSC0149:00000004 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:49:37.3131674+04:00 0HLUCURSC0149:00000004 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:49:37.3161533+04:00 0HLUCURSC0149:00000004 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:49:37.3186874+04:00 0HLUCURSC0149:00000004 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:50:47.3534853+04:00 0HLUCUSS7B768:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:50:47.3942037+04:00 0HLUCUSS7B768:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:50:47.4154383+04:00 0HLUCUSS7B768:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:50:47.6957371+04:00 0HLUCUSS7B768:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:50:47.7599154+04:00 0HLUCUSS7B768:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:50:48.7427415+04:00 0HLUCUSS7B768:00000001 [ERR] Failed executing DbCommand ("101"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstame\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23502: null value in column "Firstame" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T21:50:48.8368374+04:00 0HLUCUSS7B768:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23502: null value in column \"Firstame\" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23502: null value in column "Firstame" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(T entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 41
+2020-03-20T21:50:48.8372788+04:00 0HLUCUSS7B768:00000001 [ERR] 23502: null value in column "Firstame" violates not-null constraint (a7c030b7)
+2020-03-20T21:50:48.8400018+04:00 0HLUCUSS7B768:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 1077.437ms. (50a9e262)
+2020-03-20T21:50:48.8450199+04:00 0HLUCUSS7B768:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:50:48.8502655+04:00 0HLUCUSS7B768:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 1432.8559ms (afa2e885)
+2020-03-20T21:50:48.8505797+04:00 0HLUCUSS7B768:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:50:48.8530135+04:00 0HLUCUSS7B768:00000001 [INF] Request finished in 1503.0933ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T21:53:22.7424192+04:00 0HLUCUUAHA9LI:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T21:53:22.7870461+04:00 0HLUCUUAHA9LI:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T21:53:22.8100024+04:00 0HLUCUUAHA9LI:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T21:53:23.1067101+04:00 0HLUCUUAHA9LI:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T21:53:23.1706890+04:00 0HLUCUUAHA9LI:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T21:53:24.8462849+04:00 0HLUCUUAHA9LI:00000001 [ERR] Failed executing DbCommand ("107"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T21:53:24.9538260+04:00 0HLUCUUAHA9LI:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(T entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 41
+2020-03-20T21:53:24.9541264+04:00 0HLUCUUAHA9LI:00000001 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T21:53:24.9564203+04:00 0HLUCUUAHA9LI:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 1783.4644ms. (50a9e262)
+2020-03-20T21:53:24.9609284+04:00 0HLUCUUAHA9LI:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T21:53:24.9661922+04:00 0HLUCUUAHA9LI:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 2154.1135ms (afa2e885)
+2020-03-20T21:53:24.9665208+04:00 0HLUCUUAHA9LI:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T21:53:24.9691765+04:00 0HLUCUUAHA9LI:00000001 [INF] Request finished in 2230.4561ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T22:18:42.0241271+04:00 0HLUCVCFA576H:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T22:18:42.0707102+04:00 0HLUCVCFA576H:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T22:18:42.0960224+04:00 0HLUCVCFA576H:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T22:18:42.4183245+04:00 0HLUCVCFA576H:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T22:18:42.4857352+04:00 0HLUCVCFA576H:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T22:18:43.4781640+04:00 0HLUCVCFA576H:00000001 [ERR] Failed executing DbCommand ("98"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:18:43.5947671+04:00 0HLUCVCFA576H:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(T entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 41
+2020-03-20T22:18:43.5950548+04:00 0HLUCVCFA576H:00000001 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T22:18:43.5980728+04:00 0HLUCVCFA576H:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 1109.3795ms. (50a9e262)
+2020-03-20T22:18:43.6034930+04:00 0HLUCVCFA576H:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T22:18:43.6094662+04:00 0HLUCVCFA576H:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 1511.1395ms (afa2e885)
+2020-03-20T22:18:43.6098220+04:00 0HLUCVCFA576H:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T22:18:43.6137763+04:00 0HLUCVCFA576H:00000001 [INF] Request finished in 1594.0606ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T22:19:30.0687726+04:00 0HLUCVCFA576H:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T22:19:30.1916556+04:00 0HLUCVCFA576H:00000002 [INF] Request finished in 122.9589ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T22:19:30.1946415+04:00 0HLUCVCFA576I:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T22:19:30.1946468+04:00 0HLUCVCFA576H:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T22:19:30.1946415+04:00 0HLUCVCFA576J:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T22:19:30.2000230+04:00 0HLUCVCFA576H:00000003 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T22:19:30.2000230+04:00 0HLUCVCFA576J:00000001 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T22:19:30.2000231+04:00 0HLUCVCFA576I:00000001 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T22:19:30.2025383+04:00 0HLUCVCFA576J:00000001 [INF] Request finished in 7.9016ms 304 text/css (791a596a)
+2020-03-20T22:19:30.2025383+04:00 0HLUCVCFA576I:00000001 [INF] Request finished in 7.8932ms 304 application/javascript (791a596a)
+2020-03-20T22:19:30.2025384+04:00 0HLUCVCFA576H:00000003 [INF] Request finished in 7.919ms 304 application/javascript (791a596a)
+2020-03-20T22:19:30.4788279+04:00 0HLUCVCFA576I:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T22:19:30.5969152+04:00 0HLUCVCFA576I:00000002 [INF] Request finished in 118.1229ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T22:19:46.7774494+04:00 0HLUCVCFA576I:00000003 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T22:19:46.7794151+04:00 0HLUCVCFA576I:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T22:19:46.7797075+04:00 0HLUCVCFA576I:00000003 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T22:19:46.7807286+04:00 0HLUCVCFA576I:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T22:19:46.7816625+04:00 0HLUCVCFA576I:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T22:19:46.8967567+04:00 0HLUCVCFA576I:00000003 [ERR] Failed executing DbCommand ("111"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:19:46.9789494+04:00 0HLUCVCFA576I:00000003 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(T entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 41
+2020-03-20T22:19:46.9790774+04:00 0HLUCVCFA576I:00000003 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T22:19:46.9791348+04:00 0HLUCVCFA576I:00000003 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 197.3968ms. (50a9e262)
+2020-03-20T22:19:46.9793511+04:00 0HLUCVCFA576I:00000003 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T22:19:46.9795574+04:00 0HLUCVCFA576I:00000003 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 199.7774ms (afa2e885)
+2020-03-20T22:19:46.9795876+04:00 0HLUCVCFA576I:00000003 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T22:19:46.9796743+04:00 0HLUCVCFA576I:00000003 [INF] Request finished in 202.2781ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T22:26:52.5949074+04:00 0HLUCVH1GOI15:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T22:26:52.6401998+04:00 0HLUCVH1GOI15:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T22:26:52.6606237+04:00 0HLUCVH1GOI15:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T22:26:52.9746944+04:00 0HLUCVH1GOI15:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T22:26:53.0482617+04:00 0HLUCVH1GOI15:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T22:26:54.1104268+04:00 0HLUCVH1GOI15:00000001 [ERR] Failed executing DbCommand ("114"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:26:54.2123445+04:00 0HLUCVH1GOI15:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Users\" violates foreign key constraint \"FK_Users_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges()
+   at Nemo_v2_Repo.Repositories.EFRepository`1.Insert(T entity) in C:\Users\99455\Desktop\Nemo v2 Api\Nemo v2 Repo\Repositories\EFRepository.cs:line 41
+2020-03-20T22:26:54.2126332+04:00 0HLUCVH1GOI15:00000001 [ERR] 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId" (c6aaa976)
+2020-03-20T22:26:54.2152403+04:00 0HLUCVH1GOI15:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 1164.4311ms. (50a9e262)
+2020-03-20T22:26:54.2212538+04:00 0HLUCVH1GOI15:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T22:26:54.2273701+04:00 0HLUCVH1GOI15:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 1564.3266ms (afa2e885)
+2020-03-20T22:26:54.2278443+04:00 0HLUCVH1GOI15:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T22:26:54.2316042+04:00 0HLUCVH1GOI15:00000001 [INF] Request finished in 1640.7408ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T22:28:33.4241218+04:00 0HLUCVH1GOI16:00000001 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/User/Add application/json-patch+json 84 (ca22a1cb)
+2020-03-20T22:28:33.4264367+04:00 0HLUCVH1GOI16:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T22:28:33.4268832+04:00 0HLUCVH1GOI16:00000001 [INF] Route matched with "{action = \"AddUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult AddUser(Nemo_v2_Data.UserDto)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T22:28:33.4288144+04:00 0HLUCVH1GOI16:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T22:28:33.4306185+04:00 0HLUCVH1GOI16:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T22:28:33.5198179+04:00 0HLUCVH1GOI16:00000001 [INF] Executed DbCommand ("86"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (0723d8ff)
+2020-03-20T22:28:33.6212326+04:00 0HLUCVH1GOI16:00000001 [INF] User Added (aff57380)
+2020-03-20T22:28:33.6242800+04:00 0HLUCVH1GOI16:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 193.5655ms. (50a9e262)
+2020-03-20T22:28:33.6245144+04:00 0HLUCVH1GOI16:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T22:28:33.6300628+04:00 0HLUCVH1GOI16:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)" in 203.0118ms (afa2e885)
+2020-03-20T22:28:33.6301270+04:00 0HLUCVH1GOI16:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.AddUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T22:28:33.6303453+04:00 0HLUCVH1GOI16:00000001 [INF] Request finished in 206.2995ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T23:22:00.9288249+04:00 0HLUD0FRF53OU:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T23:22:01.0722049+04:00 0HLUD0FRF53OU:00000001 [INF] Request finished in 148.2445ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T23:22:01.0749229+04:00 0HLUD0FRF53OU:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-bundle.js   (ca22a1cb)
+2020-03-20T23:22:01.0749229+04:00 0HLUD0FRF53OT:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui.css   (ca22a1cb)
+2020-03-20T23:22:01.0749228+04:00 0HLUD0FRF53OS:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/swagger-ui-standalone-preset.js   (ca22a1cb)
+2020-03-20T23:22:01.0788187+04:00 0HLUD0FRF53OT:00000001 [INF] The file "/swagger-ui.css" was not modified (f1f8d725)
+2020-03-20T23:22:01.0788192+04:00 0HLUD0FRF53OU:00000002 [INF] The file "/swagger-ui-bundle.js" was not modified (f1f8d725)
+2020-03-20T23:22:01.0788243+04:00 0HLUD0FRF53OS:00000001 [INF] The file "/swagger-ui-standalone-preset.js" was not modified (f1f8d725)
+2020-03-20T23:22:01.0810862+04:00 0HLUD0FRF53OS:00000001 [INF] Request finished in 6.1614ms 304 application/javascript (791a596a)
+2020-03-20T23:22:01.0810868+04:00 0HLUD0FRF53OT:00000001 [INF] Request finished in 6.1605ms 304 text/css (791a596a)
+2020-03-20T23:22:01.0810856+04:00 0HLUD0FRF53OU:00000002 [INF] Request finished in 6.1654ms 304 application/javascript (791a596a)
+2020-03-20T23:22:01.3332218+04:00 0HLUD0FRF53OS:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T23:22:01.4332834+04:00 0HLUD0FRF53OS:00000002 [INF] Request finished in 100.0569ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T23:22:13.0118127+04:00 0HLUD0FRF53OS:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-20T23:22:13.0144998+04:00 0HLUD0FRF53OS:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:22:13.0305443+04:00 0HLUD0FRF53OS:00000003 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:22:13.3218986+04:00 0HLUD0FRF53OS:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:22:13.3354078+04:00 0HLUD0FRF53OS:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:22:15.0672957+04:00 0HLUD0FRF53OS:00000003 [INF] Executed DbCommand ("515"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:22:15.0880346+04:00 0HLUD0FRF53OS:00000003 [ERR] Object reference not set to an instance of an object. (f59a5554)
+2020-03-20T23:22:15.0901971+04:00 0HLUD0FRF53OS:00000003 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 1752.6384ms. (50a9e262)
+2020-03-20T23:22:15.0958936+04:00 0HLUD0FRF53OS:00000003 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T23:22:15.0993046+04:00 0HLUD0FRF53OS:00000003 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 2066.4152ms (afa2e885)
+2020-03-20T23:22:15.0993748+04:00 0HLUD0FRF53OS:00000003 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:22:15.0995796+04:00 0HLUD0FRF53OS:00000003 [INF] Request finished in 2087.8034ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T23:22:44.0135252+04:00 0HLUD0G89V0PV:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-20T23:22:44.0762634+04:00 0HLUD0G89V0PV:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:22:44.1093783+04:00 0HLUD0G89V0PV:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:22:44.6038429+04:00 0HLUD0G89V0PV:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:22:44.6358395+04:00 0HLUD0G89V0PV:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:22:49.1447191+04:00 0HLUD0G89V0PV:00000001 [INF] Executed DbCommand ("88"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:24:49.4686591+04:00 0HLUD0HDMRK0R:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-20T23:24:49.5086828+04:00 0HLUD0HDMRK0R:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:24:49.5277845+04:00 0HLUD0HDMRK0R:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:24:49.8230604+04:00 0HLUD0HDMRK0R:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:24:49.8370191+04:00 0HLUD0HDMRK0R:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:24:50.7496882+04:00 0HLUD0HDMRK0R:00000001 [INF] Executed DbCommand ("86"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:24:50.7585379+04:00 0HLUD0HDMRK0R:00000001 [ERR] User Not Found (afbac79c)
+2020-03-20T23:24:50.7606605+04:00 0HLUD0HDMRK0R:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 921.5311ms. (50a9e262)
+2020-03-20T23:24:50.7654400+04:00 0HLUD0HDMRK0R:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T23:24:50.7705717+04:00 0HLUD0HDMRK0R:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 1240.8684ms (afa2e885)
+2020-03-20T23:24:50.7706480+04:00 0HLUD0HDMRK0R:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:24:50.7746829+04:00 0HLUD0HDMRK0R:00000001 [INF] Request finished in 1309.1896ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T23:26:07.5666372+04:00 0HLUD0HDMRK0S:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:26:07.5687605+04:00 0HLUD0HDMRK0S:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:26:07.5691253+04:00 0HLUD0HDMRK0S:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:26:07.5705126+04:00 0HLUD0HDMRK0S:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:26:07.5712646+04:00 0HLUD0HDMRK0S:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:26:08.1728286+04:00 0HLUD0HDMRK0S:00000001 [INF] Executed DbCommand ("600"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:26:08.2129373+04:00 0HLUD0HDMRK0S:00000001 [INF] User Get 2 (372aa0e3)
+2020-03-20T23:26:08.2130122+04:00 0HLUD0HDMRK0S:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 641.6756ms. (50a9e262)
+2020-03-20T23:26:08.2132243+04:00 0HLUD0HDMRK0S:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T23:26:08.2443530+04:00 0HLUD0HDMRK0S:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 675.1264ms (afa2e885)
+2020-03-20T23:26:08.2444111+04:00 0HLUD0HDMRK0S:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:26:08.2446280+04:00 0HLUD0HDMRK0S:00000001 [INF] Request finished in 678.023ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T23:29:22.4695364+04:00 0HLUD0HDMRK0U:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:29:22.4696286+04:00 0HLUD0HDMRK0U:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:29:22.4697502+04:00 0HLUD0HDMRK0U:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:29:22.4703385+04:00 0HLUD0HDMRK0U:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:29:22.4704960+04:00 0HLUD0HDMRK0U:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:29:22.6159607+04:00 0HLUD0HDMRK0U:00000001 [INF] Executed DbCommand ("145"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:29:22.6168468+04:00 0HLUD0HDMRK0U:00000001 [INF] User Get 2 (372aa0e3)
+2020-03-20T23:29:22.6169069+04:00 0HLUD0HDMRK0U:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 146.3773ms. (50a9e262)
+2020-03-20T23:29:22.6170338+04:00 0HLUD0HDMRK0U:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T23:29:22.6172751+04:00 0HLUD0HDMRK0U:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 147.4864ms (afa2e885)
+2020-03-20T23:29:22.6173033+04:00 0HLUD0HDMRK0U:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:29:22.6173643+04:00 0HLUD0HDMRK0U:00000001 [INF] Request finished in 147.8839ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T23:29:40.5830738+04:00 0HLUD0K4F3KL6:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:29:40.6226411+04:00 0HLUD0K4F3KL6:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:29:40.6417836+04:00 0HLUD0K4F3KL6:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:29:40.9216415+04:00 0HLUD0K4F3KL6:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:29:40.9383500+04:00 0HLUD0K4F3KL6:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:29:42.3848757+04:00 0HLUD0K4F3KL6:00000001 [INF] Executed DbCommand ("139"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:29:42.4427826+04:00 0HLUD0K4F3KL6:00000001 [INF] User Get 2 (372aa0e3)
+2020-03-20T23:29:42.4449285+04:00 0HLUD0K4F3KL6:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 1504.4544ms. (50a9e262)
+2020-03-20T23:29:42.4497326+04:00 0HLUD0K4F3KL6:00000001 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T23:29:42.4831626+04:00 0HLUD0K4F3KL6:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 1838.7058ms (afa2e885)
+2020-03-20T23:29:42.4832471+04:00 0HLUD0K4F3KL6:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:29:42.4864061+04:00 0HLUD0K4F3KL6:00000001 [INF] Request finished in 1907.0947ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T23:29:56.9299714+04:00 0HLUD0K9ANGE5:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:29:56.9900287+04:00 0HLUD0K9ANGE5:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:29:57.0196104+04:00 0HLUD0K9ANGE5:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:29:57.4296763+04:00 0HLUD0K9ANGE5:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:29:57.4540622+04:00 0HLUD0K9ANGE5:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:29:59.2756917+04:00 0HLUD0K9ANGE5:00000001 [INF] Executed DbCommand ("87"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:36:02.3009960+04:00 0HLUD0NM755B3:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/index.html   (ca22a1cb)
+2020-03-20T23:36:02.4539858+04:00 0HLUD0NM755B3:00000001 [INF] Request finished in 151.9462ms 200 text/html;charset=utf-8 (791a596a)
+2020-03-20T23:36:02.7419057+04:00 0HLUD0NM755B3:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json   (ca22a1cb)
+2020-03-20T23:36:02.8225836+04:00 0HLUD0NM755B3:00000002 [INF] Request finished in 80.0883ms 200 application/json;charset=utf-8 (791a596a)
+2020-03-20T23:36:16.1988081+04:00 0HLUD0NM755B3:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:36:16.2037956+04:00 0HLUD0NM755B3:00000003 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:36:16.2235579+04:00 0HLUD0NM755B3:00000003 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:36:16.6258297+04:00 0HLUD0NM755B3:00000003 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:36:16.6455948+04:00 0HLUD0NM755B3:00000003 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:36:17.7649660+04:00 0HLUD0NM755B3:00000003 [INF] Executed DbCommand ("113"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:37:51.2087454+04:00 0HLUD0OMLPHRD:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/2   (ca22a1cb)
+2020-03-20T23:37:51.2565094+04:00 0HLUD0OMLPHRD:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:37:51.2838850+04:00 0HLUD0OMLPHRD:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:37:51.6872180+04:00 0HLUD0OMLPHRD:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:37:51.7147246+04:00 0HLUD0OMLPHRD:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:37:52.7564794+04:00 0HLUD0OMLPHRD:00000001 [INF] Executed DbCommand ("130"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:40:41.7952737+04:00 0HLUD0Q9H0ACJ:00000001 [INF] Request starting HTTP/1.1 PUT https://localhost:5001/api/user/2 application/json 2 (ca22a1cb)
+2020-03-20T23:40:41.8344741+04:00 0HLUD0Q9H0ACJ:00000001 [INF] Executing endpoint '"405 HTTP Method Not Supported"' (500cc934)
+2020-03-20T23:40:41.8347218+04:00 0HLUD0Q9H0ACJ:00000001 [INF] Executed endpoint '"405 HTTP Method Not Supported"' (99874f2b)
+2020-03-20T23:40:41.8390365+04:00 0HLUD0Q9H0ACJ:00000001 [INF] Request finished in 47.3181ms 405  (791a596a)
+2020-03-20T23:40:41.8453218+04:00  [INF] Connection id ""0HLUD0Q9H0ACJ"", Request id ""0HLUD0Q9H0ACJ:00000001"": the application completed without reading the entire request body. (54ac9468)
+2020-03-20T23:40:45.7832644+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/user/2 application/json 2 (ca22a1cb)
+2020-03-20T23:40:45.7849589+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:40:45.8059259+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:40:46.0990230+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:40:46.1136738+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:40:48.2119472+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executed DbCommand ("217"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:40:48.2597772+04:00 0HLUD0Q9H0ACJ:00000002 [INF] User Get 2 (372aa0e3)
+2020-03-20T23:40:48.2619449+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.OkObjectResult" in 2146.1297ms. (50a9e262)
+2020-03-20T23:40:48.2664449+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executing ObjectResult, writing value of type '"Nemo_v2_Data.UserDto"'. (8a1b66c8)
+2020-03-20T23:40:48.2988406+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 2490.0501ms (afa2e885)
+2020-03-20T23:40:48.2989382+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:40:48.3024057+04:00 0HLUD0Q9H0ACJ:00000002 [INF] Request finished in 2519.1711ms 200 application/json; charset=utf-8 (791a596a)
+2020-03-20T23:40:48.3026992+04:00  [INF] Connection id ""0HLUD0Q9H0ACJ"", Request id ""0HLUD0Q9H0ACJ:00000002"": the application completed without reading the entire request body. (54ac9468)
+2020-03-20T23:47:47.9272188+04:00 0HLUD0U8GSGF4:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/user/2 application/json 2 (ca22a1cb)
+2020-03-20T23:47:47.9706690+04:00 0HLUD0U8GSGF4:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-20T23:47:47.9932458+04:00 0HLUD0U8GSGF4:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-20T23:47:48.3308010+04:00 0HLUD0U8GSGF4:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-20T23:47:48.3491137+04:00 0HLUD0U8GSGF4:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-20T23:47:51.2008577+04:00 0HLUD0U8GSGF4:00000001 [INF] Executed DbCommand ("307"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT s.\"Id\", s.\"AddedDate\", s.\"Firstname\", s.\"Lastname\", s.\"ModifiedDate\", s.\"Password\", s.\"RestaurantId\"
+FROM \"Users\" AS s
+WHERE s.\"Id\" = @__id_0
+LIMIT 2" (0723d8ff)
+2020-03-20T23:47:51.2487740+04:00 0HLUD0U8GSGF4:00000001 [ERR] No database provider has been configured for this DbContext. A provider can be configured by overriding the DbContext.OnConfiguring method or by using AddDbContext on the application service provider. If AddDbContext is used, then also ensure that your DbContext type accepts a DbContextOptions<TContext> object in its constructor and passes it to the base constructor for DbContext. (b38a13e7)
+2020-03-20T23:47:51.2517908+04:00 0HLUD0U8GSGF4:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.BadRequestObjectResult" in 2899.664ms. (50a9e262)
+2020-03-20T23:47:51.2569435+04:00 0HLUD0U8GSGF4:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-20T23:47:51.2630072+04:00 0HLUD0U8GSGF4:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 3267.3648ms (afa2e885)
+2020-03-20T23:47:51.2631356+04:00 0HLUD0U8GSGF4:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-20T23:47:51.2677818+04:00 0HLUD0U8GSGF4:00000001 [INF] Request finished in 3344.9591ms 400 text/plain; charset=utf-8 (791a596a)
+2020-03-20T23:47:51.2742863+04:00  [INF] Connection id ""0HLUD0U8GSGF4"", Request id ""0HLUD0U8GSGF4:00000001"": the application completed without reading the entire request body. (54ac9468)

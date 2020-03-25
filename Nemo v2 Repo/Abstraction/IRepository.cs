@@ -49,7 +49,7 @@ namespace Nemo_v2_Repo.Abstraction
 		/// Update entity in db
 		/// </summary>
 		/// <param name="entity"></param>
-		TEntity Update(TEntity entity);
+		TEntity Update(TEntity entity,string []notUpdateProperties=null);
  
 		/// <summary>
 		/// Delete entity from db by primary key

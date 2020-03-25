@@ -175,3 +175,346 @@ System.InvalidOperationException: An exception has been raised that is likely du
    at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
    at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass15_1`1.<CompileQueryCore>b__0(QueryContext qc)
 2020-03-20T20:33:57.1213586+04:00 0HLUCTHPMGSSD:00000001 [ERR] An exception has been raised that is likely due to a transient failure. (0c30b9c3)
+2020-03-20T21:48:01.1226466+04:00 0HLUCUQV9NMHB:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:01.2479813+04:00 0HLUCURSC0148:00000001 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:04.7870273+04:00 0HLUCURSC0148:00000002 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:06.1708273+04:00 0HLUCURSC0148:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:49:28.0957350+04:00 0HLUCURSC0149:00000003 [ERR] Missing type map configuration or unsupported mapping.
+
+Mapping types:
+ClaimsPrincipal -> User
+System.Security.Claims.ClaimsPrincipal -> Nemo_v2_Data.Entities.User (1c0057f9)
+2020-03-20T21:50:48.7426971+04:00 0HLUCUSS7B768:00000001 [ERR] Failed executing DbCommand ("101"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstame\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23502: null value in column "Firstame" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T21:50:48.8364006+04:00 0HLUCUSS7B768:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23502: null value in column \"Firstame\" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23502: null value in column "Firstame" violates not-null constraint
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-20T21:50:48.8372386+04:00 0HLUCUSS7B768:00000001 [ERR] 23502: null value in column "Firstame" violates not-null constraint (a7c030b7)
+2020-03-20T21:53:24.8462414+04:00 0HLUCUUAHA9LI:00000001 [ERR] Failed executing DbCommand ("107"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T21:53:24.9533399+04:00 0HLUCUUAHA9LI:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-20T21:53:24.9541056+04:00 0HLUCUUAHA9LI:00000001 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T22:18:43.4780821+04:00 0HLUCVCFA576H:00000001 [ERR] Failed executing DbCommand ("98"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:18:43.5943246+04:00 0HLUCVCFA576H:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-20T22:18:43.5950323+04:00 0HLUCVCFA576H:00000001 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T22:19:46.8967156+04:00 0HLUCVCFA576I:00000003 [ERR] Failed executing DbCommand ("111"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:19:46.9785721+04:00 0HLUCVCFA576I:00000003 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column \"Firstname\" of relation \"Users\" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 42703: column "Firstname" of relation "Users" does not exist
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 444
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-20T22:19:46.9790660+04:00 0HLUCVCFA576I:00000003 [ERR] 42703: column "Firstname" of relation "Users" does not exist (9d211a30)
+2020-03-20T22:26:54.1103809+04:00 0HLUCVH1GOI15:00000001 [ERR] Failed executing DbCommand ("114"ms) [Parameters=["@p0='?' (DbType = DateTime), @p1='?' (Size = 30), @p2='?' (Size = 30), @p3='?' (DbType = DateTime), @p4='?', @p5='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""INSERT INTO \"Users\" (\"AddedDate\", \"Firstname\", \"Lastname\", \"ModifiedDate\", \"Password\", \"RestaurantId\")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING \"Id\";" (627a98df)
+Npgsql.PostgresException (0x80004005): 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+2020-03-20T22:26:54.2119593+04:00 0HLUCVH1GOI15:00000001 [ERR] An exception occurred in the database while saving changes for context type '"Nemo_v2_Repo.DbContexts.ApplicationContext"'."
+""Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table \"Users\" violates foreign key constraint \"FK_Users_Restaurants_RestaurantId\"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)" (170f029e)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> Npgsql.PostgresException: 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId"
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlConnector.<>c__DisplayClass161_0.<<ReadMessage>g__ReadMessageLong|0>d.MoveNext() in C:\projects\npgsql\src\Npgsql\NpgsqlConnector.cs:line 1032
+--- End of stack trace from previous location where exception was thrown ---
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming) in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 490
+   at Npgsql.NpgsqlDataReader.NextResult() in C:\projects\npgsql\src\Npgsql\NpgsqlDataReader.cs:line 332
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1218
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\npgsql\src\Npgsql\NpgsqlCommand.cs:line 1130
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.Execute(IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(DbContext _, ValueTuple`2 parameters)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded) in C:\projects\npgsql-entityframeworkcore-postgresql\src\EFCore.PG\Storage\Internal\NpgsqlExecutionStrategy.cs:line 28
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.Execute(IEnumerable`1 commandBatches, IRelationalConnection connection)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChanges(IReadOnlyList`1 entries)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(IReadOnlyList`1 entriesToSave)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChanges(Boolean acceptAllChangesOnSuccess)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChanges(Boolean acceptAllChangesOnSuccess)
+2020-03-20T22:26:54.2126096+04:00 0HLUCVH1GOI15:00000001 [ERR] 23503: insert or update on table "Users" violates foreign key constraint "FK_Users_Restaurants_RestaurantId" (c6aaa976)
+2020-03-20T23:22:15.0879936+04:00 0HLUD0FRF53OS:00000003 [ERR] Object reference not set to an instance of an object. (f59a5554)
+2020-03-20T23:24:50.7584962+04:00 0HLUD0HDMRK0R:00000001 [ERR] User Not Found (afbac79c)
+2020-03-20T23:47:51.2487344+04:00 0HLUD0U8GSGF4:00000001 [ERR] No database provider has been configured for this DbContext. A provider can be configured by overriding the DbContext.OnConfiguring method or by using AddDbContext on the application service provider. If AddDbContext is used, then also ensure that your DbContext type accepts a DbContextOptions<TContext> object in its constructor and passes it to the base constructor for DbContext. (b38a13e7)

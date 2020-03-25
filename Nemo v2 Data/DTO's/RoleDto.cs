@@ -4,6 +4,7 @@ namespace Nemo_v2_Data
 {
     public class RoleDto
     {
+        public long Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }

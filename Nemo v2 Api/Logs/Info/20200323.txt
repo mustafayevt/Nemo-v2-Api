@@ -1,0 +1,294 @@
+2020-03-23T21:20:48.0531963+04:00 0HLUF9Q3JGECN:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T21:20:48.0965613+04:00 0HLUF9Q3JGECN:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T21:20:48.1180310+04:00 0HLUF9Q3JGECN:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T21:20:48.4917240+04:00 0HLUF9Q3JGECN:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T21:20:48.5076461+04:00 0HLUF9Q3JGECN:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T21:20:51.4719289+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed DbCommand ("418"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T21:20:51.9076786+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed DbCommand ("376"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T21:20:52.2723455+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed DbCommand ("331"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T21:20:52.3037608+04:00 0HLUF9Q3JGECN:00000001 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T21:20:52.3062950+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 3796.1277ms. (50a9e262)
+2020-03-23T21:20:52.3117499+04:00 0HLUF9Q3JGECN:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T21:20:52.3175415+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 4197.607ms (afa2e885)
+2020-03-23T21:20:52.3175949+04:00 0HLUF9Q3JGECN:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T21:20:52.3201947+04:00 0HLUF9Q3JGECN:00000001 [INF] Request finished in 4270.8695ms 404 text/plain; charset=utf-8 (791a596a)
+2020-03-23T21:57:18.7262030+04:00 0HLUFAEGFFAUQ:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T21:57:18.7657130+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T21:57:18.7845847+04:00 0HLUFAEGFFAUQ:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T21:57:19.0723390+04:00 0HLUFAEGFFAUQ:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T21:57:19.0864082+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T21:57:22.2802832+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed DbCommand ("1,100"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T21:57:22.6818019+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed DbCommand ("339"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T21:57:23.1216249+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed DbCommand ("408"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T21:57:23.1554874+04:00 0HLUFAEGFFAUQ:00000001 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T21:57:23.1587882+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 4069.0864ms. (50a9e262)
+2020-03-23T21:57:23.1642315+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T21:57:23.1702098+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 4383.7424ms (afa2e885)
+2020-03-23T21:57:23.1702602+04:00 0HLUFAEGFFAUQ:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T21:57:23.1729129+04:00 0HLUFAEGFFAUQ:00000001 [INF] Request finished in 4450.1111ms 404 text/plain; charset=utf-8 (791a596a)
+2020-03-23T22:18:04.0464225+04:00 0HLUFAQ3K07LH:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T22:18:04.0831228+04:00 0HLUFAQ3K07LH:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T22:18:04.1019334+04:00 0HLUFAQ3K07LH:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T22:18:04.3840156+04:00 0HLUFAQ3K07LH:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T22:18:04.3981601+04:00 0HLUFAQ3K07LH:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T22:18:07.7921329+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed DbCommand ("606"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T22:18:08.4752952+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed DbCommand ("626"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T22:18:09.7274973+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed DbCommand ("1,220"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T22:18:09.7601502+04:00 0HLUFAQ3K07LH:00000001 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T22:18:09.7623884+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 5362.0158ms. (50a9e262)
+2020-03-23T22:18:09.7676104+04:00 0HLUFAQ3K07LH:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T22:18:09.7744749+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 5669.9595ms (afa2e885)
+2020-03-23T22:18:09.7745505+04:00 0HLUFAQ3K07LH:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T22:18:09.7774217+04:00 0HLUFAQ3K07LH:00000001 [INF] Request finished in 5734.3302ms 404 text/plain; charset=utf-8 (791a596a)
+2020-03-23T22:18:12.8565954+04:00 0HLUFAQ3K07LH:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T22:18:12.8584864+04:00 0HLUFAQ3K07LH:00000002 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T22:18:12.8588256+04:00 0HLUFAQ3K07LH:00000002 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T22:18:12.8600855+04:00 0HLUFAQ3K07LH:00000002 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T22:18:12.8609041+04:00 0HLUFAQ3K07LH:00000002 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T22:18:13.2163932+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed DbCommand ("354"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T22:18:13.5753055+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed DbCommand ("358"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T22:18:13.9323622+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed DbCommand ("357"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T22:18:13.9333185+04:00 0HLUFAQ3K07LH:00000002 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T22:18:13.9333703+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 1072.402ms. (50a9e262)
+2020-03-23T22:18:13.9335712+04:00 0HLUFAQ3K07LH:00000002 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T22:18:13.9337546+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 1074.886ms (afa2e885)
+2020-03-23T22:18:13.9337958+04:00 0HLUFAQ3K07LH:00000002 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T22:18:13.9339732+04:00 0HLUFAQ3K07LH:00000002 [INF] Request finished in 1077.4054ms 404 text/plain; charset=utf-8 (791a596a)
+2020-03-23T22:25:10.0912064+04:00 0HLUFAU2J42PI:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T22:25:10.1287007+04:00 0HLUFAU2J42PI:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T22:25:10.1459693+04:00 0HLUFAU2J42PI:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T22:25:10.4229973+04:00 0HLUFAU2J42PI:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T22:25:10.4369109+04:00 0HLUFAU2J42PI:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T22:25:12.6126376+04:00 0HLUFAU2J42PI:00000001 [INF] Executed DbCommand ("517"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T22:25:13.1989835+04:00 0HLUFAU2J42PI:00000001 [INF] Executed DbCommand ("530"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T22:25:13.7635633+04:00 0HLUFAU2J42PI:00000001 [INF] Executed DbCommand ("533"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T22:25:13.7947530+04:00 0HLUFAU2J42PI:00000001 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T22:25:13.7978769+04:00 0HLUFAU2J42PI:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 3357.8913ms. (50a9e262)
+2020-03-23T22:25:13.8024071+04:00 0HLUFAU2J42PI:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T22:25:13.8075826+04:00 0HLUFAU2J42PI:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 3659.7371ms (afa2e885)
+2020-03-23T22:25:13.8076288+04:00 0HLUFAU2J42PI:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T22:25:13.8100394+04:00 0HLUFAU2J42PI:00000001 [INF] Request finished in 3722.3919ms 404 text/plain; charset=utf-8 (791a596a)
+2020-03-23T23:03:24.2130222+04:00 0HLUFBJE9AAAP:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/User/1   (ca22a1cb)
+2020-03-23T23:03:24.2481238+04:00 0HLUFBJE9AAAP:00000001 [INF] Executing endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (500cc934)
+2020-03-23T23:03:24.2713464+04:00 0HLUFBJE9AAAP:00000001 [INF] Route matched with "{action = \"GetUser\", controller = \"User\"}". Executing controller action with signature "Microsoft.AspNetCore.Mvc.IActionResult GetUser(Int64)" on controller "Nemo_v2_Api.Controllers.UserController" ("Nemo v2 Api"). (122b2fdf)
+2020-03-23T23:03:24.5563365+04:00 0HLUFBJE9AAAP:00000001 [INF] Entity Framework Core "2.2.6-servicing-10079" initialized '"ApplicationContext"' using provider '"Npgsql.EntityFrameworkCore.PostgreSQL"' with options: "None" (9958f5bb)
+2020-03-23T23:03:24.5703682+04:00 0HLUFBJE9AAAP:00000001 [INF] Executing action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" - Validation state: Valid (dad538d7)
+2020-03-23T23:03:26.8994450+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed DbCommand ("379"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM \"Users\" AS \"user\"
+        WHERE \"user\".\"Id\" = @__id_0)
+    THEN TRUE::bool ELSE FALSE::bool
+END" (0723d8ff)
+2020-03-23T23:03:27.3196765+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed DbCommand ("363"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user\".\"Id\", \"user\".\"AddedDate\", \"user\".\"Firstname\", \"user\".\"Lastname\", \"user\".\"ModifiedDate\", \"user\".\"Password\", \"user\".\"RestaurantId\"
+FROM \"Users\" AS \"user\"
+WHERE \"user\".\"Id\" = @__id_0
+ORDER BY \"user\".\"Id\"
+LIMIT 1" (0723d8ff)
+2020-03-23T23:03:27.7641817+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed DbCommand ("409"ms) [Parameters=["@__id_0='?' (DbType = Int64)"], CommandType='Text', CommandTimeout='30']"
+""SELECT \"user.UserRoles\".\"Id\", \"user.UserRoles\".\"AddedDate\", \"user.UserRoles\".\"ModifiedDate\", \"user.UserRoles\".\"RoleId\", \"user.UserRoles\".\"UserId\", \"u.Role\".\"Id\", \"u.Role\".\"AddedDate\", \"u.Role\".\"Description\", \"u.Role\".\"ModifiedDate\", \"u.Role\".\"Name\", \"u.Role\".\"RestaurantId\"
+FROM \"UserRoles\" AS \"user.UserRoles\"
+INNER JOIN \"Roles\" AS \"u.Role\" ON \"user.UserRoles\".\"RoleId\" = \"u.Role\".\"Id\"
+INNER JOIN (
+    SELECT user0.\"Id\"
+    FROM \"Users\" AS user0
+    WHERE user0.\"Id\" = @__id_0
+    ORDER BY user0.\"Id\"
+    LIMIT 1
+) AS t ON \"user.UserRoles\".\"UserId\" = t.\"Id\"
+ORDER BY t.\"Id\"" (0723d8ff)
+2020-03-23T23:03:27.7959238+04:00 0HLUFBJE9AAAP:00000001 [ERR] Error mapping types.
+
+Mapping types:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Type Map configuration:
+User -> UserDto
+Nemo_v2_Data.Entities.User -> Nemo_v2_Data.UserDto
+
+Destination Member:
+Roles
+ (752ae9fa)
+2020-03-23T23:03:27.7982753+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed action method "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)", returned result "Microsoft.AspNetCore.Mvc.NotFoundObjectResult" in 3225.5893ms. (50a9e262)
+2020-03-23T23:03:27.8027884+04:00 0HLUFBJE9AAAP:00000001 [INF] Executing ObjectResult, writing value of type '"System.String"'. (8a1b66c8)
+2020-03-23T23:03:27.8077999+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed action "Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)" in 3534.5569ms (afa2e885)
+2020-03-23T23:03:27.8078620+04:00 0HLUFBJE9AAAP:00000001 [INF] Executed endpoint '"Nemo_v2_Api.Controllers.UserController.GetUser (Nemo v2 Api)"' (99874f2b)
+2020-03-23T23:03:27.8105326+04:00 0HLUFBJE9AAAP:00000001 [INF] Request finished in 3601.8061ms 404 text/plain; charset=utf-8 (791a596a)

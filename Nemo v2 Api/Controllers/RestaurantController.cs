@@ -70,8 +70,6 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var restaurant = _mapper.Map<Restaurant>(restaurantDto);
-                restaurant.AddedDate = DateTime.Now;
-                restaurant.ModifiedDate = DateTime.Now;
                 var addedRestaurant = _restaurantService.InsertRestaurant(restaurant);
                 _logger.LogInformation($"Restaurant Added {restaurant.Id}");
                 return Ok(_mapper.Map<RestaurantDto>(addedRestaurant));
@@ -90,7 +88,6 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var updateRestaurant = _mapper.Map<Restaurant>(restaurantDto);
-                updateRestaurant.ModifiedDate = DateTime.Now;
                 var result =_restaurantService.UpdateRestaurant(updateRestaurant);
                 _logger.LogInformation($"Restaurant Updated : RestaurantId - {updateRestaurant.Id}");
                 return Ok(_mapper.Map<RestaurantDto>(result));
