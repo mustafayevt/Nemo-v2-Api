@@ -73,7 +73,7 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var user = _mapper.Map<User>(userDto);
-                var addedUser = _userService.InsertUser(user);
+                var addedUser = _userService.InsertUser(user,userDto.RolesId);
                 _logger.LogInformation($"User Added {user.Id}");
                 return Ok(_mapper.Map<UserDto>(addedUser));
             }
@@ -91,7 +91,7 @@ namespace Nemo_v2_Api.Controllers
             try
             {
                 var updateUser = _mapper.Map<User>(userDto);
-                var result =_userService.UpdateUser(updateUser);
+                var result =_userService.UpdateUser(updateUser,userDto.RolesId);
                 _logger.LogInformation($"User Updated : Firstname - {updateUser.Firstname}");
                 return Ok(_mapper.Map<UserDto>(result));
             }

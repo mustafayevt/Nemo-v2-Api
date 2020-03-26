@@ -11,11 +11,10 @@ namespace Nemo_v2_Data.AutoMapper
         {
             //User
             CreateMap<User, UserDto>()
-                .ForMember(x => x.Roles, 
+                .ForMember(x => x.Roles,
                     opt => opt
-                        .MapFrom(user => user.UserRoles.Select(x=>x.Role)))
+                        .MapFrom(user => user.UserRoles.Select(x => x.Role)))
                 .ReverseMap();
-            
             //Role
             CreateMap<Role, RoleDto>().ReverseMap();
             

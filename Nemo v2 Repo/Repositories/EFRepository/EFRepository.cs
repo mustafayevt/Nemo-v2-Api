@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 
-namespace Nemo_v2_Repo.Repositories
+namespace Nemo_v2_Repo.Repositories.EFRepository
 {
     public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private DbContext context;
-        private DbSet<TEntity> dbSet;
+        protected DbContext context;
+        protected DbSet<TEntity> dbSet;
 
         public EFRepository(ApplicationContext context)
         {
@@ -119,15 +116,19 @@ namespace Nemo_v2_Repo.Repositories
         {
             try
             {
+                context.Entry(entity).State = EntityState.Unchanged;
+                
                 context.Entry(entity).Entity.ModifiedDate = DateTime.Now;
 
                 dbSet.Attach(entity);
                 context.Entry(entity).State = EntityState.Modified;
                 context.Entry(entity).Property("AddedDate").IsModified = false;
-                foreach (var property in notUpdateProperties)
-                {
-                    context.Entry(entity).Property(property).IsModified = false;
-                }
+                
+                if (notUpdateProperties != null)
+                    foreach (var property in notUpdateProperties)
+                    {
+                        context.Entry(entity).Property(property).IsModified = false;
+                    }
 
                 context.SaveChanges();
                 return context.Entry(entity).Entity;

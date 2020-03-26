@@ -17,9 +17,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nemo_v2_Api.Filters;
 using Nemo_v2_Data.AutoMapper;
+using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Repositories;
+using Nemo_v2_Repo.Repositories.EFRepository;
 using Nemo_v2_Service.Abstraction;
 using Nemo_v2_Service.Services;
 
@@ -79,7 +81,13 @@ namespace Nemo_v2_Api
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
+            services.AddScoped<IRepository<User>, EFUserRepository>();
+            services.AddScoped<IRepository<Role>, EFRoleRepository>();
+            services.AddScoped<IRepository<Restaurant>, EFRestaurantRepository>();
+            
+            
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRestaurantService, RestaurantService>();

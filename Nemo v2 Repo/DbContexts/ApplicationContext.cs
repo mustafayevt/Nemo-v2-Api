@@ -28,5 +28,6 @@ namespace Nemo_v2_Repo.DbContexts
             new UserRoleMap(modelBuilder.Entity<UserRole>());
             new RestWareRelMap(modelBuilder.Entity<RestWareRel>());
         }  
+        
     }  
 }
