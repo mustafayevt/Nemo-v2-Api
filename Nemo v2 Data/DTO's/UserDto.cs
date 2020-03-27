@@ -8,6 +8,7 @@ namespace Nemo_v2_Data
     public class UserDto
     {
         [Required]
+        [Range(1,long.MaxValue)]
         public long Id { get; set; }
         [Required] 
         public string Firstname { get; set; }

@@ -116,19 +116,10 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
         {
             try
             {
-                context.Entry(entity).State = EntityState.Unchanged;
-                
-                context.Entry(entity).Entity.ModifiedDate = DateTime.Now;
-
-                dbSet.Attach(entity);
-                context.Entry(entity).State = EntityState.Modified;
-                context.Entry(entity).Property("AddedDate").IsModified = false;
-                
-                if (notUpdateProperties != null)
-                    foreach (var property in notUpdateProperties)
-                    {
-                        context.Entry(entity).Property(property).IsModified = false;
-                    }
+                entity.ModifiedDate = DateTime.Now;
+                var oldEntity = context.Set<TEntity>().First(g => g.Id == entity.Id);
+                entity.AddedDate = oldEntity.AddedDate;
+                context.Entry(oldEntity).CurrentValues.SetValues(entity);
 
                 context.SaveChanges();
                 return context.Entry(entity).Entity;

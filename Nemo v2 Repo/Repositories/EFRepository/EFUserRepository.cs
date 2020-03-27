@@ -20,13 +20,13 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
             try
             {
                 var model = (context as ApplicationContext).Users
-                    .Include(x => x.UserRoles)
                     .AsNoTracking()
+                    .Include(x => x.UserRoles)
                     .FirstOrDefault(x => x.Id == entity.Id);
-                
-                context.Entry(entity).State = EntityState.Modified;
                 context.TryUpdateManyToMany(model.UserRoles, entity.UserRoles, x => x.RoleId);
-                return base.Update(entity, notUpdateProperties);
+                
+                
+                return base.Update(entity,notUpdateProperties);
             }
             catch (Exception e)
             {

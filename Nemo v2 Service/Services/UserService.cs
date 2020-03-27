@@ -12,15 +12,12 @@ namespace Nemo_v2_Service.Services
     {
         private IRepository<User> _userRepository;
         private IRepository<Role> _roleRepository;
-        private IRepository<UserRole> _userRoleRepository;
 
         public UserService(IRepository<User> userRepository,
-            IRepository<Role> roleRepository,
-            IRepository<UserRole> userRoleRepository)
+            IRepository<Role> roleRepository)
         {
             this._userRepository = userRepository;
             this._roleRepository = roleRepository;
-            this._userRoleRepository = userRoleRepository;
         }
 
         public IEnumerable<User> GetUsers()
@@ -50,8 +47,8 @@ namespace Nemo_v2_Service.Services
             {
                 UserId = user.Id,
                 RoleId = x.Id,
-                AddedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now
+                //AddedDate = DateTime.Now,
+                //ModifiedDate = DateTime.Now
             }));
             
             user.UserRoles = userRoles;
@@ -60,6 +57,7 @@ namespace Nemo_v2_Service.Services
 
         public User UpdateUser(User user, IEnumerable<long> rolesId)
         {
+            if(_userRepository.Query(x=>x.Id ==user.Id).AsNoTracking() ==null) throw new NullReferenceException("User Not Found");
             var roles = _roleRepository.Query(x => rolesId.Contains(x.Id)).ToList();
             var userRoles = new List<UserRole>();
             roles.ForEach(x=> userRoles.Add(new UserRole()
@@ -67,8 +65,8 @@ namespace Nemo_v2_Service.Services
                 UserId = user.Id,
                 RoleId = x.Id,
                 Role = x,
-                AddedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now
+                //AddedDate = DateTime.Now,
+                //ModifiedDate = DateTime.Now
             }));
             user.UserRoles = userRoles.ToList();
             return _userRepository.Update(user);
