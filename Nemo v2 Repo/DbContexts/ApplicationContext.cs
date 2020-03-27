@@ -16,6 +16,11 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<RestWareRel> RestWareRels { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<IngredientsInsert> IngredientsInserts { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodGroup> FoodGroups { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
         
         
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)  
@@ -27,7 +32,7 @@ namespace Nemo_v2_Repo.DbContexts
             new UserMap(modelBuilder.Entity<User>());
             new UserRoleMap(modelBuilder.Entity<UserRole>());
             new RestWareRelMap(modelBuilder.Entity<RestWareRel>());
-        }  
-        
+            new IngredientFoodRelMap(modelBuilder.Entity<IngredientFoodRel>());
+        }
     }  
 }

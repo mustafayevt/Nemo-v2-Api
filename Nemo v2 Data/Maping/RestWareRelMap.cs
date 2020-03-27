@@ -7,7 +7,7 @@ namespace Nemo_v2_Data.Maping
     {
         public RestWareRelMap(EntityTypeBuilder<RestWareRel> entityBuilder)  
         {  
-            entityBuilder.HasKey(t=>new {t.RestaurantId,t.WarehouseId});  
+            entityBuilder.HasKey(t => new {t.RestaurantId, t.WarehouseId});
         } 
     }
 }

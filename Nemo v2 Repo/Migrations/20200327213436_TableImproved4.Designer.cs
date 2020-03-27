@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200327213436_TableImproved4")]
+    partial class TableImproved4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,8 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
+                    b.Property<long?>("FoodId");
+
                     b.Property<long>("IngredientCategoryId");
 
                     b.Property<DateTime>("ModifiedDate");
@@ -81,6 +85,8 @@ namespace Nemo_v2_Repo.Migrations
                     b.Property<long>("WarehouseId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
 
                     b.HasIndex("IngredientCategoryId");
 
@@ -109,19 +115,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("IngredientCategories");
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.IngredientFoodRel", b =>
-                {
-                    b.Property<long>("FoodId");
-
-                    b.Property<long>("IngredientId");
-
-                    b.HasKey("FoodId", "IngredientId");
-
-                    b.HasIndex("IngredientId");
-
-                    b.ToTable("IngredientFoodRel");
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.IngredientsInsert", b =>
@@ -406,6 +399,10 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Ingredient", b =>
                 {
+                    b.HasOne("Nemo_v2_Data.Entities.Food")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("FoodId");
+
                     b.HasOne("Nemo_v2_Data.Entities.IngredientCategory", "IngredientCategory")
                         .WithMany()
                         .HasForeignKey("IngredientCategoryId")
@@ -422,19 +419,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
                         .WithMany()
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.IngredientFoodRel", b =>
-                {
-                    b.HasOne("Nemo_v2_Data.Entities.Food", "Food")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nemo_v2_Data.Entities.Ingredient", "Ingredient")
-                        .WithMany()
-                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nemo_v2_Data.Entities
 {
-    public class UserRole//:BaseEntity
+    public class UserRole
     {
         [Required,ForeignKey(nameof(User))]
         public long UserId { get; set; }
