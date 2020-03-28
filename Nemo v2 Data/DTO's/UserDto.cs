@@ -8,7 +8,7 @@ namespace Nemo_v2_Data
     public class UserDto
     {
         [Required]
-        [Range(1,long.MaxValue)]
+        // [Range(1,long.MaxValue)]
         public long Id { get; set; }
         [Required] 
         public string Firstname { get; set; }
@@ -20,7 +20,7 @@ namespace Nemo_v2_Data
         public long RestaurantId { get; set; }
 
         public List<RoleDto> Roles { get; set; }
-        [Required]
+        // [Required]
         public List<long> RolesId { get; set; }
     }
 }

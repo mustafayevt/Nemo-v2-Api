@@ -16,7 +16,7 @@ using Nemo_v2_Service.Abstraction;
 namespace Nemo_v2_Api.Controllers
 {
     [AuthorizationFilter]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -33,23 +33,23 @@ namespace Nemo_v2_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUser(long id)
-        {
-            try
-            {
-                var user = _userService.GetUser(id);
-                if (user == null) throw new NullReferenceException("User Not Found");
-                var userDto = _mapper.Map<UserDto>(user);
-                _logger.LogInformation($"User Get {user.Id}");
-                return Ok(userDto);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
-            }
-        }
-        [HttpGet("RestId/{RestaurantId}")]
+                 public IActionResult GetUser(long id)
+                 {
+                     try
+                     {
+                         var user = _userService.GetUser(id);
+                         if (user == null) throw new NullReferenceException("User Not Found");
+                         var userDto = _mapper.Map<UserDto>(user);
+                         _logger.LogInformation($"User Get {user.Id}");
+                         return Ok(userDto);
+                     }
+                     catch (Exception e)
+                     {
+                         _logger.LogError(e.Message);
+                         return NotFound(e.Message);
+                     }
+                 }
+        [HttpGet("{RestaurantId}")]
         public IActionResult GetUserByRestaurantId(long RestaurantId)
         {
             try
@@ -67,7 +67,7 @@ namespace Nemo_v2_Api.Controllers
             }
         }
         
-        [HttpPost("Add")]
+        [HttpPost]
         public IActionResult AddUser([FromBody]UserDto userDto)
         {
             try
@@ -85,7 +85,6 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        [Route("Update")]
         public IActionResult UpdateUser([FromBody]UserDto userDto)
         {
             try

@@ -86,11 +86,13 @@ namespace Nemo_v2_Api
             services.AddScoped<IRepository<User>, EFUserRepository>();
             services.AddScoped<IRepository<Role>, EFRoleRepository>();
             services.AddScoped<IRepository<Restaurant>, EFRestaurantRepository>();
+            services.AddScoped<IRepository<Warehouse>,EFWarehouseRepository>();
             
             
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IWarehouseService, WarehouseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

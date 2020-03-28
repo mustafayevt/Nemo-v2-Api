@@ -34,9 +34,13 @@ namespace Nemo_v2_Repo.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<long>("RestaurantId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FoodGroupId");
+
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Foods");
                 });
@@ -78,11 +82,15 @@ namespace Nemo_v2_Repo.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<long>("RestaurantId");
+
                     b.Property<long>("WarehouseId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IngredientCategoryId");
+
+                    b.HasIndex("RestaurantId");
 
                     b.HasIndex("WarehouseId");
 
@@ -141,11 +149,15 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<decimal>("PriceForEach");
 
+                    b.Property<long>("RestaurantId");
+
                     b.Property<long>("WarehouseInvoiceId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
+
+                    b.HasIndex("RestaurantId");
 
                     b.HasIndex("WarehouseInvoiceId");
 
@@ -287,9 +299,13 @@ namespace Nemo_v2_Repo.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<long>("RestaurantId");
+
                     b.Property<long>("SectionId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
 
                     b.HasIndex("SectionId");
 
@@ -371,6 +387,8 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
+                    b.Property<long>("RestaurantId");
+
                     b.Property<long>("SupplierId");
 
                     b.Property<long>("UserId");
@@ -378,6 +396,8 @@ namespace Nemo_v2_Repo.Migrations
                     b.Property<long>("WarehouseId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
 
                     b.HasIndex("SupplierId");
 
@@ -394,6 +414,11 @@ namespace Nemo_v2_Repo.Migrations
                         .WithMany()
                         .HasForeignKey("FoodGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.FoodGroup", b =>
@@ -409,6 +434,11 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.IngredientCategory", "IngredientCategory")
                         .WithMany()
                         .HasForeignKey("IngredientCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Nemo_v2_Data.Entities.Warehouse", "Warehouse")
@@ -443,6 +473,11 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.Ingredient", "Ingredient")
                         .WithMany()
                         .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Nemo_v2_Data.Entities.WarehouseInvoice", "WarehouseInvoice")
@@ -497,6 +532,11 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Table", b =>
                 {
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Nemo_v2_Data.Entities.Section", "Section")
                         .WithMany()
                         .HasForeignKey("SectionId")
@@ -526,6 +566,11 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.WarehouseInvoice", b =>
                 {
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany("WarehouseInvoices")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Nemo_v2_Data.Entities.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId")

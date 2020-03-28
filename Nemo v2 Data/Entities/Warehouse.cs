@@ -9,6 +9,6 @@ namespace Nemo_v2_Data.Entities
         [Required,MaxLength(Int32.MaxValue)]
         public string Name { get; set; }
 
-        public List<RestWareRel> Restaurants { get; set; }
+        public List<RestWareRel> RestWareRels { get; set; }
     }
 }

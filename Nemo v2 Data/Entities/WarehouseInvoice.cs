@@ -19,6 +19,11 @@ namespace Nemo_v2_Data.Entities
         [Required,ForeignKey(nameof(Warehouse))]
         public long WarehouseId { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        
+        [Required,ForeignKey(nameof(Restaurant))]
+        public long RestaurantId { get; set; }
+
+        public Restaurant Restaurant { get; set; }
 
         public bool IsPayed { get; set; }
     }

@@ -12,7 +12,7 @@ using Nemo_v2_Service.Abstraction;
 namespace Nemo_v2_Api.Controllers
 {
     [AuthorizationFilter]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RestaurantController : ControllerBase
     {
@@ -46,7 +46,7 @@ namespace Nemo_v2_Api.Controllers
             }
         }
         
-        [HttpGet("Branches/{RestaurantId}")]
+        [HttpGet("{RestaurantId}")]
         public IActionResult GetBranchesByRestaurantId(long RestaurantId)
         {
             try
@@ -64,7 +64,7 @@ namespace Nemo_v2_Api.Controllers
             }
         }
         
-        [HttpPost("Add")]
+        [HttpPost]
         public IActionResult AddRestaurant([FromBody]RestaurantDto restaurantDto)
         {
             try
@@ -82,7 +82,6 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        [Route("Update")]
         public IActionResult UpdateRestaurant([FromBody]RestaurantDto restaurantDto)
         {
             try

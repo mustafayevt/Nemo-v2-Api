@@ -10,6 +10,10 @@
       <Compile Remove="Migrations\20200320193936_test.Designer.cs" />
       <Compile Remove="Migrations\20200320204217_userRole-Id_PK1.cs" />
       <Compile Remove="Migrations\20200320204217_userRole-Id_PK1.Designer.cs" />
+      <Compile Remove="Migrations\20200328123434_addRestIdAllTables2.cs" />
+      <Compile Remove="Migrations\20200328123434_addRestIdAllTables2.Designer.cs" />
+      <Compile Remove="Migrations\20200328123528_addRestIdAllTables2.cs" />
+      <Compile Remove="Migrations\20200328123528_addRestIdAllTables2.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>

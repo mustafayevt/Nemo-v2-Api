@@ -15,5 +15,10 @@ namespace Nemo_v2_Data.Entities
         [Required,ForeignKey(nameof(IngredientCategory))]
         public long IngredientCategoryId { get; set; }
         public virtual IngredientCategory IngredientCategory { get; set; }
+        
+        [Required,ForeignKey(nameof(Restaurant))]
+        public long RestaurantId { get; set; }
+
+        public Restaurant Restaurant { get; set; }
     }
 }

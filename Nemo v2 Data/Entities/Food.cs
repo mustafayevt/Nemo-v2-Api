@@ -15,5 +15,10 @@ namespace Nemo_v2_Data.Entities
         public virtual FoodGroup FoodGroup { get; set; }
 
         public List<IngredientFoodRel> Ingredients { get; set; }
+        
+        [Required,ForeignKey(nameof(Restaurant))]
+        public long RestaurantId { get; set; }
+
+        public Restaurant Restaurant { get; set; }
     }
 }

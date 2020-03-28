@@ -16,5 +16,10 @@ namespace Nemo_v2_Data.Entities
         public decimal InitialCount { get; set; }
         public decimal CurrentCount { get; set; }
         public decimal PriceForEach { get; set; }
+        
+        [Required,ForeignKey(nameof(Restaurant))]
+        public long RestaurantId { get; set; }
+
+        public Restaurant Restaurant { get; set; }
     }
 }

@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
-using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Helper;
 
 namespace Nemo_v2_Repo.Repositories.EFRepository
 {
-    public class EFUserRepository : EFRepository<User>
+    public class EFWarehouseRepository : EFRepository<Warehouse>
     {
-        public EFUserRepository(ApplicationContext context) : base(context)
+        public EFWarehouseRepository(ApplicationContext context) : base(context)
         {
         }
 
-        public override User Update(User entity, string[] notUpdateProperties)
+        public override Warehouse Update(Warehouse entity, string[] notUpdateProperties)
         {
             try
             {
-                if (entity.UserRoles == null) entity.UserRoles = new List<UserRole>();
+                if (entity.RestWareRels == null) entity.RestWareRels = new List<RestWareRel>();
 
-                var model = (context as ApplicationContext).Users
+                var model = (context as ApplicationContext).Warehouses
                     .AsNoTracking()
-                    .Include(x => x.UserRoles)
+                    .Include(x => x.RestWareRels)
                     .FirstOrDefault(x => x.Id == entity.Id);
-                context.TryUpdateManyToMany(model.UserRoles, entity.UserRoles, x => x.RoleId);
+                context.TryUpdateManyToMany(model.RestWareRels, entity.RestWareRels, x => x.RestaurantId);
 
 
                 return base.Update(entity, notUpdateProperties);

@@ -101,6 +101,8 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
         {
             try
             {
+                entity.AddedDate = DateTime.Now;
+                entity.ModifiedDate = DateTime.Now;
                 var result = dbSet.Add(entity);
                 context.SaveChanges();
                 return result.Entity;

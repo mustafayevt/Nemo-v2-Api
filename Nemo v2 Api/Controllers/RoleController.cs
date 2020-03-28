@@ -12,7 +12,7 @@ using Nemo_v2_Service.Abstraction;
 namespace Nemo_v2_Api.Controllers
 {
     [AuthorizationFilter]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RoleController : ControllerBase
     {
@@ -64,15 +64,15 @@ namespace Nemo_v2_Api.Controllers
             }
         }
         
-        [HttpPost("Add")]
-        public IActionResult AddUser([FromBody]RoleDto roleDto)
+        [HttpPost]
+        public IActionResult AddRole([FromBody]RoleDto roleDto)
         {
             try
             {
                 var role = _mapper.Map<Role>(roleDto);
                 var addedRole = _roleService.InsertRole(role);
                 _logger.LogInformation($"Role Added {role.Id}");
-                return Ok(_mapper.Map<UserDto>(addedRole));
+                return Ok(_mapper.Map<RoleDto>(addedRole));
             }
             catch (Exception e)
             {
@@ -82,8 +82,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        [Route("Update")]
-        public IActionResult UpdateUser([FromBody]RoleDto roleDto)
+        public IActionResult UpdateRole([FromBody]RoleDto roleDto)
         {
             try
             {

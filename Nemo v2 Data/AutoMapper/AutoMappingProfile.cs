@@ -20,6 +20,13 @@ namespace Nemo_v2_Data.AutoMapper
             
             //Restaurant
             CreateMap<Restaurant, RestaurantDto>().ReverseMap();
+            
+            //Warehouse
+            CreateMap<Warehouse, WarehouseDto>()
+                .ForMember(x => x.Restaurants,
+                    opt => opt
+                        .MapFrom(warehouse => warehouse.RestWareRels.Select(x => x.Restaurant)))
+                .ReverseMap();
         }
     }
 }
