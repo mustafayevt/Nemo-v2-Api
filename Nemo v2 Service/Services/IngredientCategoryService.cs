@@ -32,10 +32,6 @@ namespace Nemo_v2_Service.Services
 
         public IngredientCategory InsertIngredientCategory(IngredientCategory IngredientCategory)
         {
-            // foreach (var categoryRel in IngredientCategory.IngredientCategoryRels)
-            // {
-            //     
-            // }
             
             return _ingredientCategoryRepository.Insert(IngredientCategory);
         }

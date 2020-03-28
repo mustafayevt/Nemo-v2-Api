@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -47,17 +48,17 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.Message);
             }
         }
-
+        
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetIngredientCategoryCategory(long id)
+        public async Task<IActionResult>  GetIngredientByRestaurantId(long id)
         {
             try
             {
-                var ingredientCategory = _ingredientCategoryService.GetIngredientCategory(id);
-                if (ingredientCategory == null) throw new NullReferenceException("IngredientCategory Not Found");
-                var ingredientCategoryDto = _mapper.Map<IngredientCategoryDto>(ingredientCategory);
-                _logger.LogInformation($"IngredientCategory Get {ingredientCategory.Id}");
-                return Ok(ingredientCategoryDto);
+                var ingredients = _ingredientService.GetIngredientByRestaurantId(id);
+                if (ingredients == null) throw new NullReferenceException("Ingredient Not Found");
+                var ingredientDtos = _mapper.Map<List<IngredientDto>>(ingredients);
+                _logger.LogInformation($"Ingredient Get by RestaurantId {id}");
+                return Ok(ingredientDtos);
             }
             catch (Exception e)
             {
@@ -65,6 +66,7 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.Message);
             }
         }
+        
 
         [HttpPost]
         public async Task<IActionResult> AddIngredient([FromBody] IngredientDto ingredientDto)
