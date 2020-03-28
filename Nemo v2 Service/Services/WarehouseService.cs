@@ -8,16 +8,18 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class WarehouseService:IWarehouseService
+    public class WarehouseService : IWarehouseService
     {
         private IRepository<Warehouse> _warehouseRepository;
         private IRepository<Restaurant> _restaurantRepository;
+
         public WarehouseService(IRepository<Warehouse> warehouseRepository,
             IRepository<Restaurant> repositoryRepository)
         {
             _warehouseRepository = warehouseRepository;
             _restaurantRepository = repositoryRepository;
         }
+
         public IEnumerable<Warehouse> GetWarehouses()
         {
             return _warehouseRepository.Get();
@@ -25,7 +27,7 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<Warehouse> GetWarehousesByRestaurantId(long RestId)
         {
-            return _warehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId==RestId)>0);
+            return _warehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId == RestId) > 0);
         }
 
         public Warehouse GetWarehouse(long id)
@@ -33,41 +35,55 @@ namespace Nemo_v2_Service.Services
             return _warehouseRepository.GetById(id);
         }
 
-        public Warehouse InsertWarehouse(Warehouse Warehouse,IEnumerable<long> restaurantIds)
+        public Warehouse InsertWarehouse(Warehouse Warehouse)
         {
-            if (restaurantIds?.Any() ?? false)
+            if (Warehouse.RestWareRels?.Any() ?? false)
             {
-                var restaurants = _restaurantRepository.Query(x => restaurantIds.Contains(x.Id)).ToList();
-                if(restaurants.Count() != restaurantIds.Count()) throw  new ArgumentException("Restaurant Not Found");
-
-                var RestWareRels = new List<RestWareRel>();
-                restaurants.ForEach(x => RestWareRels.Add(new RestWareRel()
+                if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
                 {
-                    WarehouseId = Warehouse.Id,
-                    RestaurantId = x.Id
-                }));
-                Warehouse.RestWareRels = RestWareRels;
+                    throw new NullReferenceException("Restaurant Not Found");
+                }
+
+                var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
+                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                if (selectedRestaurants.Count() != restaurantsId.Count())
+                    throw new NullReferenceException("Restaurant Not Found");
+
+                Warehouse.RestWareRels = selectedRestaurants.Select(x =>
+                    new RestWareRel()
+                    {
+                        RestaurantId = x.Id,
+                        WarehouseId = Warehouse.Id
+                    }
+                ).ToList();
             }
+
             return _warehouseRepository.Insert(Warehouse);
         }
 
-        public Warehouse UpdateWarehouse(Warehouse Warehouse,IEnumerable<long> restaurantIds)
+        public Warehouse UpdateWarehouse(Warehouse Warehouse)
         {
-            if (_warehouseRepository.Query(x => x.Id == Warehouse.Id).AsNoTracking() == null)
-                throw new NullReferenceException("Warehouse Not Found");
-            if (restaurantIds?.Any() ?? false)
+            if (Warehouse.RestWareRels?.Any() ?? false)
             {
-                var restaurants = _restaurantRepository.Query(x => restaurantIds.Contains(x.Id)).ToList();
-                if(restaurants.Count() != restaurantIds.Count()) throw  new ArgumentException("Restaurant Not Found");
-
-                var RestWareRels = new List<RestWareRel>();
-                restaurants.ForEach(x => RestWareRels.Add(new RestWareRel()
+                if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
                 {
-                    WarehouseId = Warehouse.Id,
-                    RestaurantId = x.Id
-                }));
-                Warehouse.RestWareRels = RestWareRels;
+                    throw new NullReferenceException("Restaurant Not Found");
+                }
+
+                var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
+                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                if (selectedRestaurants.Count() != restaurantsId.Count())
+                    throw new NullReferenceException("Restaurant Not Found");
+
+                Warehouse.RestWareRels = selectedRestaurants.Select(x =>
+                    new RestWareRel()
+                    {
+                        RestaurantId = x.Id,
+                        WarehouseId = Warehouse.Id
+                    }
+                ).ToList();
             }
+
             return _warehouseRepository.Update(Warehouse);
         }
 

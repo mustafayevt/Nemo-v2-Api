@@ -44,6 +44,7 @@ namespace Nemo_v2_Repo.Abstraction
 		/// </summary>
 		/// <param name="entity"></param>
 		TEntity Insert(TEntity entity);
+		IEnumerable<TEntity> InsertMany(IEnumerable<TEntity> entities);
  
 		/// <summary>
 		/// Update entity in db

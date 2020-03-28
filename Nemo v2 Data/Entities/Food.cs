@@ -12,7 +12,7 @@ namespace Nemo_v2_Data.Entities
         [Required,ForeignKey(nameof(FoodGroup))]
         public long FoodGroupId { get; set; }
         
-        public virtual FoodGroup FoodGroup { get; set; }
+        public  List<FoodGroupRel> FoodGroupRels { get; set; }
 
         public List<IngredientFoodRel> Ingredients { get; set; }
         

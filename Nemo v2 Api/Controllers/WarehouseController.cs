@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetWarehouse(long id)
+        public async Task<IActionResult> GetWarehouse(long id)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{RestaurantId}")]
-        public IActionResult GetWarehousesByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetWarehousesByRestaurantId(long RestaurantId)
         {
             try
             {
@@ -65,12 +66,12 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPost]
-        public IActionResult AddWarehouse([FromBody]WarehouseDto WarehouseDto)
+        public async Task<IActionResult> AddWarehouse([FromBody]WarehouseDto WarehouseDto)
         {
             try
             {
                 var Warehouse = _mapper.Map<Warehouse>(WarehouseDto);
-                var addedWarehouse = _warehouseService.InsertWarehouse(Warehouse,WarehouseDto.RestaurantIds);
+                var addedWarehouse = _warehouseService.InsertWarehouse(Warehouse);
                 _logger.LogInformation($"Warehouse Added {Warehouse.Id}");
                 return Ok(_mapper.Map<WarehouseDto>(addedWarehouse));
             }
@@ -82,12 +83,12 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        public IActionResult UpdateWarehouse([FromBody]WarehouseDto WarehouseDto)
+        public async Task<IActionResult> UpdateWarehouse([FromBody]WarehouseDto WarehouseDto)
         {
             try
             {
                 var updateWarehouse = _mapper.Map<Warehouse>(WarehouseDto);
-                var result =_warehouseService.UpdateWarehouse(updateWarehouse,WarehouseDto.RestaurantIds);
+                var result =_warehouseService.UpdateWarehouse(updateWarehouse);
                 _logger.LogInformation($"Warehouse Updated : Firstname - {updateWarehouse.Id}");
                 return Ok(_mapper.Map<WarehouseDto>(result));
             }

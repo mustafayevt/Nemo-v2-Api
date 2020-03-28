@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetRestaurant(long id)
+        public async Task<IActionResult> GetRestaurant(long id)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{RestaurantId}")]
-        public IActionResult GetBranchesByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetBranchesByRestaurantId(long RestaurantId)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPost]
-        public IActionResult AddRestaurant([FromBody]RestaurantDto restaurantDto)
+        public async Task<IActionResult> AddRestaurant([FromBody]RestaurantDto restaurantDto)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        public IActionResult UpdateRestaurant([FromBody]RestaurantDto restaurantDto)
+        public async Task<IActionResult> UpdateRestaurant([FromBody]RestaurantDto restaurantDto)
         {
             try
             {

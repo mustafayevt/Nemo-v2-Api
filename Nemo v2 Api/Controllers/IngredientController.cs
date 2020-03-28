@@ -1,0 +1,103 @@
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Nemo_v2_Api.Filters;
+using Nemo_v2_Data;
+using Nemo_v2_Data.Entities;
+using Nemo_v2_Service.Abstraction;
+
+namespace Nemo_v2_Api.Controllers
+{
+    [AuthorizationFilter]
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class IngredientController : Controller
+    {
+        private IIngredientService _ingredientService;
+        private IIngredientCategoryService _ingredientCategoryService;
+        private ILogger<IngredientController> _logger;
+        private IMapper _mapper;
+        public IngredientController(IIngredientService ingredientService,
+            IIngredientCategoryService ingredientCategoryService,
+            ILogger<IngredientController> logger,
+            IMapper mapper)
+        {
+            this._ingredientService =ingredientService;
+            this._ingredientCategoryService =ingredientCategoryService;
+            this._logger = logger;
+            this._mapper = mapper;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult>  GetIngredient(long id)
+        {
+            try
+            {
+                var ingredient = _ingredientService.GetIngredient(id);
+                if (ingredient == null) throw new NullReferenceException("Ingredient Not Found");
+                var ingredientDto = _mapper.Map<IngredientDto>(ingredient);
+                _logger.LogInformation($"Ingredient Get {ingredient.Id}");
+                return Ok(ingredientDto);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetIngredientCategoryCategory(long id)
+        {
+            try
+            {
+                var ingredientCategory = _ingredientCategoryService.GetIngredientCategory(id);
+                if (ingredientCategory == null) throw new NullReferenceException("IngredientCategory Not Found");
+                var ingredientCategoryDto = _mapper.Map<IngredientCategoryDto>(ingredientCategory);
+                _logger.LogInformation($"IngredientCategory Get {ingredientCategory.Id}");
+                return Ok(ingredientCategoryDto);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddIngredient([FromBody] IngredientDto ingredientDto)
+        {
+            try
+            {
+                var ingredient = _mapper.Map<Ingredient>(ingredientDto);
+                var addedIngredient = _ingredientService.InsertIngredient(ingredient);
+                _logger.LogInformation($"Ingredient Added {ingredient.Id}");
+                return Ok(_mapper.Map<IngredientDto>(addedIngredient));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest(e.Message);
+            }
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> UpdateIngredient([FromBody] IngredientDto ingredientDto)
+        {
+            try
+            {
+                var ingredient = _mapper.Map<Ingredient>(ingredientDto);
+                var updateIngredient = _ingredientService.UpdateIngredient(ingredient);
+                _logger.LogInformation($"Ingredient Updated {ingredient.Id}");
+                return Ok(_mapper.Map<IngredientDto>(updateIngredient));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest(e.Message);
+            }
+        }
+    }
+}

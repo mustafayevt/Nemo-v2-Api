@@ -20,7 +20,5 @@ namespace Nemo_v2_Data
         public long RestaurantId { get; set; }
 
         public List<RoleDto> Roles { get; set; }
-        // [Required]
-        public List<long> RolesId { get; set; }
     }
 }

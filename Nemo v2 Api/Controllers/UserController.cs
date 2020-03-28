@@ -23,6 +23,7 @@ namespace Nemo_v2_Api.Controllers
         private IUserService _userService;
         private ILogger<UserController> _logger;
         private IMapper _mapper;
+
         public UserController(IUserService userService,
             ILogger<UserController> logger,
             IMapper mapper)
@@ -33,30 +34,31 @@ namespace Nemo_v2_Api.Controllers
         }
 
         [HttpGet("{id}")]
-                 public IActionResult GetUser(long id)
-                 {
-                     try
-                     {
-                         var user = _userService.GetUser(id);
-                         if (user == null) throw new NullReferenceException("User Not Found");
-                         var userDto = _mapper.Map<UserDto>(user);
-                         _logger.LogInformation($"User Get {user.Id}");
-                         return Ok(userDto);
-                     }
-                     catch (Exception e)
-                     {
-                         _logger.LogError(e.Message);
-                         return NotFound(e.Message);
-                     }
-                 }
+        public IActionResult GetUser(long id)
+        {
+            try
+            {
+                var user = _userService.GetUser(id);
+                if (user == null) throw new NullReferenceException("User Not Found");
+                var userDto = _mapper.Map<UserDto>(user);
+                _logger.LogInformation($"User Get {user.Id}");
+                return Ok(userDto);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
+
         [HttpGet("{RestaurantId}")]
-        public IActionResult GetUserByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetUserByRestaurantId(long RestaurantId)
         {
             try
             {
                 var users = _userService.GetUsersByRestaurantId(RestaurantId);
                 if (users == null) throw new NullReferenceException("User Not Found");
-                var usersDtos =_mapper.Map<List<User>,List<UserDto>>(users.ToList());
+                var usersDtos = _mapper.Map<List<User>, List<UserDto>>(users.ToList());
                 _logger.LogInformation($"Users Get By Restaurant Id:{RestaurantId}");
                 return Ok(usersDtos);
             }
@@ -66,14 +68,14 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.Message);
             }
         }
-        
+
         [HttpPost]
-        public IActionResult AddUser([FromBody]UserDto userDto)
+        public async Task<IActionResult> AddUser([FromBody] UserDto userDto)
         {
             try
             {
                 var user = _mapper.Map<User>(userDto);
-                var addedUser = _userService.InsertUser(user,userDto.RolesId);
+                var addedUser = _userService.InsertUser(user);
                 _logger.LogInformation($"User Added {user.Id}");
                 return Ok(_mapper.Map<UserDto>(addedUser));
             }
@@ -83,14 +85,14 @@ namespace Nemo_v2_Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [HttpPut]
-        public IActionResult UpdateUser([FromBody]UserDto userDto)
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto userDto)
         {
             try
             {
                 var updateUser = _mapper.Map<User>(userDto);
-                var result =_userService.UpdateUser(updateUser,userDto.RolesId);
+                var result = _userService.UpdateUser(updateUser);
                 _logger.LogInformation($"User Updated : Firstname - {updateUser.Firstname}");
                 return Ok(_mapper.Map<UserDto>(result));
             }

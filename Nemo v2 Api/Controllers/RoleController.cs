@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetRole(long id)
+        public async Task<IActionResult> GetRole(long id)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("RestId/{RestaurantId}")]
-        public IActionResult GetUserByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetUserByRestaurantId(long RestaurantId)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPost]
-        public IActionResult AddRole([FromBody]RoleDto roleDto)
+        public async Task<IActionResult> AddRole([FromBody]RoleDto roleDto)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPut]
-        public IActionResult UpdateRole([FromBody]RoleDto roleDto)
+        public async Task<IActionResult> UpdateRole([FromBody]RoleDto roleDto)
         {
             try
             {

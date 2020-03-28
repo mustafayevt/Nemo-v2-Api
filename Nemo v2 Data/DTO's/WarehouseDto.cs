@@ -11,7 +11,6 @@ namespace Nemo_v2_Data
         [Required,MaxLength(Int32.MaxValue)]
         public string Name { get; set; }
 
-        public List<RestaurantDto> Restaurants { get; set; }
-        public List<long> RestaurantIds { get; set; }
+        public List<RestaurantDto> RestWareRels { get; set; }
     }
 }

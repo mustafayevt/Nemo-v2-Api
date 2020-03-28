@@ -39,43 +39,53 @@ namespace Nemo_v2_Service.Services
                 .ThenInclude(role => role.Role).First();
         }
 
-        public User InsertUser(User user, IEnumerable<long> rolesId)
+        public User InsertUser(User user)
         {
-            if (rolesId?.Any() ?? false)
+            if (user.UserRoles?.Any() ?? false)
             {
-                var roles = _roleRepository.Query(x => rolesId.Contains(x.Id)).ToList();
-                if(roles.Count() != rolesId.Count()) throw  new ArgumentException("Role Not Found");
-
-                var userRoles = new List<UserRole>();
-                roles.ForEach(x => userRoles.Add(new UserRole()
+                if (user.UserRoles.Any(x => x.Role.Id == 0))
                 {
-                    UserId = user.Id,
-                    RoleId = x.Id,
-                    //AddedDate = DateTime.Now,
-                    //ModifiedDate = DateTime.Now
-                }));
-                user.UserRoles = userRoles;
+                    IEnumerable<Role> newRoles;
+                    newRoles = _roleRepository
+                        .InsertMany(user.UserRoles
+                            .Where(x => x.Role.Id == 0)
+                            .Select(x => x.Role)).ToList();
+
+                    user.UserRoles.RemoveAll(x => x.Role.Id == 0);
+                }
+
+                user.UserRoles.ForEach(x =>
+                {
+                    x.UserId = user.Id;
+                    x.RoleId = x.Role.Id;
+                    x.Role = null;
+                });
             }
 
             return _userRepository.Insert(user);
         }
 
-        public User UpdateUser(User user, IEnumerable<long> rolesId)
+        public User UpdateUser(User user)
         {
-            if (_userRepository.Query(x => x.Id == user.Id).AsNoTracking() == null)
-                throw new NullReferenceException("User Not Found");
-            if (rolesId?.Any() ?? false)
+            if (user.UserRoles?.Any() ?? false)
             {
-                var roles = _roleRepository.Query(x => rolesId.Contains(x.Id)).ToList();
-                if(roles.Count() != rolesId.Count()) throw  new ArgumentException("Role Not Found");
-                var userRoles = new List<UserRole>();
-                roles.ForEach(x => userRoles.Add(new UserRole()
+                if (user.UserRoles.Any(x => x.Role.Id == 0))
                 {
-                    UserId = user.Id,
-                    RoleId = x.Id,
-                    Role = x
-                }));
-                user.UserRoles = userRoles.ToList();
+                    IEnumerable<Role> newRoles;
+                    newRoles = _roleRepository
+                        .InsertMany(user.UserRoles
+                            .Where(x => x.Role.Id == 0)
+                            .Select(x => x.Role)).ToList();
+
+                    user.UserRoles.RemoveAll(x => x.Role.Id == 0);
+                }
+
+                user.UserRoles.ForEach(x =>
+                {
+                    x.UserId = user.Id;
+                    x.RoleId = x.Role.Id;
+                    x.Role = null;
+                });
             }
 
             return _userRepository.Update(user);

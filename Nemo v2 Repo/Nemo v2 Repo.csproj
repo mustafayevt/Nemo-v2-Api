@@ -14,6 +14,10 @@
       <Compile Remove="Migrations\20200328123434_addRestIdAllTables2.Designer.cs" />
       <Compile Remove="Migrations\20200328123528_addRestIdAllTables2.cs" />
       <Compile Remove="Migrations\20200328123528_addRestIdAllTables2.Designer.cs" />
+      <Compile Remove="Migrations\20200328162351_addRestIdAllTables3.cs" />
+      <Compile Remove="Migrations\20200328162351_addRestIdAllTables3.Designer.cs" />
+      <Compile Remove="Migrations\20200328213557_IngCat1.cs" />
+      <Compile Remove="Migrations\20200328213557_IngCat1.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>

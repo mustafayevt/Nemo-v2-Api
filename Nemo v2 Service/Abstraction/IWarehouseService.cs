@@ -8,8 +8,8 @@ namespace Nemo_v2_Service.Abstraction
         IEnumerable<Warehouse> GetWarehouses();
         IEnumerable<Warehouse> GetWarehousesByRestaurantId(long RestId);
         Warehouse GetWarehouse(long id);
-        Warehouse InsertWarehouse(Warehouse Warehouse,IEnumerable<long> restaurantIds);
-        Warehouse UpdateWarehouse(Warehouse Warehouse,IEnumerable<long> restaurantIds);
+        Warehouse InsertWarehouse(Warehouse Warehouse);
+        Warehouse UpdateWarehouse(Warehouse Warehouse);
         void DeleteWarehouse(long id);
     }
 }

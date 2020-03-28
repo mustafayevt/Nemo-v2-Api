@@ -114,6 +114,27 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
             }
         }
 
+        public IEnumerable<TEntity> InsertMany(IEnumerable<TEntity> entities)
+        {
+            try
+            {
+                var addedEntities = new List<TEntity>();
+                foreach (var entity in entities)
+                {
+                    entity.AddedDate = DateTime.Now;
+                    entity.ModifiedDate = DateTime.Now;
+                    addedEntities.Add(dbSet.Add(entity).Entity);
+                }
+                context.SaveChanges();
+                return addedEntities;
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) throw e.InnerException;
+                throw;
+            }
+        }
+
         public virtual TEntity Update(TEntity entity, string[] notUpdateProperties)
         {
             try
