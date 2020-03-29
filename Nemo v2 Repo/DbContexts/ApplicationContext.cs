@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Data.Maping;
 
@@ -35,6 +37,26 @@ namespace Nemo_v2_Repo.DbContexts
             new IngredientFoodRelMap(modelBuilder.Entity<IngredientFoodRel>());
             new IngredientCategoryRelMap(modelBuilder.Entity<IngredientCategoryRel>());
             new FoodGroupRelMap(modelBuilder.Entity<FoodGroupRel>());
+            new SectionMap(modelBuilder.Entity<Section>());
+        }
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is BaseEntity && (
+                                e.State == EntityState.Added
+                                || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                ((BaseEntity)entityEntry.Entity).ModifiedDate = DateTime.Now;
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entityEntry.Entity).AddedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChanges();
         }
     }  
 }

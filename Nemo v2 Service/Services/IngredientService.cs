@@ -38,20 +38,20 @@ namespace Nemo_v2_Service.Services
 
         public Ingredient InsertIngredient(Ingredient Ingredient)
         {
-            if (Ingredient.IngredientCategoryRels?.Any() ?? false)
+            if (Ingredient.IngredientCategories?.Any() ?? false)
             {
-                if (Ingredient.IngredientCategoryRels.Any(x => x.IngredientCategory.Id == 0))
+                if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
                 {
                     IEnumerable<IngredientCategory> newCategories;
                     newCategories = _ingredientCategoryRepository
-                        .InsertMany(Ingredient.IngredientCategoryRels
+                        .InsertMany(Ingredient.IngredientCategories
                             .Where(x => x.IngredientCategory.Id == 0)
                             .Select(x => x.IngredientCategory)).ToList();
 
-                    Ingredient.IngredientCategoryRels.RemoveAll(x => x.IngredientCategory.Id == 0);
+                    Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
                 }
 
-                Ingredient.IngredientCategoryRels.ForEach(x =>
+                Ingredient.IngredientCategories.ForEach(x =>
                 {
                     x.IngredientId = Ingredient.Id;
                     x.IngredientCategoryId = x.IngredientCategory.Id;
@@ -64,20 +64,20 @@ namespace Nemo_v2_Service.Services
 
         public Ingredient UpdateIngredient(Ingredient Ingredient)
         {
-            if (Ingredient.IngredientCategoryRels?.Any() ?? false)
+            if (Ingredient.IngredientCategories?.Any() ?? false)
             {
-                if (Ingredient.IngredientCategoryRels.Any(x => x.IngredientCategory.Id == 0))
+                if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
                 {
                     IEnumerable<IngredientCategory> newCategories;
                     newCategories = _ingredientCategoryRepository
-                        .InsertMany(Ingredient.IngredientCategoryRels
+                        .InsertMany(Ingredient.IngredientCategories
                             .Where(x => x.IngredientCategory.Id == 0)
                             .Select(x => x.IngredientCategory)).ToList();
 
-                    Ingredient.IngredientCategoryRels.RemoveAll(x => x.IngredientCategory.Id == 0);
+                    Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
                 }
 
-                Ingredient.IngredientCategoryRels.ForEach(x =>
+                Ingredient.IngredientCategories.ForEach(x =>
                 {
                     x.IngredientId = Ingredient.Id;
                     x.IngredientCategoryId = x.IngredientCategory.Id;

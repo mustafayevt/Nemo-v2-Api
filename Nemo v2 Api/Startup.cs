@@ -16,8 +16,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nemo_v2_Api.Filters;
+using Nemo_v2_Data;
 using Nemo_v2_Data.AutoMapper;
 using Nemo_v2_Data.Entities;
+using Nemo_v2_Data.Maping;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Repositories;
@@ -89,6 +91,13 @@ namespace Nemo_v2_Api
             services.AddScoped<IRepository<Warehouse>,EFWarehouseRepository>();
             services.AddScoped<IRepository<IngredientCategory>,EFIngredientCategoryRepository>();
             services.AddScoped<IRepository<Ingredient>,EFIngredientRepository>();
+            services.AddScoped<IRepository<Section>,EFSectionRepository>();
+            services.AddScoped<IRepository<Table>,EFTableRepository>();
+            services.AddScoped<IRepository<Supplier>,EFSupplierRepository>();
+            services.AddScoped<IRepository<FoodGroup>,EFFoodGroupRepository>();
+            services.AddScoped<IRepository<Food>,EFFoodRepository>();
+            services.AddScoped<IRepository<IngredientsInsert>,EFIngredientsInsertRepository>();
+            services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
             
             
             services.AddTransient<IUserService, UserService>();
@@ -97,6 +106,13 @@ namespace Nemo_v2_Api
             services.AddTransient<IWarehouseService, WarehouseService>();
             services.AddTransient<IIngredientCategoryService, IngredientCategoryService>();
             services.AddTransient<IIngredientService, IngredientService>();
+            services.AddTransient<ISectionService, SectionService>();
+            services.AddTransient<ITableService, TableService>();
+            services.AddTransient<ITableService, TableService>();
+            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddTransient<IFoodGroupService, FoodGroupService>();
+            services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IWarehouseInvoiceService, WarehouseInvoiceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

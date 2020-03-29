@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Nemo_v2_Data.Entities;
 
-namespace Nemo_v2_Data.Entities
+namespace Nemo_v2_Data
 {
-    public class Food:BaseEntity
+    public class SectionDto
     {
-        [Required,MaxLength(50)]
+        public long Id { get; set; }
+        [Required,MaxLength(30)]
         public string Name { get; set; }
 
-        public  List<FoodGroupRel> FoodGroups { get; set; }
-
-        public List<IngredientFoodRel> Ingredients { get; set; }
-        
         [Required]
         public long RestaurantId { get; set; }
-
+        
+        public List<TableDto> Tables { get; set; }
     }
 }

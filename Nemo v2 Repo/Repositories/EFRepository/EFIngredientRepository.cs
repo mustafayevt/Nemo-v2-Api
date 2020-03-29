@@ -18,13 +18,13 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
         {
             try
             {
-                if (entity.IngredientCategoryRels == null) entity.IngredientCategoryRels = new List<IngredientCategoryRel>();
+                if (entity.IngredientCategories == null) entity.IngredientCategories = new List<IngredientCategoryRel>();
 
                 var model = (context as ApplicationContext).Ingredients
                     .AsNoTracking()
-                    .Include(x => x.IngredientCategoryRels)
+                    .Include(x => x.IngredientCategories)
                     .FirstOrDefault(x => x.Id == entity.Id);
-                context.TryUpdateManyToMany(model.IngredientCategoryRels, entity.IngredientCategoryRels, x => x.IngredientCategoryId);
+                context.TryUpdateManyToMany(model.IngredientCategories, entity.IngredientCategories, x => x.IngredientCategoryId);
 
 
                 return base.Update(entity, notUpdateProperties);

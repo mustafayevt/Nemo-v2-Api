@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Principal;
 
 namespace Nemo_v2_Data.Entities
 {
@@ -12,5 +14,7 @@ namespace Nemo_v2_Data.Entities
         public long RestaurantId { get; set; }
 
         public virtual Restaurant Restaurant { get; set; }
+
+        public List<Table> Tables { get; set; }
     }
 }

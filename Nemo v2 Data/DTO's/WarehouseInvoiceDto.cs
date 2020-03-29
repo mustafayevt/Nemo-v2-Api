@@ -5,19 +5,25 @@ using Nemo_v2_Data.Entities;
 
 namespace Nemo_v2_Data
 {
-    public class IngredientDto
+    public class WarehouseInvoiceDto
     {
-        [Required] 
         public long Id { get; set; }
-        
         [Required,MaxLength(50)]
-        public string Name { get; set; }
+        public string InvoiceNumber { get; set; }
 
+        [Required]
+        public long SupplierId { get; set; }
+        
+        [Required]
+        public long UserId { get; set; }
+        
+        [Required]
         public long WarehouseId { get; set; }
-
-        public List<IngredientCategoryDto> IngredientCategories { get; set; }
         
         [Required]
         public long RestaurantId { get; set; }
+
+        public bool IsPayed { get; set; }
+        public List<IngredientsInsertDto> IngredientsInserts { get; set; }
     }
 }

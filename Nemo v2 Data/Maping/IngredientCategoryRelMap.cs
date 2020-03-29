@@ -10,7 +10,7 @@ namespace Nemo_v2_Data.Maping
             entityBuilder.HasKey(t => new {t.IngredientId, t.IngredientCategoryId});
             entityBuilder
                 .HasOne(pt => pt.Ingredient)
-                .WithMany(p => p.IngredientCategoryRels)
+                .WithMany(p => p.IngredientCategories)
                 .HasForeignKey(pt => pt.IngredientId);
             
             // entityBuilder

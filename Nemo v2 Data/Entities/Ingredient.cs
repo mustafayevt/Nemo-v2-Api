@@ -13,7 +13,7 @@ namespace Nemo_v2_Data.Entities
         public long WarehouseId { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         
-        public  List<IngredientCategoryRel> IngredientCategoryRels { get; set; }
+        public  List<IngredientCategoryRel> IngredientCategories { get; set; }
         
         [Required,ForeignKey(nameof(Restaurant))]
         public long RestaurantId { get; set; }

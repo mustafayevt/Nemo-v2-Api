@@ -93,7 +93,7 @@ namespace Nemo_v2_Api.Controllers
             {
                 var updateUser = _mapper.Map<User>(userDto);
                 var result = _userService.UpdateUser(updateUser);
-                _logger.LogInformation($"User Updated : Firstname - {updateUser.Firstname}");
+                _logger.LogInformation($"User Updated : Id: {updateUser.Id}");
                 return Ok(_mapper.Map<UserDto>(result));
             }
             catch (Exception e)

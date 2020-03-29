@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nemo_v2_Data.Entities
@@ -26,5 +27,6 @@ namespace Nemo_v2_Data.Entities
         public Restaurant Restaurant { get; set; }
 
         public bool IsPayed { get; set; }
+        public List<IngredientsInsert> IngredientsInserts { get; set; }
     }
 }

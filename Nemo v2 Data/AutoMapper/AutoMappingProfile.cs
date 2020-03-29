@@ -46,6 +46,37 @@ namespace Nemo_v2_Data.AutoMapper
             
             //Ingredient
             CreateMap<Ingredient, IngredientDto>().ReverseMap();
+            
+            //Table
+            CreateMap<Table, TableDto>().ReverseMap();
+            
+            //Section
+            CreateMap<Section, SectionDto>().ReverseMap();
+            
+            //Supplier
+            CreateMap<Supplier, SupplierDto>().ReverseMap();
+            
+            //FoodGroup
+            CreateMap<FoodGroup, FoodGroupDto>().ReverseMap();
+            
+            //Food
+            CreateMap<Food, FoodDto>().ReverseMap();
+            
+            //FoodGroupRel
+            CreateMap<FoodGroupDto, FoodGroupRel>()
+                .ForMember(x => x.FoodGroup, opt => opt
+                    .MapFrom(y => y)).ReverseMap();
+            
+            //IngredientFoodRel
+            CreateMap<IngredientDto, IngredientFoodRel>()
+                .ForMember(x => x.Ingredient, opt => opt
+                    .MapFrom(y => y)).ReverseMap();
+            
+            //IngredientsInsert
+            CreateMap<IngredientsInsert, IngredientsInsertDto>().ReverseMap();
+            
+            //WarehouseInvoice
+            CreateMap<WarehouseInvoice, WarehouseInvoiceDto>().ReverseMap();
         }
     }
 }

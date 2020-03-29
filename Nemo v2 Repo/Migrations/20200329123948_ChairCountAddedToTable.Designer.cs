@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200329123948_ChairCountAddedToTable")]
+    partial class ChairCountAddedToTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,8 @@ namespace Nemo_v2_Repo.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("AddedDate");
+
+                    b.Property<long>("FoodGroupId");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -430,7 +434,7 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Food", b =>
                 {
-                    b.HasOne("Nemo_v2_Data.Entities.Restaurant")
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
                         .WithMany("Foods")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -452,7 +456,7 @@ namespace Nemo_v2_Repo.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Nemo_v2_Data.Entities.Food", "Food")
-                        .WithMany("FoodGroups")
+                        .WithMany("FoodGroupRels")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -486,7 +490,7 @@ namespace Nemo_v2_Repo.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Nemo_v2_Data.Entities.Ingredient", "Ingredient")
-                        .WithMany("IngredientCategories")
+                        .WithMany("IngredientCategoryRels")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -494,7 +498,7 @@ namespace Nemo_v2_Repo.Migrations
             modelBuilder.Entity("Nemo_v2_Data.Entities.IngredientFoodRel", b =>
                 {
                     b.HasOne("Nemo_v2_Data.Entities.Food", "Food")
-                        .WithMany("Ingredients")
+                        .WithMany("IngredientFoodRels")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
 

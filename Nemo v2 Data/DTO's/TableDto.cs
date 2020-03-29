@@ -1,23 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Nemo_v2_Data.Entities;
 
-namespace Nemo_v2_Data.Entities
+namespace Nemo_v2_Data
 {
-    public class Table:BaseEntity
+    public class TableDto
     {
+        public long Id { get; set; }
         [Required,MaxLength(50)]
         public string Name { get; set; }
 
-        [Required,ForeignKey(nameof(Section))]
+        [Required]
         public long SectionId { get; set; }
         
-        public virtual Section Section { get; set; }
-        
-        [Required,ForeignKey(nameof(Restaurant))]
+        [Required]
         public long RestaurantId { get; set; }
-
-        public Restaurant Restaurant { get; set; }
-
+        [Required]
         public int ChairCount { get; set; }
     }
 }
