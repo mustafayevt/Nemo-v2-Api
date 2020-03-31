@@ -4,13 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
-using Nemo_v2_Repo.DbContexts;
-using Nemo_v2_Repo.Repositories;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Api.Controllers
@@ -20,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class SupplierController : ControllerBase
     {
-        private ISupplierService _supplierService;
-        private ILogger<SupplierController> _logger;
-        private IMapper _mapper;
+        private readonly ISupplierService _supplierService;
+        private readonly ILogger<SupplierController> _logger;
+        private readonly IMapper _mapper;
 
         public SupplierController(ISupplierService supplierService,
             ILogger<SupplierController> logger,
@@ -34,7 +31,7 @@ namespace Nemo_v2_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSupplier(long id)
+        public async Task<IActionResult> GetSupplier(long id)
         {
             try
             {

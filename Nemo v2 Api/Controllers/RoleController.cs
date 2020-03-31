@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private IRoleService _roleService;
-        private ILogger<RoleController> _logger;
-        private IMapper _mapper;
+        private readonly IRoleService _roleService;
+        private readonly ILogger<RoleController> _logger;
+        private readonly IMapper _mapper;
         public RoleController(IRoleService roleService,
             ILogger<RoleController> logger,
             IMapper mapper)
@@ -48,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("RestId/{RestaurantId}")]
-        public async Task<IActionResult> GetUserByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetRolesByRestaurantId(long RestaurantId)
         {
             try
             {

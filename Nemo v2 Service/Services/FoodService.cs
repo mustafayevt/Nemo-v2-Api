@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -30,12 +30,16 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<Food> GetFoodByRestaurantId(long RestId)
         {
-            return _foodRepository.Query(x => x.RestaurantId == RestId);
+            return _foodRepository.Query(x => x.RestaurantId == RestId)
+                .Include(x =>x.Ingredients).ThenInclude(y=>y.Ingredient).ThenInclude(h=>h.IngredientCategories).ThenInclude(g=>g.IngredientCategory)
+                .Include(x=>x.FoodGroups).ThenInclude(y=>y.FoodGroup);
         }
 
         public Food GetFood(long id)
         {
-            return _foodRepository.GetById(id);
+            return _foodRepository.Query(x => x.Id == id)
+                .Include(x =>x.Ingredients).ThenInclude(y=>y.Ingredient).ThenInclude(h=>h.IngredientCategories).ThenInclude(g=>g.IngredientCategory)
+                .Include(x=>x.FoodGroups).ThenInclude(y=>y.FoodGroup).First();
         }
 
         public Food InsertFood(Food Food)

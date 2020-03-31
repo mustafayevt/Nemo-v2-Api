@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Nemo_v2_Data.Entities;
+﻿using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.DbContexts;
-using Nemo_v2_Repo.Helper;
 
 namespace Nemo_v2_Repo.Repositories.EFRepository
 {

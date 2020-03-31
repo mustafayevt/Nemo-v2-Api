@@ -8,6 +8,7 @@ namespace Nemo_v2_Service.Abstraction
         IEnumerable<Restaurant> Get();  
         IEnumerable<Restaurant> GetBranches(long RestId);  
         Restaurant GetRestaurant(long id);  
+        Restaurant GetParentByBranchId(long id);  
         Restaurant InsertRestaurant(Restaurant restaurant);  
         Restaurant UpdateRestaurant(Restaurant restaurant);  
         void DeleteRestaurant(long id); 

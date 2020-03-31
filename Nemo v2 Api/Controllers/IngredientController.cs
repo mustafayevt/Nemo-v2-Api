@@ -16,10 +16,10 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class IngredientController : Controller
     {
-        private IIngredientService _ingredientService;
+        private readonly IIngredientService _ingredientService;
         private IIngredientCategoryService _ingredientCategoryService;
-        private ILogger<IngredientController> _logger;
-        private IMapper _mapper;
+        private readonly ILogger<IngredientController> _logger;
+        private readonly IMapper _mapper;
         public IngredientController(IIngredientService ingredientService,
             IIngredientCategoryService ingredientCategoryService,
             ILogger<IngredientController> logger,

@@ -1,28 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Nemo_v2_Api.Filters;
-using Nemo_v2_Data;
 using Nemo_v2_Data.AutoMapper;
 using Nemo_v2_Data.Entities;
-using Nemo_v2_Data.Maping;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
-using Nemo_v2_Repo.Repositories;
 using Nemo_v2_Repo.Repositories.EFRepository;
 using Nemo_v2_Service.Abstraction;
 using Nemo_v2_Service.Services;
@@ -128,7 +117,7 @@ namespace Nemo_v2_Api
                 app.UseHsts();
             }
             loggerFactory.AddFile("Logs/Errors/{Date}.txt",LogLevel.Error);
-            loggerFactory.AddFile("Logs/Info/{Date}.txt",LogLevel.Information);
+            loggerFactory.AddFile("Logs/Info/{Date}.txt");
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 

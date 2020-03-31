@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
-using Nemo_v2_Data;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -11,8 +9,8 @@ namespace Nemo_v2_Service.Services
 {
     public class IngredientService : IIngredientService
     {
-        private IRepository<Ingredient> _ingredientRepository;
-        private IRepository<IngredientCategory> _ingredientCategoryRepository;
+        private readonly IRepository<Ingredient> _ingredientRepository;
+        private readonly IRepository<IngredientCategory> _ingredientCategoryRepository;
 
         public IngredientService(IRepository<Ingredient> ingredientRepository,
             IRepository<IngredientCategory> ingredientCategoryRepository)
@@ -28,12 +26,16 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<Ingredient> GetIngredientByRestaurantId(long RestId)
         {
-            return _ingredientRepository.Query(x => x.RestaurantId == RestId);
+            return _ingredientRepository.Query(x => x.RestaurantId == RestId)
+                .Include(x=>x.IngredientCategories)
+                .ThenInclude(x=>x.IngredientCategory);
         }
 
         public Ingredient GetIngredient(long id)
         {
-            return _ingredientRepository.GetById(id);
+            return _ingredientRepository.Query(x => x.Id == id)
+                .Include(x=>x.IngredientCategories)
+                .ThenInclude(x=>x.IngredientCategory).First();
         }
 
         public Ingredient InsertIngredient(Ingredient Ingredient)

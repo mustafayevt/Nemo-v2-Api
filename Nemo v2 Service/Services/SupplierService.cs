@@ -7,7 +7,7 @@ namespace Nemo_v2_Service.Services
 {
     public class SupplierService:ISupplierService
     {
-        private IRepository<Supplier> _supplierRepository;
+        private readonly IRepository<Supplier> _supplierRepository;
 
         public SupplierService(IRepository<Supplier> supplierRepository)
         {

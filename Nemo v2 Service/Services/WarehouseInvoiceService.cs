@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -24,12 +26,14 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<WarehouseInvoice> GetWarehouseInvoiceByRestaurantId(long RestId)
         {
-            return _warehouseInvoiceRepository.Query(x => x.RestaurantId == RestId);
+            return _warehouseInvoiceRepository.Query(x => x.RestaurantId == RestId)
+                .Include(x=>x.IngredientsInserts);
         }
 
         public WarehouseInvoice GetWarehouseInvoice(long id)
         {
-            return _warehouseInvoiceRepository.GetById(id);
+            return _warehouseInvoiceRepository.Query(x => x.Id == id)
+                .Include(x => x.IngredientsInserts).First();
         }
 
         public WarehouseInvoice InsertWarehouseInvoice(WarehouseInvoice WarehouseInvoice)

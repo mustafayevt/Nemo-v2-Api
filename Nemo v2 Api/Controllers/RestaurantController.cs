@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class RestaurantController : ControllerBase
     {
-        private IRestaurantService _restaurantService;
-        private ILogger<RestaurantController> _logger;
-        private IMapper _mapper;
+        private readonly IRestaurantService _restaurantService;
+        private readonly ILogger<RestaurantController> _logger;
+        private readonly IMapper _mapper;
         public RestaurantController(IRestaurantService restaurantService,
             ILogger<RestaurantController> logger,
             IMapper mapper)
@@ -56,6 +56,24 @@ namespace Nemo_v2_Api.Controllers
                 if (restaurants == null) throw new NullReferenceException("Branch Not Found");
                 var restaurantsDtos =_mapper.Map<List<Restaurant>,List<RestaurantDto>>(restaurants.ToList());
                 _logger.LogInformation($"Branch(es) Get By Restaurant Id:{RestaurantId}");
+                return Ok(restaurantsDtos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
+        
+        [HttpGet("{BranchId}")]
+        public async Task<IActionResult> GetRestaurantByBranchId(long BranchId)
+        {
+            try
+            {
+                var restaurant = _restaurantService.GetParentByBranchId(BranchId);
+                if (restaurant == null) throw new NullReferenceException("Restaurant Not Found");
+                var restaurantsDtos =_mapper.Map<RestaurantDto>(restaurant);
+                _logger.LogInformation($"Restaurant Get By Branch Id:{BranchId}");
                 return Ok(restaurantsDtos);
             }
             catch (Exception e)

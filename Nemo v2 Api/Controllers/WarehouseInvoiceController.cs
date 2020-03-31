@@ -16,9 +16,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class WarehouseInvoiceController : Controller
     {
-        private IWarehouseInvoiceService _warehouseInvoiceService;
-        private ILogger<WarehouseInvoiceController> _logger;
-        private IMapper _mapper;
+        private readonly IWarehouseInvoiceService _warehouseInvoiceService;
+        private readonly ILogger<WarehouseInvoiceController> _logger;
+        private readonly IMapper _mapper;
         public WarehouseInvoiceController(IWarehouseInvoiceService warehouseInvoiceService,
             ILogger<WarehouseInvoiceController> logger,
             IMapper mapper)

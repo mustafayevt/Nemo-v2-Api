@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
-using Nemo_v2_Repo.DbContexts;
-using Nemo_v2_Repo.Repositories;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Api.Controllers
@@ -20,9 +19,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
-        private ILogger<UserController> _logger;
-        private IMapper _mapper;
+        private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
 
         public UserController(IUserService userService,
             ILogger<UserController> logger,
@@ -34,7 +33,7 @@ namespace Nemo_v2_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUser(long id)
+        public async Task<IActionResult> GetUser(long id)
         {
             try
             {

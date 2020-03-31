@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class FoodGroupController : ControllerBase
     {
-        private IFoodGroupService _foodGroupService;
-        private ILogger<FoodGroupController> _logger;
-        private IMapper _mapper;
+        private readonly IFoodGroupService _foodGroupService;
+        private readonly ILogger<FoodGroupController> _logger;
+        private readonly IMapper _mapper;
         public FoodGroupController(IFoodGroupService foodGroupService,
             ILogger<FoodGroupController> logger,
             IMapper mapper)

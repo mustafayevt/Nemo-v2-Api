@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class TableController : Controller
     {
-        private ITableService _tableService;
-        private ILogger<TableController> _logger;
-        private IMapper _mapper;
+        private readonly ITableService _tableService;
+        private readonly ILogger<TableController> _logger;
+        private readonly IMapper _mapper;
 
         public TableController(ITableService tableService,
             ILogger<TableController> logger,
@@ -31,7 +31,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetTable(long id)
+        public async Task<IActionResult> GetTable(long id)
         {
             try
             {

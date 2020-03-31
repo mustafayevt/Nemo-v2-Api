@@ -10,8 +10,8 @@ namespace Nemo_v2_Service.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        private IRepository<Warehouse> _warehouseRepository;
-        private IRepository<Restaurant> _restaurantRepository;
+        private readonly IRepository<Warehouse> _warehouseRepository;
+        private readonly IRepository<Restaurant> _restaurantRepository;
 
         public WarehouseService(IRepository<Warehouse> warehouseRepository,
             IRepository<Restaurant> repositoryRepository)

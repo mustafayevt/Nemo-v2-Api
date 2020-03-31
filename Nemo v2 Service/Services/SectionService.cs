@@ -31,12 +31,14 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<Section> GetSectionsByRestaurantId(long RestId)
         {
-            return _sectionRepository.Query(x => x.RestaurantId == RestId);
+            return _sectionRepository.Query(x => x.RestaurantId == RestId)
+                .Include(x=>x.Tables);
         }
 
         public Section GetSection(long id)
         {
-            return _sectionRepository.GetById(id);
+            return _sectionRepository.Query(x => x.Id == id)
+                .Include(x => x.Tables).First();
         }
 
         public Section InsertSection(Section Section)

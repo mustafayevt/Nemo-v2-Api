@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class FoodController : ControllerBase
     {
-        private IFoodService _foodService;
-        private ILogger<FoodController> _logger;
-        private IMapper _mapper;
+        private readonly IFoodService _foodService;
+        private readonly ILogger<FoodController> _logger;
+        private readonly IMapper _mapper;
         public FoodController(IFoodService foodService,
             ILogger<FoodController> logger,
             IMapper mapper)
@@ -48,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("RestId/{RestaurantId}")]
-        public async Task<IActionResult> GetUserByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetFoodByRestaurantId(long RestaurantId)
         {
             try
             {

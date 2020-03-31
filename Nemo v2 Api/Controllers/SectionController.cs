@@ -17,9 +17,9 @@ namespace Nemo_v2_Api.Controllers
     [ApiController]
     public class SectionController : Controller
     {
-        private ISectionService _sectionService;
-        private ILogger<SectionController> _logger;
-        private IMapper _mapper;
+        private readonly ISectionService _sectionService;
+        private readonly ILogger<SectionController> _logger;
+        private readonly IMapper _mapper;
 
         public SectionController(ISectionService sectionService,
             ILogger<SectionController> logger,
@@ -31,7 +31,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetSection(long id)
+        public async Task<IActionResult> GetSection(long id)
         {
             try
             {
