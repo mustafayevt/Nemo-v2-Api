@@ -18,6 +18,8 @@
       <Compile Remove="Migrations\20200328162351_addRestIdAllTables3.Designer.cs" />
       <Compile Remove="Migrations\20200328213557_IngCat1.cs" />
       <Compile Remove="Migrations\20200328213557_IngCat1.Designer.cs" />
+      <Compile Remove="Migrations\20200404135328_InvoiceModel.cs" />
+      <Compile Remove="Migrations\20200404135328_InvoiceModel.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>

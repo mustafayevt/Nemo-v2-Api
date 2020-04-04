@@ -87,6 +87,7 @@ namespace Nemo_v2_Api
             services.AddScoped<IRepository<Food>,EFFoodRepository>();
             services.AddScoped<IRepository<IngredientsInsert>,EFIngredientsInsertRepository>();
             services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
+            services.AddScoped<IRepository<Printer>,EFPrinterRepository>();
             
             
             services.AddTransient<IUserService, UserService>();
@@ -102,6 +103,7 @@ namespace Nemo_v2_Api
             services.AddTransient<IFoodGroupService, FoodGroupService>();
             services.AddTransient<IFoodService, FoodService>();
             services.AddTransient<IWarehouseInvoiceService, WarehouseInvoiceService>();
+            services.AddTransient<IPrinterService, PrinterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

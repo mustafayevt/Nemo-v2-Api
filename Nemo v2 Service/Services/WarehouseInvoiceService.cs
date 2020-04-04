@@ -7,7 +7,7 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class WarehouseInvoiceService:IWarehouseInvoiceService
+    public class WarehouseInvoiceService : IWarehouseInvoiceService
     {
         private IRepository<WarehouseInvoice> _warehouseInvoiceRepository;
         private IRepository<IngredientsInsert> _ingredientsInsertRepository;
@@ -27,7 +27,7 @@ namespace Nemo_v2_Service.Services
         public IEnumerable<WarehouseInvoice> GetWarehouseInvoiceByRestaurantId(long RestId)
         {
             return _warehouseInvoiceRepository.Query(x => x.RestaurantId == RestId)
-                .Include(x=>x.IngredientsInserts);
+                .Include(x => x.IngredientsInserts);
         }
 
         public WarehouseInvoice GetWarehouseInvoice(long id)

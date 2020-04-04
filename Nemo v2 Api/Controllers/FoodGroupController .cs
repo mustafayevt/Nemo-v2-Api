@@ -48,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpGet("RestId/{RestaurantId}")]
-        public async Task<IActionResult> GetUserByRestaurantId(long RestaurantId)
+        public async Task<IActionResult> GetFoodGroupByRestaurantId(long RestaurantId)
         {
             try
             {

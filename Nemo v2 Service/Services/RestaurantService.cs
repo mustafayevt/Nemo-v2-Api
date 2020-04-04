@@ -23,7 +23,9 @@ namespace Nemo_v2_Service.Services
         public IEnumerable<Restaurant> GetBranches(long RestId)
         {
             return _restaurantRepository.Query(x => x.BranchId == RestId)
-                .Include(x=>x.Branches);
+                .Include(x=>x.Branches)
+                .Include(x=>x.Sections)
+                .Include(x=>x.Tables);
         }
 
         public Restaurant GetRestaurant(long id)

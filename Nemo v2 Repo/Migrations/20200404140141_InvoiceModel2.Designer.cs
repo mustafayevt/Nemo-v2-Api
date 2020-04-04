@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200404140141_InvoiceModel2")]
+    partial class InvoiceModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,13 +36,9 @@ namespace Nemo_v2_Repo.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<long>("PrinterId");
-
                     b.Property<long>("RestaurantId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PrinterId");
 
                     b.HasIndex("RestaurantId");
 
@@ -224,28 +222,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.Printer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<long>("RestaurantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("Printers");
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.RestWareRel", b =>
@@ -496,11 +472,6 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Food", b =>
                 {
-                    b.HasOne("Nemo_v2_Data.Entities.Printer", "Printer")
-                        .WithMany()
-                        .HasForeignKey("PrinterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant")
                         .WithMany("Foods")
                         .HasForeignKey("RestaurantId")
@@ -608,14 +579,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.Printer", b =>
-                {
-                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -37,7 +37,7 @@ namespace Nemo_v2_Api.Controllers
                 var food = _foodService.GetFood(id);
                 if (food == null) throw new NullReferenceException("Food Not Found");
                 var foodDto = _mapper.Map<FoodDto>(food);
-                _logger.LogInformation($"User Get {food.Id}");
+                _logger.LogInformation($"Food Get {food.Id}");
                 return Ok(foodDto);
             }
             catch (Exception e)

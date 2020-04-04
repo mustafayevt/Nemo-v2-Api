@@ -52,7 +52,7 @@ namespace Nemo_v2_Api.Controllers
         {
             try
             {
-                var restaurants = _restaurantService.GetBranches(RestaurantId);
+                var restaurants = _restaurantService.GetBranches(RestaurantId).ToList();
                 if (restaurants == null) throw new NullReferenceException("Branch Not Found");
                 var restaurantsDtos =_mapper.Map<List<Restaurant>,List<RestaurantDto>>(restaurants.ToList());
                 _logger.LogInformation($"Branch(es) Get By Restaurant Id:{RestaurantId}");

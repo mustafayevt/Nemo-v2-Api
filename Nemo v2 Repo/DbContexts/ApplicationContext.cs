@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Data.Maping;
+using Npgsql;
 
 namespace Nemo_v2_Repo.DbContexts
 {
@@ -23,6 +24,8 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<FoodGroup> FoodGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Printer> Printers { get; set; }
         
         
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)  
@@ -38,6 +41,8 @@ namespace Nemo_v2_Repo.DbContexts
             new IngredientCategoryRelMap(modelBuilder.Entity<IngredientCategoryRel>());
             new FoodGroupRelMap(modelBuilder.Entity<FoodGroupRel>());
             new SectionMap(modelBuilder.Entity<Section>());
+            modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();        
         }
         public override int SaveChanges()
         {

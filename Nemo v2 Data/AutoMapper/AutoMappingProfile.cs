@@ -76,6 +76,13 @@ namespace Nemo_v2_Data.AutoMapper
             
             //WarehouseInvoice
             CreateMap<WarehouseInvoice, WarehouseInvoiceDto>().ReverseMap();
+            
+            //Invoice
+            CreateMap<Invoice, InvoiceDto>().ReverseMap();
+            
+            //Printer
+            CreateMap<Printer, PrinterDto>().ReverseMap();
+            
         }
     }
 }
