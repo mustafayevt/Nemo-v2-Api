@@ -10,13 +10,13 @@ namespace Nemo_v2_Service.Services
     public class WarehouseInvoiceService : IWarehouseInvoiceService
     {
         private IRepository<WarehouseInvoice> _warehouseInvoiceRepository;
-        private IRepository<IngredientsInsert> _ingredientsInsertRepository;
+        private IIngredientService _ingredientService;
 
         public WarehouseInvoiceService(IRepository<WarehouseInvoice> warehouseInvoiceRepository,
-            IRepository<IngredientsInsert> ingredientsInsertRepository)
+            IIngredientService ingredientService)
         {
             _warehouseInvoiceRepository = warehouseInvoiceRepository;
-            _ingredientsInsertRepository = ingredientsInsertRepository;
+            _ingredientService = ingredientService;
         }
 
         public IEnumerable<WarehouseInvoice> Get()
@@ -38,7 +38,12 @@ namespace Nemo_v2_Service.Services
 
         public WarehouseInvoice InsertWarehouseInvoice(WarehouseInvoice WarehouseInvoice)
         {
-            return _warehouseInvoiceRepository.Insert(WarehouseInvoice);
+            // var a =_ingredientService.CalculateAveragePrice(28);
+            
+            var warehouseInvoice = _warehouseInvoiceRepository.Insert(WarehouseInvoice);
+            _ingredientService.IncreaseCurrentQuantity(WarehouseInvoice.IngredientsInserts);
+
+            return warehouseInvoice;
         }
 
         public WarehouseInvoice UpdateWarehouseInvoice(WarehouseInvoice WarehouseInvoice)

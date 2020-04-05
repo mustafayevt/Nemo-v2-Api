@@ -19,5 +19,7 @@ namespace Nemo_v2_Data.Entities
         public long RestaurantId { get; set; }
 
         public Restaurant Restaurant { get; set; }
+        [Required]
+        public decimal CurrentQuantity { get; set; }
     }
 }

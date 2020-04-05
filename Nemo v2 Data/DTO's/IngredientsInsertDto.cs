@@ -13,9 +13,7 @@ namespace Nemo_v2_Data
         [Required]
         public long WarehouseInvoiceId { get; set; }
         [Required]
-        public decimal InitialCount { get; set; }
-        [Required]
-        public decimal CurrentCount { get; set; }
+        public decimal Quantity { get; set; }
         [Required]
         public decimal PriceForEach { get; set; }
         

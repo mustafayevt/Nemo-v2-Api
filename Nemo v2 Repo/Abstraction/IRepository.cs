@@ -49,6 +49,7 @@ namespace Nemo_v2_Repo.Abstraction
 		/// </summary>
 		/// <param name="entity"></param>
 		TEntity Update(TEntity entity,string []notUpdateProperties=null);
+		IEnumerable<TEntity> UpdateMany(IEnumerable<TEntity> entities);
  
 		/// <summary>
 		/// Delete entity from db by primary key

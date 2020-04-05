@@ -125,6 +125,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                     // entity.ModifiedDate = DateTime.Now;
                     addedEntities.Add(dbSet.Add(entity).Entity);
                 }
+
                 context.SaveChanges();
                 return addedEntities;
             }
@@ -141,11 +142,33 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
             {
                 // entity.ModifiedDate = DateTime.Now;
                 var oldEntity = context.Set<TEntity>().First(g => g.Id == entity.Id);
-                 entity.AddedDate = oldEntity.AddedDate;
+                entity.AddedDate = oldEntity.AddedDate;
                 context.Entry(oldEntity).CurrentValues.SetValues(entity);
 
                 context.SaveChanges();
                 return context.Entry(oldEntity).Entity;
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) throw e.InnerException;
+                throw;
+            }
+        }
+
+        public IEnumerable<TEntity> UpdateMany(IEnumerable<TEntity> entities)
+        {
+            try
+            {
+                foreach (var entity in entities)
+                {
+                    // entity.ModifiedDate = DateTime.Now;
+                    var oldEntity = context.Set<TEntity>().First(g => g.Id == entity.Id);
+                    entity.AddedDate = oldEntity.AddedDate;
+                    context.Entry(oldEntity).CurrentValues.SetValues(entity);
+                }
+
+                context.SaveChanges();
+                return entities;
             }
             catch (Exception e)
             {

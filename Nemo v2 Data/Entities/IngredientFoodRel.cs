@@ -12,5 +12,9 @@ namespace Nemo_v2_Data.Entities
 
         public virtual Food Food { get; set; }
         public virtual Ingredient Ingredient { get; set; }
+        [Required]
+        public decimal Quantity { get; set; }
+        [Required]
+        public Unit Unit { get; set; }
     }
 }

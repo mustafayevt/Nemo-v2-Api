@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace Nemo_v2_Repo.DbContexts
 {
-    public class ApplicationContext : DbContext  
+    public class ApplicationContext : DbContext
     {
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<User> Users { get; set; }
@@ -17,6 +17,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<Table> Tables { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<RestWareRel> RestWareRels { get; set; }
+        public DbSet<RestSupplierRel> RestSupplierRels { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientsInsert> IngredientsInserts { get; set; }
@@ -26,14 +27,15 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
-        
-        
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)  
-        {  
-        }  
-        protected override void OnModelCreating(ModelBuilder modelBuilder)  
-        {  
-            base.OnModelCreating(modelBuilder);  
+
+
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
             new UserMap(modelBuilder.Entity<User>());
             new UserRoleMap(modelBuilder.Entity<UserRole>());
             new RestWareRelMap(modelBuilder.Entity<RestWareRel>());
@@ -41,9 +43,15 @@ namespace Nemo_v2_Repo.DbContexts
             new IngredientCategoryRelMap(modelBuilder.Entity<IngredientCategoryRel>());
             new FoodGroupRelMap(modelBuilder.Entity<FoodGroupRel>());
             new SectionMap(modelBuilder.Entity<Section>());
-            modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();        
+            new RestSupplierRelMap(modelBuilder.Entity<RestSupplierRel>());
+
+            // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
+            // NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();
+            //
+            // modelBuilder.ForNpgsqlHasEnum<Unit>();
+            // NpgsqlConnection.GlobalTypeMapper.MapEnum<Unit>();
         }
+
         public override int SaveChanges()
         {
             var entries = ChangeTracker
@@ -54,14 +62,14 @@ namespace Nemo_v2_Repo.DbContexts
 
             foreach (var entityEntry in entries)
             {
-                ((BaseEntity)entityEntry.Entity).ModifiedDate = DateTime.Now;
+                ((BaseEntity) entityEntry.Entity).ModifiedDate = DateTime.Now;
                 if (entityEntry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entityEntry.Entity).AddedDate = DateTime.Now;
+                    ((BaseEntity) entityEntry.Entity).AddedDate = DateTime.Now;
                 }
             }
 
             return base.SaveChanges();
         }
-    }  
+    }
 }

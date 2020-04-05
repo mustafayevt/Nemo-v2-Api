@@ -11,12 +11,15 @@ namespace Nemo_v2_Service.Services
     {
         private readonly IRepository<Ingredient> _ingredientRepository;
         private readonly IRepository<IngredientCategory> _ingredientCategoryRepository;
+        private readonly IRepository<IngredientsInsert> _ingredientsInsertRepository;
 
         public IngredientService(IRepository<Ingredient> ingredientRepository,
-            IRepository<IngredientCategory> ingredientCategoryRepository)
+            IRepository<IngredientCategory> ingredientCategoryRepository,
+            IRepository<IngredientsInsert> ingredientsInsertRepository)
         {
             _ingredientRepository = ingredientRepository;
             _ingredientCategoryRepository = ingredientCategoryRepository;
+            _ingredientsInsertRepository = ingredientsInsertRepository;
         }
 
         public IEnumerable<Ingredient> Get()
@@ -27,15 +30,15 @@ namespace Nemo_v2_Service.Services
         public IEnumerable<Ingredient> GetIngredientByRestaurantId(long RestId)
         {
             return _ingredientRepository.Query(x => x.RestaurantId == RestId)
-                .Include(x=>x.IngredientCategories)
-                .ThenInclude(x=>x.IngredientCategory);
+                .Include(x => x.IngredientCategories)
+                .ThenInclude(x => x.IngredientCategory);
         }
 
         public Ingredient GetIngredient(long id)
         {
             return _ingredientRepository.Query(x => x.Id == id)
-                .Include(x=>x.IngredientCategories)
-                .ThenInclude(x=>x.IngredientCategory).First();
+                .Include(x => x.IngredientCategories)
+                .ThenInclude(x => x.IngredientCategory).First();
         }
 
         public Ingredient InsertIngredient(Ingredient Ingredient)
@@ -88,6 +91,53 @@ namespace Nemo_v2_Service.Services
             }
 
             return _ingredientRepository.Update(Ingredient);
+        }
+
+        public IEnumerable<Ingredient> IncreaseCurrentQuantity(IEnumerable<IngredientsInsert> ingredientsInserts)
+        {
+            var ingredientIds = ingredientsInserts.GroupBy(x => x.IngredientId);
+            var ingredients = new List<Ingredient>();
+            foreach (var insert in ingredientIds)
+            {
+                ingredients.Add(_ingredientRepository.GetById(insert.Key));
+                foreach (var eachIngredient in insert)
+                {
+                    ingredients.Last().CurrentQuantity += eachIngredient.Quantity;
+                }
+            }
+
+            return _ingredientRepository.UpdateMany(ingredients);
+        }
+
+        public decimal CalculateAveragePrice(long id)
+        {
+            var ingredient = _ingredientRepository.GetById(id);
+            var inserts = _ingredientsInsertRepository.Query(x => x.IngredientId == id)
+                .ToList();
+            decimal PriceAmount = 0;
+            if (ingredient.CurrentQuantity <= 0)
+            {
+                inserts.ForEach(x => PriceAmount += x.PriceForEach);
+                return PriceAmount / inserts.Count();
+            }
+
+            decimal insertsQuantity = 0;
+            inserts.ForEach(x => insertsQuantity += x.Quantity);
+            var unAvailableQuantity = insertsQuantity - ingredient.CurrentQuantity;
+
+            decimal count = 0;
+            int index = 0;
+            while (count <= unAvailableQuantity)
+            {
+                count += inserts[index++].Quantity;
+            }
+
+            var TakeSkip = inserts.Skip(index- 1).Take(inserts.Count());
+            foreach (var ingredientsInsert in TakeSkip)
+            {
+                PriceAmount += ingredientsInsert.PriceForEach;
+            }
+            return PriceAmount / TakeSkip.Count();
         }
 
         public void DeleteIngredient(long id)

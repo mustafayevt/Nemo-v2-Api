@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200405150123_SuplierManyRestaurant2")]
+    partial class SuplierManyRestaurant2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<decimal>("CurrentQuantity");
+                    b.Property<decimal>("CurrentCount");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -168,13 +170,15 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
+                    b.Property<decimal>("CurrentCount");
+
                     b.Property<long>("IngredientId");
+
+                    b.Property<decimal>("InitialCount");
 
                     b.Property<DateTime>("ModifiedDate");
 
                     b.Property<decimal>("PriceForEach");
-
-                    b.Property<decimal>("Quantity");
 
                     b.Property<long>("RestaurantId");
 

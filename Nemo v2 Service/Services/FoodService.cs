@@ -56,15 +56,20 @@ namespace Nemo_v2_Service.Services
 
                     if (ingredients.Count() != Food.Ingredients.Count())
                         throw new NullReferenceException("Ingredient Not Found");
-                    Food.Ingredients.Clear();
-                    ingredients.ForEach(x =>
+                    //Food.Ingredients.Clear();
+                    var ingredientFoodRels = new List<IngredientFoodRel>();
+                    for (int i = 0; i < ingredients.Count(); i++)
                     {
-                        Food.Ingredients.Add(new IngredientFoodRel()
+                        ingredientFoodRels.Add(new IngredientFoodRel()
                         {
                             FoodId = Food.Id,
-                            IngredientId = x.Id
+                            IngredientId = ingredients[i].Id,
+                            Quantity = Food.Ingredients[i].Quantity,
+                            Unit =  Food.Ingredients[i].Unit
                         });
-                    });
+                    }
+
+                    Food.Ingredients = ingredientFoodRels;
                 }
             }
 

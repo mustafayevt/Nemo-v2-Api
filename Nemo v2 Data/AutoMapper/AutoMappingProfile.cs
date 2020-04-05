@@ -37,6 +37,11 @@ namespace Nemo_v2_Data.AutoMapper
                 .ForMember(x => x.Restaurant, opt => opt
                     .MapFrom(y => y)).ReverseMap();
             
+            //RestSupplierRel
+            CreateMap<RestaurantDto, RestSupplierRel>()
+                .ForMember(x => x.Restaurant, opt => opt
+                    .MapFrom(y => y)).ReverseMap();
+            
             //IngredientCategory
             CreateMap<IngredientCategory, IngredientCategoryDto>().ReverseMap();
             CreateMap<IngredientCategoryDto, IngredientCategoryRel>()

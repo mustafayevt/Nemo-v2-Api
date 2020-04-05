@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Nemo_v2_Data.Entities;
 
 namespace Nemo_v2_Data
 {
@@ -17,5 +18,8 @@ namespace Nemo_v2_Data
         
         [Required]
         public long RestaurantId { get; set; }
+        public decimal CurrentQuantity { get; set; }
+        public Unit Unit { get; set; }
+
     }
 }

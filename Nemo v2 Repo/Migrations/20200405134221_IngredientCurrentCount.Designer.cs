@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200405134221_IngredientCurrentCount")]
+    partial class IngredientCurrentCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<decimal>("CurrentQuantity");
+                    b.Property<decimal>("CurrentCount");
 
                     b.Property<DateTime>("ModifiedDate");
 
@@ -168,13 +170,15 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
+                    b.Property<decimal>("CurrentCount");
+
                     b.Property<long>("IngredientId");
+
+                    b.Property<decimal>("InitialCount");
 
                     b.Property<DateTime>("ModifiedDate");
 
                     b.Property<decimal>("PriceForEach");
-
-                    b.Property<decimal>("Quantity");
 
                     b.Property<long>("RestaurantId");
 
@@ -249,19 +253,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Printers");
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.RestSupplierRel", b =>
-                {
-                    b.Property<long>("RestaurantId");
-
-                    b.Property<long>("SupplierId");
-
-                    b.HasKey("RestaurantId", "SupplierId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("RestSupplierRels");
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.RestWareRel", b =>
@@ -377,7 +368,11 @@ namespace Nemo_v2_Repo.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<long>("RestaurantId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Suppliers");
                 });
@@ -631,19 +626,6 @@ namespace Nemo_v2_Repo.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Nemo_v2_Data.Entities.RestSupplierRel", b =>
-                {
-                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
-                        .WithMany("Supplliers")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nemo_v2_Data.Entities.Supplier", "Supplier")
-                        .WithMany("RestSupplierRels")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Nemo_v2_Data.Entities.RestWareRel", b =>
                 {
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
@@ -676,6 +658,14 @@ namespace Nemo_v2_Repo.Migrations
                 {
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
                         .WithMany("Sections")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Nemo_v2_Data.Entities.Supplier", b =>
+                {
+                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
+                        .WithMany("Suppliers")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

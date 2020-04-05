@@ -7,6 +7,7 @@ namespace Nemo_v2_Data.Entities
 {
     public class Invoice:BaseEntity
     {
+        [Required]
         public InvoiceType InvoiceType { get; set; }
         
         [Required,ForeignKey(nameof(Restaurant))]

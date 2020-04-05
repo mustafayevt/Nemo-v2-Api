@@ -20,6 +20,18 @@
       <Compile Remove="Migrations\20200328213557_IngCat1.Designer.cs" />
       <Compile Remove="Migrations\20200404135328_InvoiceModel.cs" />
       <Compile Remove="Migrations\20200404135328_InvoiceModel.Designer.cs" />
+      <Compile Remove="Migrations\20200405132938_IngredientCurrentCount.cs" />
+      <Compile Remove="Migrations\20200405132938_IngredientCurrentCount.Designer.cs" />
+      <Compile Remove="Migrations\20200405133023_IngredientCurrentCount1.cs" />
+      <Compile Remove="Migrations\20200405133023_IngredientCurrentCount1.Designer.cs" />
+      <Compile Remove="Migrations\20200405133057_IngredientCurrentCount2.cs" />
+      <Compile Remove="Migrations\20200405133057_IngredientCurrentCount2.Designer.cs" />
+      <Compile Remove="Migrations\20200405133408_IngredientCurrentCount3.cs" />
+      <Compile Remove="Migrations\20200405133408_IngredientCurrentCount3.Designer.cs" />
+      <Compile Remove="Migrations\20200405133714_IngredientCurrentCount4.cs" />
+      <Compile Remove="Migrations\20200405133714_IngredientCurrentCount4.Designer.cs" />
+      <Compile Remove="Migrations\20200405134030_IngredientCurrentCount5.cs" />
+      <Compile Remove="Migrations\20200405134030_IngredientCurrentCount5.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>

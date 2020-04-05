@@ -13,8 +13,7 @@ namespace Nemo_v2_Data.Entities
         public long WarehouseInvoiceId { get; set; }
         public virtual WarehouseInvoice WarehouseInvoice { get; set; }
         
-        public decimal InitialCount { get; set; }
-        public decimal CurrentCount { get; set; }
+        public decimal Quantity { get; set; }
         public decimal PriceForEach { get; set; }
         
         [Required,ForeignKey(nameof(Restaurant))]
