@@ -25,7 +25,7 @@ namespace Nemo_v2_Data.Entities
         public virtual Table Table { get; set; }
 
         
-        public List<long> FoodIds { get; set; }
+        public List<FoodInvoiceRel> Foods { get; set; }
         [DefaultValue(false)]
         public bool IsIngredientReducted { get; set; }
         public decimal TotalAmount { get; set; }

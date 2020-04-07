@@ -42,6 +42,7 @@ namespace Nemo_v2_Repo.DbContexts
             new IngredientFoodRelMap(modelBuilder.Entity<IngredientFoodRel>());
             new IngredientCategoryRelMap(modelBuilder.Entity<IngredientCategoryRel>());
             new FoodGroupRelMap(modelBuilder.Entity<FoodGroupRel>());
+            new FoodInvoiceRelMap(modelBuilder.Entity<FoodInvoiceRel>());
             new SectionMap(modelBuilder.Entity<Section>());
             new RestSupplierRelMap(modelBuilder.Entity<RestSupplierRel>());
 

@@ -9,6 +9,7 @@ namespace Nemo_v2_Data
     public class InvoiceDto
     {
         public long Id { get; set; }
+        [Required]
         public InvoiceType InvoiceType { get; set; }
         
         [Required]
@@ -23,7 +24,7 @@ namespace Nemo_v2_Data
         public long TableId { get; set; }
 
         
-        public List<long> FoodIds { get; set; }
+        public List<FoodDto> Foods { get; set; }
         public bool IsIngredientReducted { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal Discount { get; set; }

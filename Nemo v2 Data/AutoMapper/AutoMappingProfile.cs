@@ -88,6 +88,11 @@ namespace Nemo_v2_Data.AutoMapper
             //Printer
             CreateMap<Printer, PrinterDto>().ReverseMap();
             
+            //FoodInvoiceRel
+            CreateMap<FoodDto,FoodInvoiceRel>()
+                .ForMember(x => x.Food, opt => opt
+                    .MapFrom(y => y)).ReverseMap();
+            
         }
     }
 }

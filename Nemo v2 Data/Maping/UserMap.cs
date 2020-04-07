@@ -8,6 +8,7 @@ namespace Nemo_v2_Data.Maping
         public UserMap(EntityTypeBuilder<User> entityBuilder)  
         {  
             entityBuilder.HasKey(t => t.Id);
+            entityBuilder.HasIndex(t => new { t.Password, t.RestaurantId}).IsUnique();
         }  
     }  
 }

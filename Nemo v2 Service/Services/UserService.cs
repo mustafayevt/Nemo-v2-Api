@@ -31,6 +31,13 @@ namespace Nemo_v2_Service.Services
                 .ThenInclude(role => role.Role);
         }
 
+        public User GetUsersByRestaurantIdAndPassword(long RestId, string Password)
+        {
+            return _userRepository.Query(user => user.RestaurantId == RestId && user.Password == Password)
+                .Include(user => user.UserRoles)
+                .ThenInclude(role => role.Role).First();
+        }
+
         public User GetUser(long id)
         {
             return _userRepository.Query(user => user.Id == id)

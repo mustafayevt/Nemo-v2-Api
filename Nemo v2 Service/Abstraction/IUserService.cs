@@ -7,6 +7,7 @@ namespace Nemo_v2_Service.Abstraction
     {
         IEnumerable<User> GetUsers();
         IEnumerable<User> GetUsersByRestaurantId(long RestId);
+        User GetUsersByRestaurantIdAndPassword(long RestId,string Password);
         User GetUser(long id);
         User InsertUser(User user);
         User UpdateUser(User user);

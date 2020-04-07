@@ -67,6 +67,24 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.Message);
             }
         }
+        
+        [HttpGet("{RestaurantId},{Password}")]
+        public async Task<IActionResult> GetUserByPassword(long RestaurantId,string Password)
+        {
+            try
+            {
+                var user = _userService.GetUsersByRestaurantIdAndPassword(RestaurantId,Password);
+                if (user == null) throw new NullReferenceException("User Not Found");
+                var usersDtos = _mapper.Map<User, UserDto>(user);
+                _logger.LogInformation($"User Get By Restaurant Id:{RestaurantId} and Password:{Password}");
+                return Ok(usersDtos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserDto userDto)

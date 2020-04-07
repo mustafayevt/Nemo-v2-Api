@@ -32,6 +32,8 @@
       <Compile Remove="Migrations\20200405133714_IngredientCurrentCount4.Designer.cs" />
       <Compile Remove="Migrations\20200405134030_IngredientCurrentCount5.cs" />
       <Compile Remove="Migrations\20200405134030_IngredientCurrentCount5.Designer.cs" />
+      <Compile Remove="Migrations\20200405162530_IngredientQuantity11.cs" />
+      <Compile Remove="Migrations\20200405162530_IngredientQuantity11.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>
