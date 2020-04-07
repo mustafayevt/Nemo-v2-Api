@@ -25,6 +25,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<FoodGroup> FoodGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
+        public DbSet<IngredientWarehouseRel> IngredientWarehouseRels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
 
@@ -45,6 +46,7 @@ namespace Nemo_v2_Repo.DbContexts
             new FoodInvoiceRelMap(modelBuilder.Entity<FoodInvoiceRel>());
             new SectionMap(modelBuilder.Entity<Section>());
             new RestSupplierRelMap(modelBuilder.Entity<RestSupplierRel>());
+            new IngredientWarehouseRelMap(modelBuilder.Entity<IngredientWarehouseRel>());
 
             // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();

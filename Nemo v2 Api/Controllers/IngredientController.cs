@@ -67,6 +67,25 @@ namespace Nemo_v2_Api.Controllers
             }
         }
         
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult>  GetIngredientByWarehouseId(long id)
+        {
+            try
+            {
+                var ingredients = _ingredientService.GetIngredientByWarehouseId(id);
+                if (ingredients == null) throw new NullReferenceException("Ingredient Not Found");
+                var ingredientDtos = _mapper.Map<List<IngredientDto>>(ingredients);
+                _logger.LogInformation($"Ingredient Get by WarehouseId {id}");
+                return Ok(ingredientDtos);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return NotFound(e.Message);
+            }
+        }
+        
 
         [HttpPost]
         public async Task<IActionResult> AddIngredient([FromBody] IngredientDto ingredientDto)

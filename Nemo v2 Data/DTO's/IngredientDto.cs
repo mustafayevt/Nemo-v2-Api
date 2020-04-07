@@ -12,9 +12,9 @@ namespace Nemo_v2_Data
         [Required,MaxLength(50)]
         public string Name { get; set; }
 
-        public long WarehouseId { get; set; }
-
         public List<IngredientCategoryDto> IngredientCategories { get; set; }
+
+        public List<WarehouseDto> IngredientWarehouseRels { get; set; }
         
         [Required]
         public long RestaurantId { get; set; }
