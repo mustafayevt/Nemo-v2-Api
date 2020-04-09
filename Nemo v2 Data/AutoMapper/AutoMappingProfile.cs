@@ -98,6 +98,20 @@ namespace Nemo_v2_Data.AutoMapper
                 .ForMember(x => x.Food, opt => opt
                     .MapFrom(y => y)).ReverseMap();
             
+            //IngredientsExport
+            CreateMap<IngredientsExport, IngredientsExportDto>().ReverseMap();
+            
+            //Buyer
+            CreateMap<Buyer, BuyerDto>().ReverseMap();
+            
+            //RestBuyerRel
+            CreateMap<RestaurantDto, RestBuyerRel>()
+                .ForMember(x => x.Restaurant, opt => opt
+                    .MapFrom(y => y)).ReverseMap();
+            
+            //WarehouseExportInvoice
+            CreateMap<WarehouseExportInvoice, WarehouseExportInvoiceDto>().ReverseMap();
+            
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Nemo_v2_Service.Services
 
         public WarehouseInvoice InsertWarehouseInvoice(WarehouseInvoice WarehouseInvoice)
         {
-             var a =_ingredientService.CalculateAveragePrice(38,9);
+            // var a =_ingredientService.CalculateAveragePrice(38,9);
             if (WarehouseInvoice.IngredientsInserts?.Any() ?? false)
             {
                 if (WarehouseInvoice.IngredientsInserts.Any(x => x.IngredientId == 0))
@@ -75,7 +75,7 @@ namespace Nemo_v2_Service.Services
 
 
             var warehouseInvoice = _warehouseInvoiceRepository.Insert(WarehouseInvoice);
-            _ingredientService.IncreaseCurrentQuantity(WarehouseInvoice.IngredientsInserts);
+            _ingredientService.InsertIngredient(WarehouseInvoice.IngredientsInserts);
 
             return warehouseInvoice;
         }

@@ -156,7 +156,7 @@ namespace Nemo_v2_Service.Services
             return _ingredientRepository.Update(Ingredient);
         }
 
-        public IEnumerable<Ingredient> IncreaseCurrentQuantity(IEnumerable<IngredientsInsert> ingredientsInserts)
+        public IEnumerable<Ingredient> InsertIngredient(IEnumerable<IngredientsInsert> ingredientsInserts)
         {
             var warehouses = ingredientsInserts.GroupBy(x => x.WarehouseInvoice.WarehouseId);
             var ingredients = new List<Ingredient>();
@@ -177,7 +177,29 @@ namespace Nemo_v2_Service.Services
             }
 
             return _ingredientRepository.UpdateMany(ingredients);
-            return null;
+        }
+
+        public IEnumerable<Ingredient> ExportIngredient(IEnumerable<IngredientsExport> ingredientsExports)
+        {
+            var warehouses = ingredientsExports.GroupBy(x => x.WarehouseExportInvoice.WarehouseId);
+            var ingredients = new List<Ingredient>();
+            foreach (var warehouse in warehouses)
+            {
+                ingredients.AddRange(_ingredientRepository
+                    .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
+                    .Include(x => x.IngredientWarehouseRels));
+            }
+
+            foreach (var ingredientsExport in ingredientsExports)
+            {
+                var ingredient = ingredients.FirstOrDefault(x =>
+                    x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
+                    x.WarehouseId == ingredientsExport.WarehouseExportInvoice.WarehouseId);
+
+                ingredient.Quantity -= ingredientsExport.Quantity;
+            }
+
+            return _ingredientRepository.UpdateMany(ingredients);
         }
 
         public decimal CalculateAveragePrice(long IngredientId, long WarehouseId)
@@ -185,7 +207,7 @@ namespace Nemo_v2_Service.Services
             var ingredient = _ingredientRepository.Query(x => x.Id == IngredientId)
                 .Include(y => y.IngredientWarehouseRels).First().IngredientWarehouseRels
                 .FirstOrDefault(x => x.WarehouseId == WarehouseId);
-            
+
             var inserts = _ingredientsInsertRepository.Query(x => x.IngredientId == IngredientId)
                 .Include(x => x.WarehouseInvoice).Where(x => x.WarehouseInvoice.WarehouseId == WarehouseId)
                 .ToList();

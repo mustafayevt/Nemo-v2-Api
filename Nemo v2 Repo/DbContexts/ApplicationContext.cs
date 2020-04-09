@@ -18,13 +18,17 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<RestWareRel> RestWareRels { get; set; }
         public DbSet<RestSupplierRel> RestSupplierRels { get; set; }
+        public DbSet<RestBuyerRel> RestBuyerRels { get; set; }
         public DbSet<IngredientCategory> IngredientCategories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientsInsert> IngredientsInserts { get; set; }
+        public DbSet<IngredientsExport> IngredientsExports { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodGroup> FoodGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Buyer> Buyers { get; set; }
         public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
+        public DbSet<WarehouseExportInvoice> WarehouseExportInvoices { get; set; }
         public DbSet<IngredientWarehouseRel> IngredientWarehouseRels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
@@ -46,6 +50,7 @@ namespace Nemo_v2_Repo.DbContexts
             new FoodInvoiceRelMap(modelBuilder.Entity<FoodInvoiceRel>());
             new SectionMap(modelBuilder.Entity<Section>());
             new RestSupplierRelMap(modelBuilder.Entity<RestSupplierRel>());
+            new RestBuyerRelMap(modelBuilder.Entity<RestBuyerRel>());
             new IngredientWarehouseRelMap(modelBuilder.Entity<IngredientWarehouseRel>());
 
             // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();

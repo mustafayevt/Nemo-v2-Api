@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Nemo_v2_Api.Hubs;
 using Nemo_v2_Data.AutoMapper;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
@@ -89,6 +90,8 @@ namespace Nemo_v2_Api
             services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
             services.AddScoped<IRepository<Printer>,EFPrinterRepository>();
             services.AddScoped<IRepository<Invoice>,EFInvoiceRepository>();
+            services.AddScoped<IRepository<Buyer>,EFBuyerRepository>();
+            services.AddScoped<IRepository<IngredientsExport>,EFIngredientsExportRepository>();
             
             
             services.AddTransient<IUserService, UserService>();
@@ -106,6 +109,10 @@ namespace Nemo_v2_Api
             services.AddTransient<IWarehouseInvoiceService, WarehouseInvoiceService>();
             services.AddTransient<IPrinterService, PrinterService>();
             services.AddTransient<IInvoiceService, InvoiceService>();
+            services.AddTransient<IBuyerService, BuyerService>();
+            services.AddTransient<IWarehouseExportInvoiceService, WarehouseExportInvoiceService>();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,6 +139,8 @@ namespace Nemo_v2_Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            app.UseSignalR(x => x.MapHub<TransferHub>("/Transfer"));
         }
     }
 }
