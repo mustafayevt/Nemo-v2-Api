@@ -104,7 +104,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                 // entity.AddedDate = DateTime.Now;
                 // entity.ModifiedDate = DateTime.Now;
                 var result = dbSet.Add(entity);
-                context.SaveChanges();
+                
                 return result.Entity;
             }
             catch (Exception e)
@@ -126,7 +126,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                     addedEntities.Add(dbSet.Add(entity).Entity);
                 }
 
-                context.SaveChanges();
+                
                 return addedEntities;
             }
             catch (Exception e)
@@ -136,7 +136,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
             }
         }
 
-        public virtual TEntity Update(TEntity entity, string[] notUpdateProperties)
+        public virtual TEntity Update(TEntity entity)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                 entity.AddedDate = oldEntity.AddedDate;
                 context.Entry(oldEntity).CurrentValues.SetValues(entity);
 
-                context.SaveChanges();
+                
                 return context.Entry(oldEntity).Entity;
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                     context.Entry(oldEntity).CurrentValues.SetValues(entity);
                 }
 
-                context.SaveChanges();
+                
                 return entities;
             }
             catch (Exception e)

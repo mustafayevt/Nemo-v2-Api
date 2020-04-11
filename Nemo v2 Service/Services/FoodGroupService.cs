@@ -1,47 +1,80 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class FoodGroupService:IFoodGroupService
+    public class FoodGroupService : IFoodGroupService
     {
-        private IRepository<FoodGroup> _foodGroupRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FoodGroupService(IRepository<FoodGroup> foodGroupRepository)
+        public FoodGroupService(IUnitOfWork unitOfWork)
         {
-            _foodGroupRepository = foodGroupRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<FoodGroup> Get()
         {
-            return _foodGroupRepository.Get();
+            return _unitOfWork.FoodGroupRepository.Get();
         }
 
         public IEnumerable<FoodGroup> GetFoodGroupByRestaurantId(long RestId)
         {
-            return _foodGroupRepository.Query(x => x.RestaurantId == RestId);
+            return _unitOfWork.FoodGroupRepository.Query(x => x.RestaurantId == RestId);
         }
 
         public FoodGroup GetFoodGroup(long id)
         {
-            return _foodGroupRepository.GetById(id);
+            return _unitOfWork.FoodGroupRepository.GetById(id);
         }
 
         public FoodGroup InsertFoodGroup(FoodGroup FoodGroup)
         {
-            return _foodGroupRepository.Insert(FoodGroup);
+            try
+            {
+                var result = _unitOfWork.FoodGroupRepository.Insert(FoodGroup);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
 
         public FoodGroup UpdateFoodGroup(FoodGroup FoodGroup)
         {
-            return _foodGroupRepository.Update(FoodGroup);
+            try
+            {
+                var result = _unitOfWork.FoodGroupRepository.Update(FoodGroup);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
 
         public void DeleteFoodGroup(long id)
         {
-            _foodGroupRepository.Delete(id);
+            try
+            {
+                _unitOfWork.FoodGroupRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
     }
 }

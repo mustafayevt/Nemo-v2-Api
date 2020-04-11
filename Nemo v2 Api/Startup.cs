@@ -14,6 +14,7 @@ using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Repositories.EFRepository;
+using Nemo_v2_Repo.UnitOfWork;
 using Nemo_v2_Service.Abstraction;
 using Nemo_v2_Service.Services;
 
@@ -74,24 +75,25 @@ namespace Nemo_v2_Api
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
             
-            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
-            services.AddScoped<IRepository<User>, EFUserRepository>();
-            services.AddScoped<IRepository<Role>, EFRoleRepository>();
-            services.AddScoped<IRepository<Restaurant>, EFRestaurantRepository>();
-            services.AddScoped<IRepository<Warehouse>,EFWarehouseRepository>();
-            services.AddScoped<IRepository<IngredientCategory>,EFIngredientCategoryRepository>();
-            services.AddScoped<IRepository<Ingredient>,EFIngredientRepository>();
-            services.AddScoped<IRepository<Section>,EFSectionRepository>();
-            services.AddScoped<IRepository<Table>,EFTableRepository>();
-            services.AddScoped<IRepository<Supplier>,EFSupplierRepository>();
-            services.AddScoped<IRepository<FoodGroup>,EFFoodGroupRepository>();
-            services.AddScoped<IRepository<Food>,EFFoodRepository>();
-            services.AddScoped<IRepository<IngredientsInsert>,EFIngredientsInsertRepository>();
-            services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
-            services.AddScoped<IRepository<Printer>,EFPrinterRepository>();
-            services.AddScoped<IRepository<Invoice>,EFInvoiceRepository>();
-            services.AddScoped<IRepository<Buyer>,EFBuyerRepository>();
-            services.AddScoped<IRepository<IngredientsExport>,EFIngredientsExportRepository>();
+            // services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
+            // services.AddScoped<IRepository<User>, EFUserRepository>();
+            // services.AddScoped<IRepository<Role>, EFRoleRepository>();
+            // services.AddScoped<IRepository<Restaurant>, EFRestaurantRepository>();
+            // services.AddScoped<IRepository<Warehouse>,EFWarehouseRepository>();
+            // services.AddScoped<IRepository<IngredientCategory>,EFIngredientCategoryRepository>();
+            // services.AddScoped<IRepository<Ingredient>,EFIngredientRepository>();
+            // services.AddScoped<IRepository<Section>,EFSectionRepository>();
+            // services.AddScoped<IRepository<Table>,EFTableRepository>();
+            // services.AddScoped<IRepository<Supplier>,EFSupplierRepository>();
+            // services.AddScoped<IRepository<FoodGroup>,EFFoodGroupRepository>();
+            // services.AddScoped<IRepository<Food>,EFFoodRepository>();
+            // services.AddScoped<IRepository<IngredientsInsert>,EFIngredientsInsertRepository>();
+            // services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
+            // services.AddScoped<IRepository<Printer>,EFPrinterRepository>();
+            // services.AddScoped<IRepository<Invoice>,EFInvoiceRepository>();
+            // services.AddScoped<IRepository<Buyer>,EFBuyerRepository>();
+            // services.AddScoped<IRepository<IngredientsExport>,EFIngredientsExportRepository>();
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             
             
             services.AddTransient<IUserService, UserService>();

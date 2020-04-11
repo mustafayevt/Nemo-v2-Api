@@ -7,87 +7,119 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class BuyerService:IBuyerService
+    public class BuyerService : IBuyerService
     {
-        private readonly IRepository<Buyer> _buyerRepository;
-        private readonly IRepository<Restaurant> _restaurantRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BuyerService(IRepository<Buyer> buyerRepository,
-            IRepository<Restaurant> restaurantRepository)
+        public BuyerService(IUnitOfWork unitOfWork)
         {
-            _buyerRepository = buyerRepository;
-            _restaurantRepository = restaurantRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Buyer> GetBuyers()
         {
-            return _buyerRepository.Get();
+            return _unitOfWork.BuyerRepository.Get();
         }
 
         public IEnumerable<Buyer> GetBuyersByRestaurantId(long RestId)
         {
-             return _buyerRepository.Query(x => x.RestBuyerRels.Count(y => y.RestaurantId == RestId) > 0);
-            return null;
+            return _unitOfWork.BuyerRepository.Query(x => x.RestBuyerRels.Count(y => y.RestaurantId == RestId) > 0);
         }
 
         public Buyer GetBuyer(long id)
         {
-            return _buyerRepository.GetById(id);
+            return _unitOfWork.BuyerRepository.GetById(id);
         }
 
         public Buyer InsertBuyer(Buyer Buyer)
         {
-            if (Buyer.RestBuyerRels?.Any() ?? false)
+            try
             {
-                if (Buyer.RestBuyerRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Buyer.RestBuyerRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Buyer.RestBuyerRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Buyer.RestBuyerRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Buyer.RestBuyerRels = selectedRestaurants.Select(x =>
+                        new RestBuyerRel()
+                        {
+                            RestaurantId = x.Id,
+                            BuyerId = Buyer.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Buyer.RestBuyerRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Buyer.RestBuyerRels = selectedRestaurants.Select(x =>
-                    new RestBuyerRel()
-                    {
-                        RestaurantId = x.Id,
-                        BuyerId = Buyer.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.BuyerRepository.Insert(Buyer);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-            return _buyerRepository.Insert(Buyer);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
 
         public Buyer UpdateBuyer(Buyer Buyer)
         {
-            if (Buyer.RestBuyerRels?.Any() ?? false)
+            try
             {
-                if (Buyer.RestBuyerRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Buyer.RestBuyerRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Buyer.RestBuyerRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Buyer.RestBuyerRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Buyer.RestBuyerRels = selectedRestaurants.Select(x =>
+                        new RestBuyerRel()
+                        {
+                            RestaurantId = x.Id,
+                            BuyerId = Buyer.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Buyer.RestBuyerRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Buyer.RestBuyerRels = selectedRestaurants.Select(x =>
-                    new RestBuyerRel()
-                    {
-                        RestaurantId = x.Id,
-                        BuyerId = Buyer.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.BuyerRepository.Update(Buyer);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-            return _buyerRepository.Update(Buyer);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
 
         public void DeleteBuyer(long id)
         {
-            _buyerRepository.Delete(id);
+            try
+            {
+            _unitOfWork.BuyerRepository.Delete(id);
+            _unitOfWork.Save();
+            _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw e;
+            }
         }
     }
 }

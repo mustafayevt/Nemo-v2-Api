@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
+using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Helper;
 
 namespace Nemo_v2_Repo.Repositories.EFRepository
 {
-    public class EFFoodRepository:EFRepository<Food>
+    public class EFFoodRepository:EFRepository<Food>,IFoodRepository
     {
         public EFFoodRepository(ApplicationContext context) : base(context)
         {
         }
 
-        public override Food Update(Food entity, string[] notUpdateProperties)
+        public override Food Update(Food entity)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                 context.TryUpdateManyToMany(model.FoodGroups, entity.FoodGroups, x => x.FoodGroupId);
 
 
-                return base.Update(entity, notUpdateProperties);
+                return base.Update(entity);
             }
             catch (Exception e)
             {
