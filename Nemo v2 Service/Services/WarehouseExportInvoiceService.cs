@@ -8,7 +8,7 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class WarehouseExportInvoiceService:IWarehouseExportInvoiceService
+    public class WarehouseExportInvoiceService : IWarehouseExportInvoiceService
     {
         private IRepository<WarehouseExportInvoice> _warehouseExportInvoiceRepository;
         private IRepository<Ingredient> _ingredientRepository;
@@ -67,10 +67,17 @@ namespace Nemo_v2_Service.Services
                             Quantity = 0
                         });
                     }
+
                     _warehouseRepository.Update(warehouse);
                 }
             }
 
+            WarehouseExportInvoice.TotalAmount = 0;
+            foreach (var ingredientsExport in WarehouseExportInvoice.IngredientsExports)
+            {
+                WarehouseExportInvoice.TotalAmount += ingredientsExport.Quantity * _ingredientService.CalculateAveragePrice(ingredientsExport.IngredientId,
+                        WarehouseExportInvoice.WarehouseId);
+            }
 
             var warehouseExportInvoice = _warehouseExportInvoiceRepository.Insert(WarehouseExportInvoice);
             _ingredientService.ExportIngredient(WarehouseExportInvoice.IngredientsExports);

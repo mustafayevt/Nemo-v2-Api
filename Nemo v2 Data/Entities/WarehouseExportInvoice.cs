@@ -28,5 +28,6 @@ namespace Nemo_v2_Data.Entities
 
         public bool IsPayed { get; set; }
         public List<IngredientsExport> IngredientsExports { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }

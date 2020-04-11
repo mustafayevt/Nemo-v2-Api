@@ -208,35 +208,44 @@ namespace Nemo_v2_Service.Services
                 .Include(y => y.IngredientWarehouseRels).First().IngredientWarehouseRels
                 .FirstOrDefault(x => x.WarehouseId == WarehouseId);
 
-            var inserts = _ingredientsInsertRepository.Query(x => x.IngredientId == IngredientId)
-                .Include(x => x.WarehouseInvoice).Where(x => x.WarehouseInvoice.WarehouseId == WarehouseId)
-                .ToList();
-            
-            decimal PriceAmount = 0;
-            if (ingredient.Quantity <= 0)
+            try
             {
-                inserts.ForEach(x => PriceAmount += x.PriceForEach);
-                return PriceAmount / inserts.Count();
+                var inserts = _ingredientsInsertRepository.Query(x => x.IngredientId == IngredientId)
+                    .Include(x => x.WarehouseInvoice).Where(x => x.WarehouseInvoice.WarehouseId == WarehouseId)
+                    .ToList();
+
+
+                decimal PriceAmount = 0;
+                if (ingredient.Quantity <= 0)
+                {
+                    inserts.ForEach(x => PriceAmount += x.PriceForEach);
+                    return PriceAmount / inserts.Count();
+                }
+
+                decimal insertsQuantity = 0;
+                inserts.ForEach(x => insertsQuantity += x.Quantity);
+                var unAvailableQuantity = insertsQuantity - ingredient.Quantity;
+
+                decimal count = 0;
+                int index = 0;
+                while (count <= unAvailableQuantity)
+                {
+                    count += inserts[index++].Quantity;
+                }
+
+                var TakeSkip = inserts.Skip(index - 1).Take(inserts.Count());
+                foreach (var ingredientsInsert in TakeSkip)
+                {
+                    PriceAmount += ingredientsInsert.PriceForEach;
+                }
+
+                return PriceAmount / TakeSkip.Count();
+            }
+            catch (Exception e)
+            {
+                return 0;
             }
 
-            decimal insertsQuantity = 0;
-            inserts.ForEach(x => insertsQuantity += x.Quantity);
-            var unAvailableQuantity = insertsQuantity - ingredient.Quantity;
-
-            decimal count = 0;
-            int index = 0;
-            while (count <= unAvailableQuantity)
-            {
-                count += inserts[index++].Quantity;
-            }
-
-            var TakeSkip = inserts.Skip(index - 1).Take(inserts.Count());
-            foreach (var ingredientsInsert in TakeSkip)
-            {
-                PriceAmount += ingredientsInsert.PriceForEach;
-            }
-
-            return PriceAmount / TakeSkip.Count();
             // return 5;
         }
 
