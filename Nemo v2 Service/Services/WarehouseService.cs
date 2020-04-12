@@ -10,86 +10,118 @@ namespace Nemo_v2_Service.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        private readonly IRepository<Warehouse> _warehouseRepository;
-        private readonly IRepository<Restaurant> _restaurantRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public WarehouseService(IRepository<Warehouse> warehouseRepository,
-            IRepository<Restaurant> repositoryRepository)
+        public WarehouseService(IUnitOfWork unitOfWork)
         {
-            _warehouseRepository = warehouseRepository;
-            _restaurantRepository = repositoryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Warehouse> GetWarehouses()
         {
-            return _warehouseRepository.Get();
+            return _unitOfWork.WarehouseRepository.Get();
         }
 
         public IEnumerable<Warehouse> GetWarehousesByRestaurantId(long RestId)
         {
-            return _warehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId == RestId) > 0);
+            return _unitOfWork.WarehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId == RestId) > 0);
         }
 
         public Warehouse GetWarehouse(long id)
         {
-            return _warehouseRepository.GetById(id);
+            return _unitOfWork.WarehouseRepository.GetById(id);
         }
 
         public Warehouse InsertWarehouse(Warehouse Warehouse)
         {
-            if (Warehouse.RestWareRels?.Any() ?? false)
+            try
             {
-                if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Warehouse.RestWareRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Warehouse.RestWareRels = selectedRestaurants.Select(x =>
+                        new RestWareRel()
+                        {
+                            RestaurantId = x.Id,
+                            WarehouseId = Warehouse.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Warehouse.RestWareRels = selectedRestaurants.Select(x =>
-                    new RestWareRel()
-                    {
-                        RestaurantId = x.Id,
-                        WarehouseId = Warehouse.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.WarehouseRepository.Insert(Warehouse);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-
-            return _warehouseRepository.Insert(Warehouse);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public Warehouse UpdateWarehouse(Warehouse Warehouse)
         {
-            if (Warehouse.RestWareRels?.Any() ?? false)
+            try
             {
-                if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Warehouse.RestWareRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Warehouse.RestWareRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Warehouse.RestWareRels = selectedRestaurants.Select(x =>
+                        new RestWareRel()
+                        {
+                            RestaurantId = x.Id,
+                            WarehouseId = Warehouse.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Warehouse.RestWareRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Warehouse.RestWareRels = selectedRestaurants.Select(x =>
-                    new RestWareRel()
-                    {
-                        RestaurantId = x.Id,
-                        WarehouseId = Warehouse.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.WarehouseRepository.Update(Warehouse);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-
-            return _warehouseRepository.Update(Warehouse);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public void DeleteWarehouse(long id)
         {
-            _warehouseRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.WarehouseRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
     }
 }

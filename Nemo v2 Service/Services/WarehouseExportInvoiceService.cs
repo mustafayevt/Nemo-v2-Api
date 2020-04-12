@@ -5,94 +5,127 @@ using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
+using Npgsql;
 
 namespace Nemo_v2_Service.Services
 {
     public class WarehouseExportInvoiceService : IWarehouseExportInvoiceService
     {
-        private IRepository<WarehouseExportInvoice> _warehouseExportInvoiceRepository;
-        private IRepository<Ingredient> _ingredientRepository;
-        private IRepository<Warehouse> _warehouseRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private IIngredientService _ingredientService;
 
-        public WarehouseExportInvoiceService(IRepository<WarehouseExportInvoice> warehouseExportInvoiceRepository,
-            IIngredientService ingredientService,
-            IRepository<Ingredient> ingredientRepository,
-            IRepository<Warehouse> warehouseRepository)
+        public WarehouseExportInvoiceService(IUnitOfWork unitOfWork, IIngredientService ingredientService)
         {
-            _warehouseExportInvoiceRepository = warehouseExportInvoiceRepository;
+            _unitOfWork = unitOfWork;
             _ingredientService = ingredientService;
-            _ingredientRepository = ingredientRepository;
-            _warehouseRepository = warehouseRepository;
         }
 
         public IEnumerable<WarehouseExportInvoice> Get()
         {
-            return _warehouseExportInvoiceRepository.Get();
+            return _unitOfWork.WarehouseExportInvoiceRepository.Get();
         }
 
         public IEnumerable<WarehouseExportInvoice> GetWarehouseExportInvoiceByRestaurantId(long RestId)
         {
-            return _warehouseExportInvoiceRepository.Query(x => x.RestaurantId == RestId)
+            return _unitOfWork.WarehouseExportInvoiceRepository.Query(x => x.RestaurantId == RestId)
                 .Include(x => x.IngredientsExports);
         }
 
         public WarehouseExportInvoice GetWarehouseExportInvoice(long id)
         {
-            return _warehouseExportInvoiceRepository.Query(x => x.Id == id)
+            return _unitOfWork.WarehouseExportInvoiceRepository.Query(x => x.Id == id)
                 .Include(x => x.IngredientsExports).First();
         }
 
         public WarehouseExportInvoice InsertWarehouseExportInvoice(WarehouseExportInvoice WarehouseExportInvoice)
         {
-            // var a =_ingredientService.CalculateAveragePrice(38,9);
-            if (WarehouseExportInvoice.IngredientsExports?.Any() ?? false)
+            try
             {
-                if (WarehouseExportInvoice.IngredientsExports.Any(x => x.IngredientId == 0))
-                    throw new NullReferenceException("Ingredient not found");
-                var warehouse = _warehouseRepository.Query(x => x.Id == WarehouseExportInvoice.WarehouseId)
-                    .Include(x => x.IngredientWarehouseRels).First();
-
-                var ingredientWareRel = WarehouseExportInvoice.IngredientsExports.Select(y => y.IngredientId)
-                    .Except(warehouse.IngredientWarehouseRels.Select(y => y.IngredientId)).ToList();
-
-                if (ingredientWareRel?.Any() ?? false)
+                _unitOfWork.CreateTransaction();
+                // var a =_ingredientService.CalculateAveragePrice(38,9);
+                if (WarehouseExportInvoice.IngredientsExports?.Any() ?? false)
                 {
-                    foreach (var ingredient in ingredientWareRel)
+                    if (WarehouseExportInvoice.IngredientsExports.Any(x => x.IngredientId == 0))
+                        throw new NullReferenceException("Ingredient not found");
+                    var warehouse = _unitOfWork.WarehouseRepository
+                        .Query(x => x.Id == WarehouseExportInvoice.WarehouseId)
+                        .Include(x => x.IngredientWarehouseRels).First();
+
+                    var ingredientWareRel = WarehouseExportInvoice.IngredientsExports.Select(y => y.IngredientId)
+                        .Except(warehouse.IngredientWarehouseRels.Select(y => y.IngredientId)).ToList();
+
+                    if (ingredientWareRel?.Any() ?? false)
                     {
-                        warehouse.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                        foreach (var ingredient in ingredientWareRel)
                         {
-                            IngredientId = ingredient,
-                            WarehouseId = warehouse.Id,
-                            Quantity = 0
-                        });
+                            warehouse.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                            {
+                                IngredientId = ingredient,
+                                WarehouseId = warehouse.Id,
+                                Quantity = 0
+                            });
+                        }
+
+                        _unitOfWork.WarehouseRepository.Update(warehouse);
+                        _unitOfWork.Save();
                     }
-
-                    _warehouseRepository.Update(warehouse);
                 }
-            }
 
-            WarehouseExportInvoice.TotalAmount = 0;
-            foreach (var ingredientsExport in WarehouseExportInvoice.IngredientsExports)
+                WarehouseExportInvoice.TotalAmount = 0;
+                foreach (var ingredientsExport in WarehouseExportInvoice.IngredientsExports)
+                {
+                    WarehouseExportInvoice.TotalAmount +=
+                        ingredientsExport.Quantity * _ingredientService.CalculateAveragePrice(
+                            ingredientsExport.IngredientId,
+                            WarehouseExportInvoice.WarehouseId);
+                }
+
+                var warehouseExportInvoice =
+                    _unitOfWork.WarehouseExportInvoiceRepository.Insert(WarehouseExportInvoice);
+                _ingredientService.ExportIngredient(WarehouseExportInvoice.IngredientsExports);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+
+                return warehouseExportInvoice;
+            }
+            catch (Exception e)
             {
-                WarehouseExportInvoice.TotalAmount += ingredientsExport.Quantity * _ingredientService.CalculateAveragePrice(ingredientsExport.IngredientId,
-                        WarehouseExportInvoice.WarehouseId);
+                _unitOfWork.Rollback();
+                throw;
             }
-
-            var warehouseExportInvoice = _warehouseExportInvoiceRepository.Insert(WarehouseExportInvoice);
-            _ingredientService.ExportIngredient(WarehouseExportInvoice.IngredientsExports);
-
-            return warehouseExportInvoice;
         }
 
         public WarehouseExportInvoice UpdateWarehouseExportInvoice(WarehouseExportInvoice WarehouseExportInvoice)
         {
-            return _warehouseExportInvoiceRepository.Update(WarehouseExportInvoice);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.WarehouseExportInvoiceRepository.Update(WarehouseExportInvoice);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
 
         public void DeleteWarehouseExportInvoice(long id)
         {
-            _warehouseExportInvoiceRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.WarehouseExportInvoiceRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
     }
 }

@@ -10,37 +10,28 @@ namespace Nemo_v2_Service.Services
 {
     public class IngredientService : IIngredientService
     {
-        private readonly IRepository<Ingredient> _ingredientRepository;
-        private readonly IRepository<IngredientCategory> _ingredientCategoryRepository;
-        private readonly IRepository<IngredientsInsert> _ingredientsInsertRepository;
-        private readonly IRepository<Warehouse> _warehouseRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public IngredientService(IRepository<Ingredient> ingredientRepository,
-            IRepository<IngredientCategory> ingredientCategoryRepository,
-            IRepository<IngredientsInsert> ingredientsInsertRepository,
-            IRepository<Warehouse> warehouseRepository)
+        public IngredientService(IUnitOfWork unitOfWork)
         {
-            _ingredientRepository = ingredientRepository;
-            _ingredientCategoryRepository = ingredientCategoryRepository;
-            _ingredientsInsertRepository = ingredientsInsertRepository;
-            _warehouseRepository = warehouseRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Ingredient> Get()
         {
-            return _ingredientRepository.Get();
+            return _unitOfWork.IngredientRepository.Get();
         }
 
         public IEnumerable<Ingredient> GetIngredientByRestaurantId(long RestId)
         {
-            return _ingredientRepository.Query(x => x.RestaurantId == RestId)
+            return _unitOfWork.IngredientRepository.Query(x => x.RestaurantId == RestId)
                 .Include(x => x.IngredientCategories)
                 .ThenInclude(x => x.IngredientCategory);
         }
 
         public IEnumerable<Ingredient> GetIngredientByWarehouseId(long WarehouseId)
         {
-            return _ingredientRepository
+            return _unitOfWork.IngredientRepository
                 .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == WarehouseId) > 0)
                 .Include(x => x.IngredientCategories)
                 .ThenInclude(x => x.IngredientCategory);
@@ -48,169 +39,211 @@ namespace Nemo_v2_Service.Services
 
         public Ingredient GetIngredient(long id)
         {
-            return _ingredientRepository.Query(x => x.Id == id)
+            return _unitOfWork.IngredientRepository.Query(x => x.Id == id)
                 .Include(x => x.IngredientCategories)
                 .ThenInclude(x => x.IngredientCategory).First();
         }
 
         public Ingredient InsertIngredient(Ingredient Ingredient)
         {
-            if (Ingredient.IngredientWarehouseRels?.Any() ?? false)
+            try
             {
-                if (Ingredient.IngredientWarehouseRels.Any(x => x.Warehouse.Id == 0))
-                    throw new NullReferenceException("Warehouse not found");
-
-                var warehouseIds = Ingredient.IngredientWarehouseRels.Select(y => y.Warehouse.Id).ToList();
-                if (warehouseIds.Any())
+                _unitOfWork.CreateTransaction();
+                if (Ingredient.IngredientWarehouseRels?.Any() ?? false)
                 {
-                    var warehouses = _warehouseRepository.Query(x => warehouseIds.Contains(x.Id)).ToList();
+                    if (Ingredient.IngredientWarehouseRels.Any(x => x.Warehouse.Id == 0))
+                        throw new NullReferenceException("Warehouse not found");
 
-                    if (warehouses.Count() != Ingredient.IngredientWarehouseRels.Count())
-                        throw new NullReferenceException("Warehouse Not Found");
-                    Ingredient.IngredientWarehouseRels.Clear();
-                    warehouses.ForEach(x =>
+                    var warehouseIds = Ingredient.IngredientWarehouseRels.Select(y => y.Warehouse.Id).ToList();
+                    if (warehouseIds.Any())
                     {
-                        Ingredient.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                        var warehouses = _unitOfWork.WarehouseRepository.Query(x => warehouseIds.Contains(x.Id)).ToList();
+
+                        if (warehouses.Count() != Ingredient.IngredientWarehouseRels.Count())
+                            throw new NullReferenceException("Warehouse Not Found");
+                        Ingredient.IngredientWarehouseRels.Clear();
+                        warehouses.ForEach(x =>
                         {
-                            IngredientId = Ingredient.Id,
-                            WarehouseId = x.Id,
-                            Quantity = 0
+                            Ingredient.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                            {
+                                IngredientId = Ingredient.Id,
+                                WarehouseId = x.Id,
+                                Quantity = 0
+                            });
                         });
+                    }
+                }
+
+
+                if (Ingredient.IngredientCategories?.Any() ?? false)
+                {
+                    if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
+                    {
+                        IEnumerable<IngredientCategory> newCategories;
+                        newCategories = _unitOfWork.IngredientCategoryRepository
+                            .InsertMany(Ingredient.IngredientCategories
+                                .Where(x => x.IngredientCategory.Id == 0)
+                                .Select(x => x.IngredientCategory)).ToList();
+
+                        Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
+                    }
+
+                    Ingredient.IngredientCategories.ForEach(x =>
+                    {
+                        x.IngredientId = Ingredient.Id;
+                        x.IngredientCategoryId = x.IngredientCategory.Id;
+                        x.IngredientCategory = null;
                     });
                 }
+
+                var result = _unitOfWork.IngredientRepository.Insert(Ingredient);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-
-
-            if (Ingredient.IngredientCategories?.Any() ?? false)
+            catch (Exception e)
             {
-                if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
-                {
-                    IEnumerable<IngredientCategory> newCategories;
-                    newCategories = _ingredientCategoryRepository
-                        .InsertMany(Ingredient.IngredientCategories
-                            .Where(x => x.IngredientCategory.Id == 0)
-                            .Select(x => x.IngredientCategory)).ToList();
-
-                    Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
-                }
-
-                Ingredient.IngredientCategories.ForEach(x =>
-                {
-                    x.IngredientId = Ingredient.Id;
-                    x.IngredientCategoryId = x.IngredientCategory.Id;
-                    x.IngredientCategory = null;
-                });
+                _unitOfWork.Rollback();
+                throw ;
             }
-
-            return _ingredientRepository.Insert(Ingredient);
         }
 
         public Ingredient UpdateIngredient(Ingredient Ingredient)
         {
-            if (Ingredient.IngredientWarehouseRels?.Any() ?? false)
+            try
             {
-                if (Ingredient.IngredientWarehouseRels.Any(x => x.Warehouse.Id == 0))
-                    throw new NullReferenceException("Warehouse not found");
-
-                var warehouseIds = Ingredient.IngredientWarehouseRels.Select(y => y.Warehouse.Id).ToList();
-                if (warehouseIds.Any())
+                _unitOfWork.CreateTransaction();
+                if (Ingredient.IngredientWarehouseRels?.Any() ?? false)
                 {
-                    var warehouses = _ingredientRepository.Query(x => warehouseIds.Contains(x.Id)).ToList();
+                    if (Ingredient.IngredientWarehouseRels.Any(x => x.Warehouse.Id == 0))
+                        throw new NullReferenceException("Warehouse not found");
 
-                    if (warehouses.Count() != Ingredient.IngredientWarehouseRels.Count())
-                        throw new NullReferenceException("Warehouse Not Found");
-                    Ingredient.IngredientWarehouseRels.Clear();
-                    warehouses.ForEach(x =>
+                    var warehouseIds = Ingredient.IngredientWarehouseRels.Select(y => y.Warehouse.Id).ToList();
+                    if (warehouseIds.Any())
                     {
-                        Ingredient.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                        var warehouses = _unitOfWork.IngredientRepository.Query(x => warehouseIds.Contains(x.Id)).ToList();
+
+                        if (warehouses.Count() != Ingredient.IngredientWarehouseRels.Count())
+                            throw new NullReferenceException("Warehouse Not Found");
+                        Ingredient.IngredientWarehouseRels.Clear();
+                        warehouses.ForEach(x =>
                         {
-                            IngredientId = Ingredient.Id,
-                            WarehouseId = x.Id
+                            Ingredient.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                            {
+                                IngredientId = Ingredient.Id,
+                                WarehouseId = x.Id
+                            });
                         });
+                    }
+                }
+
+
+                if (Ingredient.IngredientCategories?.Any() ?? false)
+                {
+                    if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
+                    {
+                        IEnumerable<IngredientCategory> newCategories;
+                        newCategories = _unitOfWork.IngredientCategoryRepository
+                            .InsertMany(Ingredient.IngredientCategories
+                                .Where(x => x.IngredientCategory.Id == 0)
+                                .Select(x => x.IngredientCategory)).ToList();
+
+                        Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
+                    }
+
+                    Ingredient.IngredientCategories.ForEach(x =>
+                    {
+                        x.IngredientId = Ingredient.Id;
+                        x.IngredientCategoryId = x.IngredientCategory.Id;
+                        x.IngredientCategory = null;
                     });
                 }
+
+                var result =  _unitOfWork.IngredientRepository.Update(Ingredient);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-
-
-            if (Ingredient.IngredientCategories?.Any() ?? false)
+            catch (Exception e)
             {
-                if (Ingredient.IngredientCategories.Any(x => x.IngredientCategory.Id == 0))
-                {
-                    IEnumerable<IngredientCategory> newCategories;
-                    newCategories = _ingredientCategoryRepository
-                        .InsertMany(Ingredient.IngredientCategories
-                            .Where(x => x.IngredientCategory.Id == 0)
-                            .Select(x => x.IngredientCategory)).ToList();
-
-                    Ingredient.IngredientCategories.RemoveAll(x => x.IngredientCategory.Id == 0);
-                }
-
-                Ingredient.IngredientCategories.ForEach(x =>
-                {
-                    x.IngredientId = Ingredient.Id;
-                    x.IngredientCategoryId = x.IngredientCategory.Id;
-                    x.IngredientCategory = null;
-                });
+                _unitOfWork.Rollback();
+                throw ;
             }
-
-            return _ingredientRepository.Update(Ingredient);
         }
 
         public IEnumerable<Ingredient> InsertIngredient(IEnumerable<IngredientsInsert> ingredientsInserts)
         {
-            var warehouses = ingredientsInserts.GroupBy(x => x.WarehouseInvoice.WarehouseId);
-            var ingredients = new List<Ingredient>();
-            foreach (var warehouse in warehouses)
+            try
             {
-                ingredients.AddRange(_ingredientRepository
-                    .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
-                    .Include(x => x.IngredientWarehouseRels));
-            }
+                var warehouses = ingredientsInserts.GroupBy(x => x.WarehouseInvoice.WarehouseId);
+                var ingredients = new List<Ingredient>();
+                foreach (var warehouse in warehouses)
+                {
+                    ingredients.AddRange(_unitOfWork.IngredientRepository
+                        .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
+                        .Include(x => x.IngredientWarehouseRels));
+                }
 
-            foreach (var ingredientsInsert in ingredientsInserts)
+                foreach (var ingredientsInsert in ingredientsInserts)
+                {
+                    var ingredient = ingredients.FirstOrDefault(x =>
+                        x.Id == ingredientsInsert.IngredientId).IngredientWarehouseRels.First(x =>
+                        x.WarehouseId == ingredientsInsert.WarehouseInvoice.WarehouseId);
+
+                    ingredient.Quantity += ingredientsInsert.Quantity;
+                }
+
+                var result =  _unitOfWork.IngredientRepository.UpdateMany(ingredients);
+                _unitOfWork.Save();
+                return result;
+            }
+            catch (Exception e)
             {
-                var ingredient = ingredients.FirstOrDefault(x =>
-                    x.Id == ingredientsInsert.IngredientId).IngredientWarehouseRels.First(x =>
-                    x.WarehouseId == ingredientsInsert.WarehouseInvoice.WarehouseId);
-
-                ingredient.Quantity += ingredientsInsert.Quantity;
+                throw ;
             }
-
-            return _ingredientRepository.UpdateMany(ingredients);
         }
 
         public IEnumerable<Ingredient> ExportIngredient(IEnumerable<IngredientsExport> ingredientsExports)
         {
-            var warehouses = ingredientsExports.GroupBy(x => x.WarehouseExportInvoice.WarehouseId);
-            var ingredients = new List<Ingredient>();
-            foreach (var warehouse in warehouses)
+            try
             {
-                ingredients.AddRange(_ingredientRepository
-                    .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
-                    .Include(x => x.IngredientWarehouseRels));
-            }
+                var warehouses = ingredientsExports.GroupBy(x => x.WarehouseExportInvoice.WarehouseId);
+                var ingredients = new List<Ingredient>();
+                foreach (var warehouse in warehouses)
+                {
+                    ingredients.AddRange(_unitOfWork.IngredientRepository
+                        .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
+                        .Include(x => x.IngredientWarehouseRels));
+                }
 
-            foreach (var ingredientsExport in ingredientsExports)
+                foreach (var ingredientsExport in ingredientsExports)
+                {
+                    var ingredient = ingredients.FirstOrDefault(x =>
+                        x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
+                        x.WarehouseId == ingredientsExport.WarehouseExportInvoice.WarehouseId);
+
+                    ingredient.Quantity -= ingredientsExport.Quantity;
+                }
+
+                var result =  _unitOfWork.IngredientRepository.UpdateMany(ingredients);
+                _unitOfWork.Save();
+                return result;
+            }
+            catch (Exception e)
             {
-                var ingredient = ingredients.FirstOrDefault(x =>
-                    x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
-                    x.WarehouseId == ingredientsExport.WarehouseExportInvoice.WarehouseId);
-
-                ingredient.Quantity -= ingredientsExport.Quantity;
+                throw ;
             }
-
-            return _ingredientRepository.UpdateMany(ingredients);
         }
 
         public decimal CalculateAveragePrice(long IngredientId, long WarehouseId)
         {
-            var ingredient = _ingredientRepository.Query(x => x.Id == IngredientId)
+            var ingredient = _unitOfWork.IngredientRepository.Query(x => x.Id == IngredientId)
                 .Include(y => y.IngredientWarehouseRels).First().IngredientWarehouseRels
                 .FirstOrDefault(x => x.WarehouseId == WarehouseId);
 
             try
             {
-                var inserts = _ingredientsInsertRepository.Query(x => x.IngredientId == IngredientId)
+                var inserts = _unitOfWork.IngredientsInsertRepository.Query(x => x.IngredientId == IngredientId)
                     .Include(x => x.WarehouseInvoice).Where(x => x.WarehouseInvoice.WarehouseId == WarehouseId)
                     .ToList();
 
@@ -251,7 +284,18 @@ namespace Nemo_v2_Service.Services
 
         public void DeleteIngredient(long id)
         {
-            _ingredientRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.IngredientRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
     }
 }

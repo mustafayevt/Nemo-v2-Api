@@ -10,102 +10,134 @@ namespace Nemo_v2_Service.Services
 {
     public class InvoiceService:IInvoiceService
     {
-        private IRepository<Invoice> _invoiceRepository;
-        private IRepository<Food> _foodRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public InvoiceService(IRepository<Invoice> invoiceRepository,
-            IRepository<Food> foodRepository)
+        public InvoiceService(IUnitOfWork unitOfWork)
         {
-            _invoiceRepository = invoiceRepository;
-            _foodRepository = foodRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Invoice> Get()
         {
-            return _invoiceRepository.Get();
+            return _unitOfWork.InvoiceRepository.Get();
         }
 
         public IEnumerable<Invoice> GetInvoicesByRestaurantId(long RestId)
         {
-            return _invoiceRepository.Query(x => x.RestaurantId == RestId)
+            return _unitOfWork.InvoiceRepository.Query(x => x.RestaurantId == RestId)
                 .Include(x => x.Foods)
                 .ThenInclude(x=>x.Food);
         }
 
         public Invoice GetInvoice(long id)
         {
-            return _invoiceRepository.Query(x => x.Id == id)
+            return _unitOfWork.InvoiceRepository.Query(x => x.Id == id)
                 .Include(x => x.Foods)
                 .ThenInclude(x=>x.Food).First();
         }
 
         public Invoice InsertInvoice(Invoice invoice)
         {
-            if (invoice.Foods?.Any() ?? false)
+            try
             {
-                if (invoice.Foods.Any(x => x.Food.Id == 0))
-                    throw new NullReferenceException("Food not found");
-
-                var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
-                if (foodIds.Any())
+                _unitOfWork.CreateTransaction();
+                if (invoice.Foods?.Any() ?? false)
                 {
-                    var foods = _foodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
+                    if (invoice.Foods.Any(x => x.Food.Id == 0))
+                        throw new NullReferenceException("Food not found");
 
-                    if (foods.Count() != invoice.Foods.Count())
-                        throw new NullReferenceException("Food Not Found");
-                    //invoice.Ingredients.Clear();
-                    var foodInvoiceRels = new List<FoodInvoiceRel>();
-                    for (int i = 0; i < foods.Count(); i++)
+                    var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
+                    if (foodIds.Any())
                     {
-                        foodInvoiceRels.Add(new FoodInvoiceRel()
-                        {
-                            InvoiceId = invoice.Id,
-                            FoodId = foods[i].Id,
-                        });
-                    }
+                        var foods = _unitOfWork.FoodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
 
-                    invoice.Foods = foodInvoiceRels;
+                        if (foods.Count() != invoice.Foods.Count())
+                            throw new NullReferenceException("Food Not Found");
+                        //invoice.Ingredients.Clear();
+                        var foodInvoiceRels = new List<FoodInvoiceRel>();
+                        for (int i = 0; i < foods.Count(); i++)
+                        {
+                            foodInvoiceRels.Add(new FoodInvoiceRel()
+                            {
+                                InvoiceId = invoice.Id,
+                                FoodId = foods[i].Id,
+                            });
+                        }
+
+                        invoice.Foods = foodInvoiceRels;
+                    }
                 }
-            }
             
-            return _invoiceRepository.Insert(invoice);
+                var result = _unitOfWork.InvoiceRepository.Insert(invoice);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public Invoice UpdateInvoice(Invoice invoice)
         {
-            if (invoice.Foods?.Any() ?? false)
+            try
             {
-                if (invoice.Foods.Any(x => x.Food.Id == 0))
-                    throw new NullReferenceException("Food not found");
-
-                var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
-                if (foodIds.Any())
+                _unitOfWork.CreateTransaction();
+                if (invoice.Foods?.Any() ?? false)
                 {
-                    var foods = _foodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
+                    if (invoice.Foods.Any(x => x.Food.Id == 0))
+                        throw new NullReferenceException("Food not found");
 
-                    if (foods.Count() != invoice.Foods.Count())
-                        throw new NullReferenceException("Food Not Found");
-                    //invoice.Ingredients.Clear();
-                    var foodInvoiceRels = new List<FoodInvoiceRel>();
-                    for (int i = 0; i < foods.Count(); i++)
+                    var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
+                    if (foodIds.Any())
                     {
-                        foodInvoiceRels.Add(new FoodInvoiceRel()
+                        var foods = _unitOfWork.FoodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
+
+                        if (foods.Count() != invoice.Foods.Count())
+                            throw new NullReferenceException("Food Not Found");
+                        //invoice.Ingredients.Clear();
+                        var foodInvoiceRels = new List<FoodInvoiceRel>();
+                        for (int i = 0; i < foods.Count(); i++)
                         {
-                            InvoiceId = invoice.Id,
-                            FoodId = foods[i].Id,
-                        });
+                            foodInvoiceRels.Add(new FoodInvoiceRel()
+                            {
+                                InvoiceId = invoice.Id,
+                                FoodId = foods[i].Id,
+                            });
+                        }
+
+                        invoice.Foods = foodInvoiceRels;
                     }
-
-                    invoice.Foods = foodInvoiceRels;
                 }
+            
+                var result = _unitOfWork.InvoiceRepository.Update(invoice);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-
-            return _invoiceRepository.Update(invoice);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public void DeleteInvoice(long id)
         {
-            _invoiceRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.InvoiceRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
     }
 }

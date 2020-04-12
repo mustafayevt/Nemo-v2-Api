@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
+using Nemo_v2_Repo.Helper;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Api.Controllers
@@ -41,8 +42,8 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
             }
         }
         
@@ -59,8 +60,8 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
             }
         }
         
@@ -77,8 +78,8 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return BadRequest(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return BadRequest(e.GetAllMessages());
             }
         }
         
@@ -94,8 +95,8 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return BadRequest(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return BadRequest(e.GetAllMessages());
             }
         }
     }

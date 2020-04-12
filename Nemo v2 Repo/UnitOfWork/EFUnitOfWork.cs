@@ -31,6 +31,7 @@ namespace Nemo_v2_Repo.UnitOfWork
             UserRepository = new EFUserRepository(_context);
             WarehouseInvoiceRepository = new EFWarehouseInvoiceRepository(_context);
             WarehouseRepository = new EFWarehouseRepository(_context);
+            WarehouseExportInvoiceRepository = new EFWarehouseExportInvoiceRepository(_context);
         }
 
 
@@ -50,6 +51,7 @@ namespace Nemo_v2_Repo.UnitOfWork
         public ITableRepository TableRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
         public IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
+        public IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
         public IWarehouseRepository WarehouseRepository { get; set; }
 
         public IDbContextTransaction CreateTransaction()

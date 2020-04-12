@@ -21,6 +21,7 @@ namespace Nemo_v2_Repo.Abstraction
         ITableRepository TableRepository { get; set; }
         IUserRepository UserRepository { get; set; }
         IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
+        IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
         IWarehouseRepository WarehouseRepository { get; set; }
         
         

@@ -26,7 +26,7 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
         //     }
         //     catch (Exception e)
         //     {
-        //         if (e.InnerException != null) throw e.InnerException;
+        //         if ( != null) throw ;
         //         throw;
         //     }
         // }

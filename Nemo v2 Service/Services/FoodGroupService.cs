@@ -34,6 +34,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 var result = _unitOfWork.FoodGroupRepository.Insert(FoodGroup);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -42,7 +43,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
 
@@ -50,6 +51,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 var result = _unitOfWork.FoodGroupRepository.Update(FoodGroup);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -58,7 +60,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
 
@@ -66,6 +68,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 _unitOfWork.FoodGroupRepository.Delete(id);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -73,7 +76,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
     }

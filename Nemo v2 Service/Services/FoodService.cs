@@ -42,6 +42,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 if (Food.Ingredients?.Any() ?? false)
                 {
                     if (Food.Ingredients.Any(x => x.Ingredient.Id == 0))
@@ -102,7 +103,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
 
@@ -110,6 +111,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 if (Food.Ingredients?.Any() ?? false)
                 {
                     if (Food.Ingredients.Any(x => x.Ingredient.Id == 0))
@@ -170,7 +172,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
 
@@ -178,6 +180,7 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                _unitOfWork.CreateTransaction();
                 _unitOfWork.FoodRepository.Delete(id);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -185,7 +188,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw e;
+                throw ;
             }
         }
     }

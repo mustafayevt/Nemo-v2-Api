@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
@@ -9,20 +10,21 @@ namespace Nemo_v2_Service.Services
 {
     public class RestaurantService:IRestaurantService
     {
-        private IRepository<Restaurant> _restaurantRepository;  
-  
-        public RestaurantService(IRepository<Restaurant> restaurantRepository)  
-        {  
-            this._restaurantRepository = restaurantRepository;
-        }  
+        private readonly IUnitOfWork _unitOfWork;
+
+        public RestaurantService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public IEnumerable<Restaurant> Get()
         {
-            return _restaurantRepository.Get();
+            return _unitOfWork.RestaurantRepository.Get();
         }
 
         public IEnumerable<Restaurant> GetBranches(long RestId)
         {
-            return _restaurantRepository.Query(x => x.BranchId == RestId)
+            return _unitOfWork.RestaurantRepository.Query(x => x.BranchId == RestId)
                 .Include(x=>x.Branches)
                 .Include(x=>x.Sections)
                 .Include(x=>x.Tables);
@@ -30,28 +32,63 @@ namespace Nemo_v2_Service.Services
 
         public Restaurant GetRestaurant(long id)
         {
-            return _restaurantRepository.Query(x => x.Id == id)
+            return _unitOfWork.RestaurantRepository.Query(x => x.Id == id)
                 .Include(x => x.Branches).First();
         }
 
         public Restaurant GetParentByBranchId(long id)
         {
-            return _restaurantRepository.Query(x => x.Id == GetRestaurant(id).BranchId).First();
+            return _unitOfWork.RestaurantRepository.Query(x => x.Id == GetRestaurant(id).BranchId).First();
         }
 
         public Restaurant InsertRestaurant(Restaurant restaurant)
         {
-            return _restaurantRepository.Insert(restaurant);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.RestaurantRepository.Insert(restaurant);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
 
         public Restaurant UpdateRestaurant(Restaurant restaurant)
         {
-            return _restaurantRepository.Update(restaurant);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.RestaurantRepository.Insert(restaurant);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
 
         public void DeleteRestaurant(long id)
         {
-            _restaurantRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.RestaurantRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
     }
 }

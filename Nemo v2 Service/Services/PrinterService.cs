@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -7,41 +8,76 @@ namespace Nemo_v2_Service.Services
 {
     public class PrinterService : IPrinterService
     {
-        private IRepository<Printer> _printerRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PrinterService(IRepository<Printer> printerRepository)
+        public PrinterService(IUnitOfWork unitOfWork)
         {
-            _printerRepository = printerRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Printer> Get()
         {
-            return _printerRepository.Get();
+            return _unitOfWork.PrinterRepository.Get();
         }
 
         public IEnumerable<Printer> GetPrinterByRestaurantId(long RestId)
         {
-            return _printerRepository.Query(x => x.RestaurantId == RestId);
+            return _unitOfWork.PrinterRepository.Query(x => x.RestaurantId == RestId);
         }
 
         public Printer GetPrinter(long id)
         {
-            return _printerRepository.GetById(id);
+            return _unitOfWork.PrinterRepository.GetById(id);
         }
 
         public Printer InsertPrinter(Printer Printer)
         {
-            return _printerRepository.Insert(Printer);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.PrinterRepository.Insert(Printer);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
 
         public Printer UpdatePrinter(Printer Printer)
         {
-            return _printerRepository.Update(Printer);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.PrinterRepository.Update(Printer);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
 
         public void DeletePrinter(long id)
         {
-            _printerRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction(); 
+                _unitOfWork.PrinterRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ; 
+            }
         }
     }
 }

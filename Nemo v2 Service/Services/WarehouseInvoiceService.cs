@@ -12,82 +12,111 @@ namespace Nemo_v2_Service.Services
 {
     public class WarehouseInvoiceService : IWarehouseInvoiceService
     {
-        private IRepository<WarehouseInvoice> _warehouseInvoiceRepository;
-        private IRepository<Ingredient> _ingredientRepository;
-        private IRepository<Warehouse> _warehouseRepository;
-        private IIngredientService _ingredientService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IIngredientService _ingredientService;
 
-        public WarehouseInvoiceService(IRepository<WarehouseInvoice> warehouseInvoiceRepository,
-            IIngredientService ingredientService,
-            IRepository<Ingredient> ingredientRepository,
-            IRepository<Warehouse> warehouseRepository)
+        public WarehouseInvoiceService(IUnitOfWork unitOfWork, IIngredientService ingredientService)
         {
-            _warehouseInvoiceRepository = warehouseInvoiceRepository;
+            _unitOfWork = unitOfWork;
             _ingredientService = ingredientService;
-            _ingredientRepository = ingredientRepository;
-            _warehouseRepository = warehouseRepository;
         }
 
         public IEnumerable<WarehouseInvoice> Get()
         {
-            return _warehouseInvoiceRepository.Get();
+            return _unitOfWork.WarehouseInvoiceRepository.Get();
         }
 
         public IEnumerable<WarehouseInvoice> GetWarehouseInvoiceByRestaurantId(long RestId)
         {
-            return _warehouseInvoiceRepository.Query(x => x.RestaurantId == RestId)
+            return _unitOfWork.WarehouseInvoiceRepository.Query(x => x.RestaurantId == RestId)
                 .Include(x => x.IngredientsInserts);
         }
 
         public WarehouseInvoice GetWarehouseInvoice(long id)
         {
-            return _warehouseInvoiceRepository.Query(x => x.Id == id)
+            return _unitOfWork.WarehouseInvoiceRepository.Query(x => x.Id == id)
                 .Include(x => x.IngredientsInserts).First();
         }
 
         public WarehouseInvoice InsertWarehouseInvoice(WarehouseInvoice WarehouseInvoice)
         {
-            // var a =_ingredientService.CalculateAveragePrice(38,9);
-            if (WarehouseInvoice.IngredientsInserts?.Any() ?? false)
+            try
             {
-                if (WarehouseInvoice.IngredientsInserts.Any(x => x.IngredientId == 0))
-                    throw new NullReferenceException("Ingredient not found");
-                var warehouse = _warehouseRepository.Query(x => x.Id == WarehouseInvoice.WarehouseId)
-                    .Include(x => x.IngredientWarehouseRels).First();
-
-                var ingredientWareRel = WarehouseInvoice.IngredientsInserts.Select(y => y.IngredientId)
-                    .Except(warehouse.IngredientWarehouseRels.Select(y => y.IngredientId)).ToList();
-
-                if (ingredientWareRel?.Any() ?? false)
+                _unitOfWork.CreateTransaction();
+                // var a =_ingredientService.CalculateAveragePrice(38,9);
+                if (WarehouseInvoice.IngredientsInserts?.Any() ?? false)
                 {
-                    foreach (var ingredient in ingredientWareRel)
+                    if (WarehouseInvoice.IngredientsInserts.Any(x => x.IngredientId == 0))
+                        throw new NullReferenceException("Ingredient not found");
+                    var warehouse = _unitOfWork.WarehouseRepository.Query(x => x.Id == WarehouseInvoice.WarehouseId)
+                        .Include(x => x.IngredientWarehouseRels).First();
+
+                    var ingredientWareRel = WarehouseInvoice.IngredientsInserts.Select(y => y.IngredientId)
+                        .Except(warehouse.IngredientWarehouseRels.Select(y => y.IngredientId)).ToList();
+
+                    if (ingredientWareRel?.Any() ?? false)
                     {
-                        warehouse.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                        foreach (var ingredient in ingredientWareRel)
                         {
-                            IngredientId = ingredient,
-                            WarehouseId = warehouse.Id,
-                            Quantity = 0
-                        });
+                            warehouse.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
+                            {
+                                IngredientId = ingredient,
+                                WarehouseId = warehouse.Id,
+                                Quantity = 0
+                            });
+                        }
+                        _unitOfWork.WarehouseRepository.Update(warehouse);
+                        _unitOfWork.Save();
                     }
-                    _warehouseRepository.Update(warehouse);
                 }
+
+
+                var warehouseInvoice = _unitOfWork.WarehouseInvoiceRepository.Insert(WarehouseInvoice);
+                _unitOfWork.Save();
+                _ingredientService.InsertIngredient(WarehouseInvoice.IngredientsInserts);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+
+                return warehouseInvoice;
             }
-
-
-            var warehouseInvoice = _warehouseInvoiceRepository.Insert(WarehouseInvoice);
-            _ingredientService.InsertIngredient(WarehouseInvoice.IngredientsInserts);
-
-            return warehouseInvoice;
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public WarehouseInvoice UpdateWarehouseInvoice(WarehouseInvoice WarehouseInvoice)
         {
-            return _warehouseInvoiceRepository.Update(WarehouseInvoice);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var result = _unitOfWork.WarehouseInvoiceRepository.Update(WarehouseInvoice);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public void DeleteWarehouseInvoice(long id)
         {
-            _warehouseInvoiceRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.WarehouseInvoiceRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
     }
 }

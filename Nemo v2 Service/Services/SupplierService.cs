@@ -7,87 +7,121 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class SupplierService:ISupplierService
+    public class SupplierService : ISupplierService
     {
-        private readonly IRepository<Supplier> _supplierRepository;
-        private readonly IRepository<Restaurant> _restaurantRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SupplierService(IRepository<Supplier> supplierRepository,
-            IRepository<Restaurant> restaurantRepository)
+        public SupplierService(IUnitOfWork unitOfWork)
         {
-            _supplierRepository = supplierRepository;
-            _restaurantRepository = restaurantRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Supplier> GetSuppliers()
         {
-            return _supplierRepository.Get();
+            return _unitOfWork.SupplierRepository.Get();
         }
 
         public IEnumerable<Supplier> GetSuppliersByRestaurantId(long RestId)
         {
-             return _supplierRepository.Query(x => x.RestSupplierRels.Count(y => y.RestaurantId == RestId) > 0);
-            return null;
+            return _unitOfWork.SupplierRepository.Query(
+                x => x.RestSupplierRels.Count(y => y.RestaurantId == RestId) > 0);
         }
 
         public Supplier GetSupplier(long id)
         {
-            return _supplierRepository.GetById(id);
+            return _unitOfWork.SupplierRepository.GetById(id);
         }
 
         public Supplier InsertSupplier(Supplier Supplier)
         {
-            if (Supplier.RestSupplierRels?.Any() ?? false)
+            try
             {
-                if (Supplier.RestSupplierRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Supplier.RestSupplierRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Supplier.RestSupplierRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Supplier.RestSupplierRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Supplier.RestSupplierRels = selectedRestaurants.Select(x =>
+                        new RestSupplierRel()
+                        {
+                            RestaurantId = x.Id,
+                            SupplierId = Supplier.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Supplier.RestSupplierRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Supplier.RestSupplierRels = selectedRestaurants.Select(x =>
-                    new RestSupplierRel()
-                    {
-                        RestaurantId = x.Id,
-                        SupplierId = Supplier.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.SupplierRepository.Insert(Supplier);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-            return _supplierRepository.Insert(Supplier);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public Supplier UpdateSupplier(Supplier Supplier)
         {
-            if (Supplier.RestSupplierRels?.Any() ?? false)
+            try
             {
-                if (Supplier.RestSupplierRels.Any(x => x.Restaurant.Id == 0))
+                _unitOfWork.CreateTransaction();
+                if (Supplier.RestSupplierRels?.Any() ?? false)
                 {
-                    throw new NullReferenceException("Restaurant Not Found");
+                    if (Supplier.RestSupplierRels.Any(x => x.Restaurant.Id == 0))
+                    {
+                        throw new NullReferenceException("Restaurant Not Found");
+                    }
+
+                    var restaurantsId = Supplier.RestSupplierRels.Select(x => x.Restaurant.Id);
+                    var selectedRestaurants = _unitOfWork.RestaurantRepository.Query(x => restaurantsId.Contains(x.Id));
+                    if (selectedRestaurants.Count() != restaurantsId.Count())
+                        throw new NullReferenceException("Restaurant Not Found");
+
+                    Supplier.RestSupplierRels = selectedRestaurants.Select(x =>
+                        new RestSupplierRel()
+                        {
+                            RestaurantId = x.Id,
+                            SupplierId = Supplier.Id
+                        }
+                    ).ToList();
                 }
 
-                var restaurantsId = Supplier.RestSupplierRels.Select(x => x.Restaurant.Id);
-                var selectedRestaurants = _restaurantRepository.Query(x => restaurantsId.Contains(x.Id));
-                if (selectedRestaurants.Count() != restaurantsId.Count())
-                    throw new NullReferenceException("Restaurant Not Found");
-
-                Supplier.RestSupplierRels = selectedRestaurants.Select(x =>
-                    new RestSupplierRel()
-                    {
-                        RestaurantId = x.Id,
-                        SupplierId = Supplier.Id
-                    }
-                ).ToList();
+                var result = _unitOfWork.SupplierRepository.Update(Supplier);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
             }
-            return _supplierRepository.Update(Supplier);
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
 
         public void DeleteSupplier(long id)
         {
-            _supplierRepository.Delete(id);
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.SupplierRepository.Delete(id);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
         }
     }
 }

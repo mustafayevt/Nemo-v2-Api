@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
+using Nemo_v2_Repo.Helper;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Api.Controllers
@@ -20,6 +21,7 @@ namespace Nemo_v2_Api.Controllers
         private readonly IFoodGroupService _foodGroupService;
         private readonly ILogger<FoodGroupController> _logger;
         private readonly IMapper _mapper;
+
         public FoodGroupController(IFoodGroupService foodGroupService,
             ILogger<FoodGroupController> logger,
             IMapper mapper)
@@ -28,7 +30,7 @@ namespace Nemo_v2_Api.Controllers
             this._logger = logger;
             this._mapper = mapper;
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFoodGroup(long id)
         {
@@ -42,11 +44,11 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
             }
         }
-        
+
         [HttpGet("RestId/{RestaurantId}")]
         public async Task<IActionResult> GetFoodGroupByRestaurantId(long RestaurantId)
         {
@@ -54,19 +56,19 @@ namespace Nemo_v2_Api.Controllers
             {
                 var foodGroups = _foodGroupService.GetFoodGroupByRestaurantId(RestaurantId);
                 if (foodGroups == null) throw new NullReferenceException("FoodGroup Not Found");
-                var foodGroupsDto =_mapper.Map<List<FoodGroup>,List<FoodGroupDto>>(foodGroups.ToList());
+                var foodGroupsDto = _mapper.Map<List<FoodGroup>, List<FoodGroupDto>>(foodGroups.ToList());
                 _logger.LogInformation($"FoodGroups Get By Restaurant Id:{RestaurantId}");
                 return Ok(foodGroupsDto);
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
             }
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> AddFoodGroup([FromBody]FoodGroupDto foodGroupDto)
+        public async Task<IActionResult> AddFoodGroup([FromBody] FoodGroupDto foodGroupDto)
         {
             try
             {
@@ -77,25 +79,25 @@ namespace Nemo_v2_Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return BadRequest(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return BadRequest(e.GetAllMessages());
             }
         }
-        
+
         [HttpPut]
-        public async Task<IActionResult> UpdateFoodGroup([FromBody]FoodGroupDto foodGroupDto)
+        public async Task<IActionResult> UpdateFoodGroup([FromBody] FoodGroupDto foodGroupDto)
         {
             try
             {
                 var updatedFoodGroup = _mapper.Map<FoodGroup>(foodGroupDto);
-                var result =_foodGroupService.UpdateFoodGroup(updatedFoodGroup);
+                var result = _foodGroupService.UpdateFoodGroup(updatedFoodGroup);
                 _logger.LogInformation($"FoodGroup Updated : {updatedFoodGroup.Name}");
                 return Ok(_mapper.Map<FoodGroupDto>(result));
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
             }
         }
     }
