@@ -52,6 +52,7 @@ namespace Nemo_v2_Repo.DbContexts
             new RestSupplierRelMap(modelBuilder.Entity<RestSupplierRel>());
             new RestBuyerRelMap(modelBuilder.Entity<RestBuyerRel>());
             new IngredientWarehouseRelMap(modelBuilder.Entity<IngredientWarehouseRel>());
+            new WarehouseInvoiceMap(modelBuilder.Entity<WarehouseInvoice>());
 
             // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();

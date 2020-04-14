@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200414144128_WarehouseInvoiceMap3")]
+    partial class WarehouseInvoiceMap3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -598,7 +600,8 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<long>("ComputedNumber");
+                    b.Property<long>("ComputedNumber")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("InvoiceNumber")
                         .IsRequired();
@@ -624,9 +627,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasIndex("UserId");
 
                     b.HasIndex("WarehouseId");
-
-                    b.HasIndex("ComputedNumber", "RestaurantId")
-                        .IsUnique();
 
                     b.ToTable("WarehouseInvoices");
                 });

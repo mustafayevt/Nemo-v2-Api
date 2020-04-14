@@ -73,6 +73,10 @@ namespace Nemo_v2_Service.Services
 
                 var warehouseInvoice = _unitOfWork.WarehouseInvoiceRepository.Insert(WarehouseInvoice);
                 _unitOfWork.Save();
+                var lastComputedNumber = _unitOfWork.WarehouseInvoiceRepository
+                    .Query(x => x.RestaurantId == WarehouseInvoice.RestaurantId)
+                    .OrderBy(y => y.ComputedNumber).Last();
+                WarehouseInvoice.ComputedNumber = lastComputedNumber !=null ? lastComputedNumber.ComputedNumber+1 : 1;
                 _ingredientService.InsertIngredient(WarehouseInvoice.IngredientsInserts);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();

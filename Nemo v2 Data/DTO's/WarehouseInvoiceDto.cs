@@ -6,8 +6,10 @@ namespace Nemo_v2_Data
     public class WarehouseInvoiceDto
     {
         public long Id { get; set; }
-        [Required,MaxLength(50)]
+        [Required]
         public string InvoiceNumber { get; set; }
+
+        public long ComputedNumber { get; set; }
 
         [Required]
         public long SupplierId { get; set; }

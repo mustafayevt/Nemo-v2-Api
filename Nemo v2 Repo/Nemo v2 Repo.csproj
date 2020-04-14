@@ -34,6 +34,20 @@
       <Compile Remove="Migrations\20200405134030_IngredientCurrentCount5.Designer.cs" />
       <Compile Remove="Migrations\20200405162530_IngredientQuantity11.cs" />
       <Compile Remove="Migrations\20200405162530_IngredientQuantity11.Designer.cs" />
+      <Compile Remove="Migrations\20200414141314_WarehouseInvoiceMap1.cs" />
+      <Compile Remove="Migrations\20200414141314_WarehouseInvoiceMap1.Designer.cs" />
+      <Compile Remove="Migrations\20200414141550_WarehouseInvoiceMap1.cs" />
+      <Compile Remove="Migrations\20200414141550_WarehouseInvoiceMap1.Designer.cs" />
+      <Compile Remove="Migrations\20200414141751_WarehouseInvoiceMap1.cs" />
+      <Compile Remove="Migrations\20200414141751_WarehouseInvoiceMap1.Designer.cs" />
+      <Compile Remove="Migrations\20200414141905_WarehouseInvoiceMap1.cs" />
+      <Compile Remove="Migrations\20200414141905_WarehouseInvoiceMap1.Designer.cs" />
+      <Compile Remove="Migrations\20200414142008_WarehouseInvoiceMap2.cs" />
+      <Compile Remove="Migrations\20200414142008_WarehouseInvoiceMap2.Designer.cs" />
+      <Compile Remove="Migrations\20200414142308_WarehouseInvoiceMap2.cs" />
+      <Compile Remove="Migrations\20200414142308_WarehouseInvoiceMap2.Designer.cs" />
+      <Compile Remove="Migrations\20200414144430_WarehouseInvoiceMap5.cs" />
+      <Compile Remove="Migrations\20200414144430_WarehouseInvoiceMap5.Designer.cs" />
     </ItemGroup>
 
     <ItemGroup>
