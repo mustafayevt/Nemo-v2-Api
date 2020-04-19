@@ -1,5 +1,7 @@
 ﻿using System.Transactions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Repo.Repositories.EFRepository;
@@ -32,6 +34,7 @@ namespace Nemo_v2_Repo.UnitOfWork
             WarehouseInvoiceRepository = new EFWarehouseInvoiceRepository(_context);
             WarehouseRepository = new EFWarehouseRepository(_context);
             WarehouseExportInvoiceRepository = new EFWarehouseExportInvoiceRepository(_context);
+            ProfitRepository = new EFProfitRepository(_context);
         }
 
 
@@ -53,6 +56,7 @@ namespace Nemo_v2_Repo.UnitOfWork
         public IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
         public IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
         public IWarehouseRepository WarehouseRepository { get; set; }
+        public IProfitRepository ProfitRepository { get; set; }
 
         public IDbContextTransaction CreateTransaction()
         {

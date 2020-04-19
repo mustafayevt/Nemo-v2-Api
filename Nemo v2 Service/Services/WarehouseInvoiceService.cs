@@ -65,18 +65,37 @@ namespace Nemo_v2_Service.Services
                                 Quantity = 0
                             });
                         }
+
                         _unitOfWork.WarehouseRepository.Update(warehouse);
                         _unitOfWork.Save();
                     }
                 }
 
+                foreach (var ingredientsInsert in WarehouseInvoice.IngredientsInserts)
+                {
+                    switch (ingredientsInsert.Unit)
+                    {
+                        case Unit.Kq:
+                        case Unit.Lt:
+                        {
+                            ingredientsInsert.MinimumQuantity = ingredientsInsert.Quantity * 1000;
+                            break;
+                        }
+                        default:
+                        {
+                            ingredientsInsert.MinimumQuantity = ingredientsInsert.Quantity;
+                            break;
+                        }
+                    }
+                }
 
                 var warehouseInvoice = _unitOfWork.WarehouseInvoiceRepository.Insert(WarehouseInvoice);
                 _unitOfWork.Save();
                 var lastComputedNumber = _unitOfWork.WarehouseInvoiceRepository
                     .Query(x => x.RestaurantId == WarehouseInvoice.RestaurantId)
                     .OrderBy(y => y.ComputedNumber).Last();
-                WarehouseInvoice.ComputedNumber = lastComputedNumber !=null ? lastComputedNumber.ComputedNumber+1 : 1;
+                WarehouseInvoice.ComputedNumber =
+                    lastComputedNumber != null ? lastComputedNumber.ComputedNumber + 1 : 1;
                 _ingredientService.InsertIngredient(WarehouseInvoice.IngredientsInserts);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -86,7 +105,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -103,7 +122,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -119,7 +138,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
     }

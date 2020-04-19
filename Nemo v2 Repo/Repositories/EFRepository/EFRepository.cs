@@ -12,12 +12,13 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
     public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         protected DbContext context;
-        protected DbSet<TEntity> dbSet;
+        private DbSet<TEntity> dbSet;
 
-        public EFRepository(ApplicationContext context)
+        protected EFRepository(ApplicationContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
+            
         }
 
         public virtual List<TEntity> Get(Expression<Func<TEntity, bool>> filter = null,

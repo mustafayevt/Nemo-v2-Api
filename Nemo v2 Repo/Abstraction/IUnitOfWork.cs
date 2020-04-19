@@ -23,6 +23,7 @@ namespace Nemo_v2_Repo.Abstraction
         IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
         IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
         IWarehouseRepository WarehouseRepository { get; set; }
+        IProfitRepository ProfitRepository { get; set; }
         
         
         IDbContextTransaction CreateTransaction();

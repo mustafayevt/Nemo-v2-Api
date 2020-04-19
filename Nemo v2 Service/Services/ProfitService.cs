@@ -6,36 +6,36 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class PrinterService : IPrinterService
+    public class ProfitService:IProfitService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
-        public PrinterService(IUnitOfWork unitOfWork)
+        public ProfitService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Printer> Get()
+        public IEnumerable<Profit> Get()
         {
-            return _unitOfWork.PrinterRepository.Get();
+            return _unitOfWork.ProfitRepository.Get();
         }
 
-        public IEnumerable<Printer> GetPrinterByRestaurantId(long RestId)
+        public IEnumerable<Profit> GetProfitByRestaurantId(long RestId)
         {
-            return _unitOfWork.PrinterRepository.Query(x => x.RestaurantId == RestId);
+            return _unitOfWork.ProfitRepository.Query(x => x.RestaurantId == RestId);
         }
 
-        public Printer GetPrinter(long id)
+        public Profit GetProfit(long id)
         {
-            return _unitOfWork.PrinterRepository.GetById(id);
+            return _unitOfWork.ProfitRepository.GetById(id);
         }
 
-        public Printer InsertPrinter(Printer Printer)
+        public Profit InsertProfit(Profit Profit)
         {
             try
             {
                 _unitOfWork.CreateTransaction();
-                var result = _unitOfWork.PrinterRepository.Insert(Printer);
+                var result = _unitOfWork.ProfitRepository.Insert(Profit);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
                 return result;
@@ -43,16 +43,16 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw; 
+                throw;
             }
         }
 
-        public Printer UpdatePrinter(Printer Printer)
+        public Profit UpdateProfit(Profit Profit)
         {
             try
             {
                 _unitOfWork.CreateTransaction();
-                var result = _unitOfWork.PrinterRepository.Update(Printer);
+                var result = _unitOfWork.ProfitRepository.Update(Profit);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
                 return result;
@@ -60,23 +60,23 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ; 
+                throw;
             }
         }
 
-        public void DeletePrinter(long id)
+        public void DeleteProfit(long id)
         {
             try
             {
-                _unitOfWork.CreateTransaction(); 
-                _unitOfWork.PrinterRepository.Delete(id);
+                _unitOfWork.CreateTransaction();
+                _unitOfWork.ProfitRepository.Delete(id);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
             }
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ; 
+                throw;
             }
         }
     }

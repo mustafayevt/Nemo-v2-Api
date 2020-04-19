@@ -10,12 +10,16 @@ namespace Nemo_v2_Data
         [Required]
         public long IngredientId { get; set; }
         
-        [Required]
         public long WarehouseInvoiceId { get; set; }
+        
         [Required]
         public decimal Quantity { get; set; }
+        
         [Required]
-        public decimal PriceForEach { get; set; }
+        public Unit Unit { get; set; }
+        
+        [Required]
+        public decimal Price { get; set; }
         
         [Required,ForeignKey(nameof(Restaurant))]
         public long RestaurantId { get; set; }

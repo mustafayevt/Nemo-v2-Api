@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Nemo_v2_Data.Entities;
-using Nemo_v2_Data.Maping;
+using Nemo_v2_Data.Mapping;
 using Npgsql;
 
 namespace Nemo_v2_Repo.DbContexts
@@ -32,6 +33,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<IngredientWarehouseRel> IngredientWarehouseRels { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
+        public DbSet<Profit> Profits { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
@@ -53,6 +55,7 @@ namespace Nemo_v2_Repo.DbContexts
             new RestBuyerRelMap(modelBuilder.Entity<RestBuyerRel>());
             new IngredientWarehouseRelMap(modelBuilder.Entity<IngredientWarehouseRel>());
             new WarehouseInvoiceMap(modelBuilder.Entity<WarehouseInvoice>());
+            new ProfitMap(modelBuilder.Entity<Profit>());
 
             // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
             // NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();

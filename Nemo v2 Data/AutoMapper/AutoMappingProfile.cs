@@ -112,6 +112,9 @@ namespace Nemo_v2_Data.AutoMapper
             //WarehouseExportInvoice
             CreateMap<WarehouseExportInvoice, WarehouseExportInvoiceDto>().ReverseMap();
             
+            
+            //Profit
+            CreateMap<Profit, ProfitDto>().ReverseMap();
         }
     }
 }

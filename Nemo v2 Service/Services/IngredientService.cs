@@ -251,7 +251,7 @@ namespace Nemo_v2_Service.Services
                 decimal PriceAmount = 0;
                 if (ingredient.Quantity <= 0)
                 {
-                    inserts.ForEach(x => PriceAmount += x.PriceForEach);
+                    inserts.ForEach(x => PriceAmount += x.Price);
                     return PriceAmount / inserts.Count();
                 }
 
@@ -269,7 +269,7 @@ namespace Nemo_v2_Service.Services
                 var TakeSkip = inserts.Skip(index - 1).Take(inserts.Count());
                 foreach (var ingredientsInsert in TakeSkip)
                 {
-                    PriceAmount += ingredientsInsert.PriceForEach;
+                    PriceAmount += ingredientsInsert.Price;
                 }
 
                 return PriceAmount / TakeSkip.Count();

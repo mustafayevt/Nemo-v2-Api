@@ -32,13 +32,16 @@ namespace Nemo_v2_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Npgsql")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
-            
+            services.AddDbContext<ApplicationContext>(x =>
+            {
+                x.UseNpgsql(Configuration.GetConnectionString("Npgsql"), e => e.MigrationsAssembly("Nemo v2 Api"));
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
+
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Nemo Api", Version = "2" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Nemo Api", Version = "2"});
                 c.AddSecurityDefinition("x-api-key", new OpenApiSecurityScheme
                 {
                     Description =
@@ -59,22 +62,18 @@ namespace Nemo_v2_Api
                             },
                             Name = "x-api-key",
                             In = ParameterLocation.Header,
-
                         },
                         new List<string>()
                     }
                 });
                 // c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
             });
-            
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new AutoMappingProfile());
-            });
+
+            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new AutoMappingProfile()); });
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            
+
             // services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
             // services.AddScoped<IRepository<User>, EFUserRepository>();
             // services.AddScoped<IRepository<Role>, EFRoleRepository>();
@@ -94,8 +93,8 @@ namespace Nemo_v2_Api
             // services.AddScoped<IRepository<Buyer>,EFBuyerRepository>();
             // services.AddScoped<IRepository<IngredientsExport>,EFIngredientsExportRepository>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-            
-            
+
+
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRestaurantService, RestaurantService>();
@@ -113,12 +112,13 @@ namespace Nemo_v2_Api
             services.AddTransient<IInvoiceService, InvoiceService>();
             services.AddTransient<IBuyerService, BuyerService>();
             services.AddTransient<IWarehouseExportInvoiceService, WarehouseExportInvoiceService>();
+            services.AddTransient<IProfitService, ProfitService>();
 
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -129,7 +129,8 @@ namespace Nemo_v2_Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            loggerFactory.AddFile("Logs/Errors/{Date}.txt",LogLevel.Error);
+
+            loggerFactory.AddFile("Logs/Errors/{Date}.txt", LogLevel.Error);
             loggerFactory.AddFile("Logs/Info/{Date}.txt");
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
@@ -137,10 +138,7 @@ namespace Nemo_v2_Api
             //app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
             app.UseSignalR(x => x.MapHub<TransferHub>("/Transfer"));
         }
