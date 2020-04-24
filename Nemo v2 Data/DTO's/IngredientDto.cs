@@ -21,5 +21,7 @@ namespace Nemo_v2_Data
         public decimal CurrentQuantity { get; set; }
         public Unit Unit { get; set; }
 
+        public decimal AvgPriceByWarehouse { get; set; }
+
     }
 }

@@ -77,6 +77,10 @@ namespace Nemo_v2_Api.Controllers
                 var ingredients = _ingredientService.GetIngredientByWarehouseId(id);
                 if (ingredients == null) throw new NullReferenceException("Ingredient Not Found");
                 var ingredientDtos = _mapper.Map<List<IngredientDto>>(ingredients);
+                foreach (var ingredientDto in ingredientDtos)
+                {
+                    ingredientDto.AvgPriceByWarehouse = _ingredientService.CalculateAveragePrice(ingredientDto.Id, id);
+                }
                 _logger.LogInformation($"Ingredient Get by WarehouseId {id}");
                 return Ok(ingredientDtos);
             }
