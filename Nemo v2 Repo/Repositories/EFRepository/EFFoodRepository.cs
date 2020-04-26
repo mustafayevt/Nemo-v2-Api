@@ -32,6 +32,12 @@ namespace Nemo_v2_Repo.Repositories.EFRepository
                     .Include(x => x.FoodGroups)
                     .FirstOrDefault(x => x.Id == entity.Id);
                 context.TryUpdateManyToMany(model.FoodGroups, entity.FoodGroups, x => x.FoodGroupId);
+                
+                model = (context as ApplicationContext).Foods
+                    .AsNoTracking()
+                    .Include(x => x.FoodPrinterAndSectionRels)
+                    .FirstOrDefault(x => x.Id == entity.Id);
+                context.TryUpdateManyToMany(model.FoodPrinterAndSectionRels, entity.FoodPrinterAndSectionRels, x => x.FoodId);
 
 
                 return base.Update(entity);

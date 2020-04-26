@@ -14,6 +14,5 @@ namespace Nemo_v2_Data.Entities
         
         public virtual Restaurant Restaurant { get; set; }
 
-        public List<Food> Foods { get; set; }
     }
 }

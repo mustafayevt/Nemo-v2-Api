@@ -12,15 +12,15 @@ namespace Nemo_v2_Data.Entities
         public  List<FoodGroupRel> FoodGroups { get; set; }
 
         public List<IngredientFoodRel> Ingredients { get; set; }
+        public List<FoodPrinterAndSectionRel> FoodPrinterAndSectionRels { get; set; }
         
         [Required]
         public long RestaurantId { get; set; }
-        
 
-        [Required,ForeignKey(nameof(Printer))]
-        public long PrinterId { get; set; }
-        
-        public virtual Printer Printer { get; set; }
+        [Required]
+        public decimal Cost { get; set; }
+        [Required]
+        public decimal Price { get; set; }
 
     }
 }

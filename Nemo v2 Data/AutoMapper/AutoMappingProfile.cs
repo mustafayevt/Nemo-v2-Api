@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Nemo_v2_Data.Entities;
 
@@ -64,7 +66,28 @@ namespace Nemo_v2_Data.AutoMapper
             CreateMap<FoodGroup, FoodGroupDto>().ReverseMap();
             
             //Food
-            CreateMap<Food, FoodDto>().ReverseMap();
+            CreateMap<KeyValuePair<SectionDto, PrinterDto>, FoodPrinterAndSectionRel>()
+                .ForMember(x => x.SectionId, opt => opt.MapFrom(src => src.Key.Id))
+                .ForMember(x => x.PrinterId, opt => opt.MapFrom(src => src.Value.Id));
+            
+                //reverse
+                CreateMap<FoodPrinterAndSectionRel, KeyValuePair<SectionDto, PrinterDto>>()
+                    .ForMember(x => x.Key, opt => opt.MapFrom(src => src.Section))
+                    .ForMember(x => x.Value, opt => opt.MapFrom(src => src.Printer));
+
+
+                CreateMap<KeyValuePair<long, decimal>, IngredientFoodRel>()
+                    .ForMember(x => x.IngredientId, opt => opt.MapFrom(src => src.Key))
+                    .ForMember(x => x.Quantity, opt => opt.MapFrom(src => src.Value));
+                
+                //reverse
+                CreateMap<IngredientFoodRel,KeyValuePair<long, decimal>>()
+                    .ForMember(x => x.Key, opt => opt.MapFrom(src => src.IngredientId))
+                    .ForMember(x => x.Value, opt => opt.MapFrom(src => src.Quantity));
+
+
+            CreateMap<Food, FoodDto>()
+                .ForMember(x=>x.SectionToPrinter,opt=>opt.MapFrom(y=>y.FoodPrinterAndSectionRels)).ReverseMap();
             
             //FoodGroupRel
             CreateMap<FoodGroupDto, FoodGroupRel>()
@@ -115,6 +138,7 @@ namespace Nemo_v2_Data.AutoMapper
             
             //Profit
             CreateMap<Profit, ProfitDto>().ReverseMap();
+            
         }
     }
 }

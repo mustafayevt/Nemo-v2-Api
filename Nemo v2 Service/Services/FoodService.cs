@@ -45,10 +45,10 @@ namespace Nemo_v2_Service.Services
                 _unitOfWork.CreateTransaction();
                 if (Food.Ingredients?.Any() ?? false)
                 {
-                    if (Food.Ingredients.Any(x => x.Ingredient.Id == 0))
+                    if (Food.Ingredients.Any(x => x.IngredientId == 0))
                         throw new NullReferenceException("Ingredient not found");
 
-                    var ingredientIds = Food.Ingredients.Select(y => y.Ingredient.Id).ToList();
+                    var ingredientIds = Food.Ingredients.Select(y => y.IngredientId).ToList();
                     if (ingredientIds.Any())
                     {
                         var ingredients = _unitOfWork.IngredientRepository.Query(x => ingredientIds.Contains(x.Id))
@@ -97,13 +97,16 @@ namespace Nemo_v2_Service.Services
 
                 var result = _unitOfWork.FoodRepository.Insert(Food);
                 _unitOfWork.Save();
+                Food.FoodPrinterAndSectionRels.ForEach(x => { x.FoodId = Food.Id; });
+                _unitOfWork.FoodRepository.Update(Food);
+                _unitOfWork.Save();
                 _unitOfWork.Commit();
                 return result;
             }
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -114,10 +117,10 @@ namespace Nemo_v2_Service.Services
                 _unitOfWork.CreateTransaction();
                 if (Food.Ingredients?.Any() ?? false)
                 {
-                    if (Food.Ingredients.Any(x => x.Ingredient.Id == 0))
+                    if (Food.Ingredients.Any(x => x.IngredientId == 0))
                         throw new NullReferenceException("Ingredient not found");
 
-                    var ingredientIds = Food.Ingredients.Select(y => y.Ingredient.Id).ToList();
+                    var ingredientIds = Food.Ingredients.Select(y => y.IngredientId).ToList();
                     if (ingredientIds.Any())
                     {
                         var ingredients = _unitOfWork.IngredientRepository.Query(x => ingredientIds.Contains(x.Id))
@@ -164,6 +167,7 @@ namespace Nemo_v2_Service.Services
                     });
                 }
 
+                Food.FoodPrinterAndSectionRels.ForEach(x => x.FoodId = Food.Id);
                 var result = _unitOfWork.FoodRepository.Update(Food);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -172,7 +176,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -188,7 +192,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
     }

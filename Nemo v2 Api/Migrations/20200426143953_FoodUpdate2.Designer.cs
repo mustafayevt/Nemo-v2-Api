@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200426143953_FoodUpdate2")]
+    partial class FoodUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,13 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<decimal>("Price");
 
+                    b.Property<long?>("PrinterId");
+
                     b.Property<long>("RestaurantId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PrinterId");
 
                     b.HasIndex("RestaurantId");
 
@@ -703,6 +709,10 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Food", b =>
                 {
+                    b.HasOne("Nemo_v2_Data.Entities.Printer")
+                        .WithMany("Foods")
+                        .HasForeignKey("PrinterId");
+
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant")
                         .WithMany("Foods")
                         .HasForeignKey("RestaurantId")

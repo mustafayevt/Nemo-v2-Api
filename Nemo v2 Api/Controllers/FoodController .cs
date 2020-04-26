@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
@@ -38,6 +39,7 @@ namespace Nemo_v2_Api.Controllers
                 var food = _foodService.GetFood(id);
                 if (food == null) throw new NullReferenceException("Food Not Found");
                 var foodDto = _mapper.Map<FoodDto>(food);
+                
                 _logger.LogInformation($"Food Get {food.Id}");
                 return Ok(foodDto);
             }
@@ -69,7 +71,7 @@ namespace Nemo_v2_Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFood([FromBody]FoodDto foodDto)
         {
-            try
+            try 
             {
                 var food = _mapper.Map<Food>(foodDto);
                 var addedFood = _foodService.InsertFood(food);
