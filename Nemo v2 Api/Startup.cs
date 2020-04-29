@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -140,7 +141,12 @@ namespace Nemo_v2_Api
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            app.UseSignalR(x => x.MapHub<TransferHub>("/Transfer"));
+            app.UseSignalR(x => x.MapHub<POSHub>("/POS", options =>
+            {
+                options.Transports =
+                    HttpTransportType.WebSockets |
+                    HttpTransportType.LongPolling;
+            }));
         }
     }
 }
