@@ -70,18 +70,29 @@ namespace Nemo_v2_Api.Hubs
         {
             var closedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(InvoiceModel);
 
-            var currentInvoice = _invoiceModels.FirstOrDefault(x => x.Id == closedInvoice.Id);
-            if (currentInvoice != null)
+            try
             {
-                _invoiceModels.Remove(currentInvoice);
-                try
+                //_invoiceService.InsertInvoice(closedInvoice)
+                
+                var currentInvoice = _invoiceModels.FirstOrDefault(x => x.Id == closedInvoice.Id);
+                if (currentInvoice != null)
                 {
-                    await Clients.OthersInGroup(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
-                }
-                catch (Exception e)
-                {
+                    _invoiceModels.Remove(currentInvoice);
+                    try
+                    {
+                        await Clients.OthersInGroup(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }

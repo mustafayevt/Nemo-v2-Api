@@ -113,6 +113,14 @@ namespace Nemo_v2_Data.AutoMapper
             //Invoice
             CreateMap<Invoice, InvoiceDto>().ReverseMap();
             
+            //InvoiceTableRel
+            CreateMap<TableDto,InvoiceTableRel>()
+                .ForMember(x => x.Table, opt => opt
+                    .MapFrom(y => y)).
+                ForMember(x=>x.TableId,opt=>opt
+                    .MapFrom(y=>y.Id))
+                .ReverseMap();
+            
             //Printer
             CreateMap<Printer, PrinterDto>().ReverseMap();
             

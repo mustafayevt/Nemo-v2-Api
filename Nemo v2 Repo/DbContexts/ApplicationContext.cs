@@ -24,6 +24,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientsInsert> IngredientsInserts { get; set; }
         public DbSet<IngredientsExport> IngredientsExports { get; set; }
+        public DbSet<IngredientsTransfer> IngredientsTransfers { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodGroup> FoodGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -31,6 +32,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<WarehouseInvoice> WarehouseInvoices { get; set; }
         public DbSet<WarehouseExportInvoice> WarehouseExportInvoices { get; set; }
         public DbSet<IngredientWarehouseRel> IngredientWarehouseRels { get; set; }
+        public DbSet<WarehouseTransferInvoice> WarehouseTransferInvoices { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Profit> Profits { get; set; }
@@ -57,12 +59,8 @@ namespace Nemo_v2_Repo.DbContexts
             new WarehouseInvoiceMap(modelBuilder.Entity<WarehouseInvoice>());
             new ProfitMap(modelBuilder.Entity<Profit>());
             new FoodPrinterAndSectionRelsMap(modelBuilder.Entity<FoodPrinterAndSectionRel>());
-
-            // modelBuilder.ForNpgsqlHasEnum<InvoiceType>();
-            // NpgsqlConnection.GlobalTypeMapper.MapEnum<InvoiceType>();
-            //
-            // modelBuilder.ForNpgsqlHasEnum<Unit>();
-            // NpgsqlConnection.GlobalTypeMapper.MapEnum<Unit>();
+            new InvoiceTableRelMap(modelBuilder.Entity<InvoiceTableRel>());
+            
         }
 
         public override int SaveChanges()

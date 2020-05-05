@@ -67,6 +67,34 @@ namespace Nemo_v2_Service.Services
                         invoice.Foods = foodInvoiceRels;
                     }
                 }
+                
+                if (invoice.InvoiceTableRels?.Any() ?? false)
+                {
+                    if (invoice.InvoiceTableRels.Any(x => x.TableId == 0))
+                        throw new NullReferenceException("Table not found");
+
+                    var tableIds = invoice.InvoiceTableRels.Select(y => y.TableId).ToList();
+                    if (tableIds.Any())
+                    {
+                        var tables = _unitOfWork.TableRepository.Query(x => tableIds.Contains(x.Id)).ToList();
+
+                        if (tables.Count() != invoice.InvoiceTableRels.Count())
+                            throw new NullReferenceException("Table Not Found");
+                        //invoice.Ingredients.Clear();
+                        var invoiceTableRels = new List<InvoiceTableRel>();
+                        for (int i = 0; i < tables.Count(); i++)
+                        {
+                            invoiceTableRels.Add(new InvoiceTableRel()
+                            {
+                                InvoiceId = invoice.Id,
+                                TableId = tables[i].Id,
+                            });
+                        }
+
+                        invoice.InvoiceTableRels = invoiceTableRels;
+                    }
+                }
+                
             
                 var result = _unitOfWork.InvoiceRepository.Insert(invoice);
                 _unitOfWork.Save();
@@ -109,6 +137,33 @@ namespace Nemo_v2_Service.Services
                         }
 
                         invoice.Foods = foodInvoiceRels;
+                    }
+                }
+                
+                if (invoice.InvoiceTableRels?.Any() ?? false)
+                {
+                    if (invoice.InvoiceTableRels.Any(x => x.TableId == 0))
+                        throw new NullReferenceException("Table not found");
+
+                    var tableIds = invoice.InvoiceTableRels.Select(y => y.TableId).ToList();
+                    if (tableIds.Any())
+                    {
+                        var tables = _unitOfWork.TableRepository.Query(x => tableIds.Contains(x.Id)).ToList();
+
+                        if (tables.Count() != invoice.InvoiceTableRels.Count())
+                            throw new NullReferenceException("Table Not Found");
+                        //invoice.Ingredients.Clear();
+                        var invoiceTableRels = new List<InvoiceTableRel>();
+                        for (int i = 0; i < tables.Count(); i++)
+                        {
+                            invoiceTableRels.Add(new InvoiceTableRel()
+                            {
+                                InvoiceId = invoice.Id,
+                                TableId = tables[i].Id,
+                            });
+                        }
+
+                        invoice.InvoiceTableRels = invoiceTableRels;
                     }
                 }
             

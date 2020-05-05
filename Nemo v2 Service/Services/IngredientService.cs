@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
+using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
@@ -11,10 +12,12 @@ namespace Nemo_v2_Service.Services
     public class IngredientService : IIngredientService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationContext _applicationContext;
 
-        public IngredientService(IUnitOfWork unitOfWork)
+        public IngredientService(IUnitOfWork unitOfWork, ApplicationContext applicationContext)
         {
             _unitOfWork = unitOfWork;
+            _applicationContext = applicationContext;
         }
 
         public IEnumerable<Ingredient> Get()
@@ -218,7 +221,7 @@ namespace Nemo_v2_Service.Services
 
                 foreach (var ingredientsExport in ingredientsExports)
                 {
-                    var ingredient = ingredients.FirstOrDefault(x =>
+                    var ingredient = ingredients.AsQueryable().FirstOrDefault(x =>
                         x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
                         x.WarehouseId == ingredientsExport.WarehouseExportInvoice.WarehouseId);
 
@@ -235,6 +238,41 @@ namespace Nemo_v2_Service.Services
             }
         }
 
+        public IEnumerable<Ingredient> DecreaseIngredientQuantity(IEnumerable<IngredientWarehouseRel> ingredientsExports)
+        {
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var warehouses = ingredientsExports.GroupBy(x => x.WarehouseId);
+                var ingredients = new List<Ingredient>();
+                foreach (var warehouse in warehouses)
+                {
+                    ingredients.AddRange(_unitOfWork.IngredientRepository
+                        .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
+                        .Include(x => x.IngredientWarehouseRels));
+                }
+
+                foreach (var ingredientsExport in ingredientsExports)
+                {
+                    var ingredient = ingredients.AsQueryable().FirstOrDefault(x =>
+                        x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
+                        x.WarehouseId == ingredientsExport.WarehouseId);
+
+                    ingredient.Quantity -= ingredientsExport.Quantity;
+                }
+
+                var result =  _unitOfWork.IngredientRepository.UpdateMany(ingredients);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
+        }
+        
         public decimal CalculateAveragePrice(long IngredientId, long WarehouseId)
         {
             var ingredient = _unitOfWork.IngredientRepository.Query(x => x.Id == IngredientId)

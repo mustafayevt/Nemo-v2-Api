@@ -20,9 +20,7 @@ namespace Nemo_v2_Data.Entities
         public virtual User User { get; set; }
 
 
-        [Required,ForeignKey(nameof(Table))]
-        public long TableId { get; set; }
-        public virtual Table Table { get; set; }
+        public virtual List<InvoiceTableRel> InvoiceTableRels { get; set; }
 
         
         public List<FoodInvoiceRel> Foods { get; set; }

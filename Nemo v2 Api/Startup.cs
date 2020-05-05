@@ -30,7 +30,6 @@ namespace Nemo_v2_Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(x =>
@@ -113,12 +112,12 @@ namespace Nemo_v2_Api
             services.AddTransient<IInvoiceService, InvoiceService>();
             services.AddTransient<IBuyerService, BuyerService>();
             services.AddTransient<IWarehouseExportInvoiceService, WarehouseExportInvoiceService>();
+            services.AddTransient<IWarehouseTransferInvoiceService, WarehouseTransferInvoiceService>();
             services.AddTransient<IProfitService, ProfitService>();
 
             services.AddSignalR();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
@@ -127,7 +126,6 @@ namespace Nemo_v2_Api
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

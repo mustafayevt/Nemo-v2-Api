@@ -23,6 +23,7 @@ namespace Nemo_v2_Repo.UnitOfWork
             IngredientRepository = new EFIngredientRepository(_context);
             IngredientsExportRepository = new EFIngredientsExportRepository(_context);
             IngredientsInsertRepository = new EFIngredientsInsertRepository(_context);
+            IngredientsTransferRepository = new  EFIngredientsTransferRepository(_context);
             InvoiceRepository = new EFInvoiceRepository(_context);
             PrinterRepository = new EFPrinterRepository(_context);
             RestaurantRepository = new EFRestaurantRepository(_context);
@@ -35,6 +36,7 @@ namespace Nemo_v2_Repo.UnitOfWork
             WarehouseRepository = new EFWarehouseRepository(_context);
             WarehouseExportInvoiceRepository = new EFWarehouseExportInvoiceRepository(_context);
             ProfitRepository = new EFProfitRepository(_context);
+            WarehouseTransferInvoiceRepository = new EFWarehouseTransferInvoiceRepository(_context);
         }
 
 
@@ -45,6 +47,7 @@ namespace Nemo_v2_Repo.UnitOfWork
         public IIngredientRepository IngredientRepository { get; set; }
         public IIngredientsExportRepository IngredientsExportRepository { get; set; }
         public IIngredientsInsertRepository IngredientsInsertRepository { get; set; }
+        public IIngredientsTransferRepository IngredientsTransferRepository { get; set; }
         public IInvoiceRepository InvoiceRepository { get; set; }
         public IPrinterRepository PrinterRepository { get; set; }
         public IRestaurantRepository RestaurantRepository { get; set; }
@@ -55,6 +58,7 @@ namespace Nemo_v2_Repo.UnitOfWork
         public IUserRepository UserRepository { get; set; }
         public IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
         public IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
+        public IWarehouseTransferInvoiceRepository WarehouseTransferInvoiceRepository { get; set; }
         public IWarehouseRepository WarehouseRepository { get; set; }
         public IProfitRepository ProfitRepository { get; set; }
 

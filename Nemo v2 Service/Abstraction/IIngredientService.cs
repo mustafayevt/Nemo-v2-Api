@@ -13,6 +13,9 @@ namespace Nemo_v2_Service.Abstraction
         Ingredient UpdateIngredient(Ingredient Ingredient);
         IEnumerable<Ingredient> InsertIngredient(IEnumerable<IngredientsInsert> ingredientsInserts);
         IEnumerable<Ingredient> ExportIngredient(IEnumerable<IngredientsExport> ingredientsExports);
+
+        IEnumerable<Ingredient> DecreaseIngredientQuantity(
+            IEnumerable<IngredientWarehouseRel> ingredientsExports);
         decimal CalculateAveragePrice(long IngredientId,long WarehouseId);
         void DeleteIngredient(long id); 
     }

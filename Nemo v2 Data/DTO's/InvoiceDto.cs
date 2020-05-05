@@ -20,8 +20,7 @@ namespace Nemo_v2_Data
         public long UserId { get; set; }
 
 
-        [Required]
-        public long TableId { get; set; }
+        public List<TableDto> InvoiceTableRels { get; set; }
 
         
         public List<FoodDto> Foods { get; set; }

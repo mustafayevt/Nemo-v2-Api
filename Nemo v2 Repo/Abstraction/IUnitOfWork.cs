@@ -12,6 +12,7 @@ namespace Nemo_v2_Repo.Abstraction
         IIngredientRepository IngredientRepository { get; set; }
         IIngredientsExportRepository IngredientsExportRepository { get; set; }
         IIngredientsInsertRepository IngredientsInsertRepository { get; set; }
+        IIngredientsTransferRepository IngredientsTransferRepository { get; set; }
         IInvoiceRepository InvoiceRepository { get; set; }
         IPrinterRepository PrinterRepository { get; set; }
         IRestaurantRepository RestaurantRepository { get; set; }
@@ -22,6 +23,7 @@ namespace Nemo_v2_Repo.Abstraction
         IUserRepository UserRepository { get; set; }
         IWarehouseInvoiceRepository WarehouseInvoiceRepository { get; set; }
         IWarehouseExportInvoiceRepository WarehouseExportInvoiceRepository { get; set; }
+        IWarehouseTransferInvoiceRepository WarehouseTransferInvoiceRepository { get; set; }
         IWarehouseRepository WarehouseRepository { get; set; }
         IProfitRepository ProfitRepository { get; set; }
         
