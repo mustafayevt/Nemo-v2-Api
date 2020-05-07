@@ -24,12 +24,15 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<Warehouse> GetWarehousesByRestaurantId(long RestId)
         {
-            return _unitOfWork.WarehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId == RestId) > 0);
+            return _unitOfWork.WarehouseRepository.Query(x => x.RestWareRels.Count(y => y.RestaurantId == RestId) > 0)
+                .Include(y=>y.IngredientWarehouseRels);
         }
 
         public Warehouse GetWarehouse(long id)
         {
-            return _unitOfWork.WarehouseRepository.GetById(id);
+            return _unitOfWork.WarehouseRepository.Query(x => x.Id == id)
+                .Include(y => y.IngredientWarehouseRels)
+                .First();
         }
 
         public Warehouse InsertWarehouse(Warehouse Warehouse)
@@ -66,7 +69,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -104,7 +107,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -120,7 +123,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
     }
