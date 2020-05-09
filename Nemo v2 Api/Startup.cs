@@ -36,6 +36,10 @@ namespace Nemo_v2_Api
             {
                 x.UseNpgsql(Configuration.GetConnectionString("Npgsql"), e => e.MigrationsAssembly("Nemo v2 Api"));
             });
+            services.AddDbContext<HubTemporaryDataContext>(x =>
+            {
+                x.UseSqlite(@"Data Source=HubTemporaryData.db;");
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
 
 
@@ -74,26 +78,8 @@ namespace Nemo_v2_Api
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            // services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>)); 
-            // services.AddScoped<IRepository<User>, EFUserRepository>();
-            // services.AddScoped<IRepository<Role>, EFRoleRepository>();
-            // services.AddScoped<IRepository<Restaurant>, EFRestaurantRepository>();
-            // services.AddScoped<IRepository<Warehouse>,EFWarehouseRepository>();
-            // services.AddScoped<IRepository<IngredientCategory>,EFIngredientCategoryRepository>();
-            // services.AddScoped<IRepository<Ingredient>,EFIngredientRepository>();
-            // services.AddScoped<IRepository<Section>,EFSectionRepository>();
-            // services.AddScoped<IRepository<Table>,EFTableRepository>();
-            // services.AddScoped<IRepository<Supplier>,EFSupplierRepository>();
-            // services.AddScoped<IRepository<FoodGroup>,EFFoodGroupRepository>();
-            // services.AddScoped<IRepository<Food>,EFFoodRepository>();
-            // services.AddScoped<IRepository<IngredientsInsert>,EFIngredientsInsertRepository>();
-            // services.AddScoped<IRepository<WarehouseInvoice>,EFWarehouseInvoiceRepository>();
-            // services.AddScoped<IRepository<Printer>,EFPrinterRepository>();
-            // services.AddScoped<IRepository<Invoice>,EFInvoiceRepository>();
-            // services.AddScoped<IRepository<Buyer>,EFBuyerRepository>();
-            // services.AddScoped<IRepository<IngredientsExport>,EFIngredientsExportRepository>();
+            
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
@@ -138,7 +124,13 @@ namespace Nemo_v2_Api
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
-
+            
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<HubTemporaryDataContext>();
+                context.Database.EnsureCreated();
+            }
+            
             app.UseSignalR(x =>
             {
                 x.MapHub<POSHub>("/POSHub", options =>

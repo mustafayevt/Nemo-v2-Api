@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Data.SignalrModels.WarehouseTransfer;
+using Nemo_v2_Repo.DbContexts;
 using Nemo_v2_Service.Abstraction;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -15,16 +16,16 @@ namespace Nemo_v2_Api.Hubs
 {
     public class WarehouseHub:Hub
     {
-        // private static List<TransferModel> _transferModels = new List<TransferModel>();
-        private static List<TransferIngredientModel> _transferIngredientModels = new List<TransferIngredientModel>();
+        // private static List<TransferIngredientModel> _transferIngredientModels = new List<TransferIngredientModel>();
         private readonly IWarehouseService _warehouseService;
         private readonly IRestaurantService _restaurantService;
+        private readonly HubTemporaryDataContext _hubTemporaryDataContext;
 
-
-        public WarehouseHub(IWarehouseService warehouseService, IRestaurantService restaurantService)
+        public WarehouseHub(IWarehouseService warehouseService, IRestaurantService restaurantService, HubTemporaryDataContext hubTemporaryDataContext)
         {
             _warehouseService = warehouseService;
             _restaurantService = restaurantService;
+            _hubTemporaryDataContext = hubTemporaryDataContext;
         }
 
         public async Task WarehouseConnected(long restaurantId,long warehouseId)
@@ -32,7 +33,7 @@ namespace Nemo_v2_Api.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, warehouseId.ToString());
 
             var warehouse = _warehouseService.GetWarehouse(warehouseId);
-            var warehouseTransferIngredients = _transferIngredientModels.Where(x =>
+            var warehouseTransferIngredients = _hubTemporaryDataContext.TransferIngredientModels.Where(x =>
                 warehouse.IngredientWarehouseRels.Count(y => y.IngredientId == x.IngredientId) > 0 && 
                     x.RequestedWareHouseId != warehouseId);
 
@@ -49,7 +50,8 @@ namespace Nemo_v2_Api.Hubs
             
             TransferIngredientModel.ForEach(x => { x.Id = Guid.NewGuid().ToString(); });
             
-            _transferIngredientModels.AddRange(TransferIngredientModel);
+            _hubTemporaryDataContext.TransferIngredientModels.AddRange(TransferIngredientModel);
+            _hubTemporaryDataContext.SaveChangesAsync();
             
             
             var restaurantWarehouses = _warehouseService.GetWarehousesByRestaurantId(restaurantId);
@@ -68,7 +70,10 @@ namespace Nemo_v2_Api.Hubs
             var TransferIngredientModel =
                 JsonConvert.DeserializeObject <List<TransferIngredientModel>>(transferIngredientModel);
 
-            TransferIngredientModel.ForEach(x => { _transferIngredientModels.RemoveAll(y => y.Id == x.Id); });
+            TransferIngredientModel.ForEach(x => 
+                _hubTemporaryDataContext.TransferIngredientModels.Remove(
+                    _hubTemporaryDataContext.TransferIngredientModels.First(y=>y.Id==x.Id)));
+            _hubTemporaryDataContext.SaveChangesAsync();
             
             //todo:database insert
 
