@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,18 +7,32 @@ namespace Nemo_v2_Data.Entities
 {
     public class WarehouseTransferInvoice:BaseEntity
     {
-        [Required,MaxLength(50)]
+        [Required]
         public string InvoiceNumber { get; set; }
+        
+        [Required,ForeignKey(nameof(Ingredient))]
+        public long IngredientId { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal PriceForEach { get; set; }
+        public DateTime RequestedTime { get; set; }
+        public DateTime AcceptedTime { get; set; }
+        public bool IsPayed { get; set; }
+
 
         [Required,ForeignKey(nameof(User))]
-        public long UserId { get; set; }
-        public virtual User User { get; set; }
+        public long RequesterUserId { get; set; }
+        public virtual User RequesterUser { get; set; }
+        
+        [Required,ForeignKey(nameof(User))]
+        public long AcceptorUserId { get; set; }
+        public virtual User AcceptorUser { get; set; }
         
         
         
         [Required,ForeignKey(nameof(Warehouse))]
-        public long WarehouseId { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
+        public long RequesterWarehouseId { get; set; }
+        public virtual Warehouse RequesterWarehouse { get; set; }
         
         [Required,ForeignKey(nameof(AcceptorWarehouse))]
         public long AcceptorWarehouseId { get; set; }
@@ -29,8 +44,5 @@ namespace Nemo_v2_Data.Entities
         public long RestaurantId { get; set; }
         public virtual Restaurant Restaurant { get; set; }
 
-        public bool IsPayed { get; set; }
-        public List<IngredientsTransfer> IngredientsTransfers { get; set; }
-        public decimal TotalAmount { get; set; }
     }
 }

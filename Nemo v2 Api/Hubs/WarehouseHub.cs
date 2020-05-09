@@ -33,7 +33,8 @@ namespace Nemo_v2_Api.Hubs
 
             var warehouse = _warehouseService.GetWarehouse(warehouseId);
             var warehouseTransferIngredients = _transferIngredientModels.Where(x =>
-                warehouse.IngredientWarehouseRels.Count(y => y.IngredientId == x.IngredientId) > 0);
+                warehouse.IngredientWarehouseRels.Count(y => y.IngredientId == x.IngredientId) > 0 && 
+                    x.RequestedWareHouseId != warehouseId);
 
             if (warehouseTransferIngredients.Any())
             {
@@ -57,7 +58,7 @@ namespace Nemo_v2_Api.Hubs
                 foreach (var warehouse in restaurantWarehouses.Where(x=>x.IngredientWarehouseRels
                                                                             .Count(y=>y.IngredientId == model.IngredientId)>0))
                 {
-                    Clients.Group(warehouse.Id.ToString()).SendAsync("NewTransfer", JsonConvert.SerializeObject(model));
+                    Clients.OthersInGroup(warehouse.Id.ToString()).SendAsync("NewTransfer", JsonConvert.SerializeObject(model));
                 }
             }
         }
@@ -70,7 +71,7 @@ namespace Nemo_v2_Api.Hubs
             TransferIngredientModel.ForEach(x => { _transferIngredientModels.RemoveAll(y => y.Id == x.Id); });
             
             //todo:database insert
-            
+
             await Clients.Group(TransferIngredientModel[0].RequestedWareHouseId.ToString())
                 .SendAsync("TransferAccepted", transferIngredientModel);
         }

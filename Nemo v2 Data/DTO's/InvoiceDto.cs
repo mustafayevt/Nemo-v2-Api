@@ -15,18 +15,28 @@ namespace Nemo_v2_Data
         [Required]
         public long RestaurantId { get; set; }
         
+        [Required]
+        public long SectionId { get; set; }
         
         [Required]
-        public long UserId { get; set; }
+        public long OpenedUserId { get; set; }
+        
+        [Required]
+        public long ClosedUserId { get; set; }
+        
 
 
         public List<TableDto> InvoiceTableRels { get; set; }
 
         
         public List<FoodDto> Foods { get; set; }
-        public bool IsIngredientReducted { get; set; }
-        public decimal TotalAmount { get; set; }
+        
+        public short PeopleCount { get; set; }
+        
+        public bool IsIngredientReduced { get; set; }
         public decimal Discount { get; set; }
         public decimal ServiceCharge { get; set; }
+        public decimal Amount { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }

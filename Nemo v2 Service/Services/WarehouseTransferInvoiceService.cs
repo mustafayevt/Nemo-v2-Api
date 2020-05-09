@@ -20,14 +20,13 @@ namespace Nemo_v2_Service.Services
 
         public IEnumerable<WarehouseTransferInvoice> GetWarehouseTransferInvoiceByRestaurantId(long RestId)
         {
-            return _unitOfWork.WarehouseTransferInvoiceRepository.Query(x => x.RestaurantId == RestId)
-                .Include(x => x.IngredientsTransfers);
+            return _unitOfWork.WarehouseTransferInvoiceRepository.Query(x => x.RestaurantId == RestId);
         }
 
         public WarehouseTransferInvoice GetWarehouseTransferInvoice(long id)
         {
             return _unitOfWork.WarehouseTransferInvoiceRepository.Query(x => x.Id == id)
-                .Include(x => x.IngredientsTransfers).First();
+                .First();
         }
 
         public WarehouseTransferInvoice InsertWarehouseTransferInvoice(
@@ -36,54 +35,29 @@ namespace Nemo_v2_Service.Services
             try
             {
                 _unitOfWork.CreateTransaction();
-                // var a =_ingredientService.CalculateAveragePrice(38,9);
-                if (WarehouseTransferInvoice.IngredientsTransfers?.Any() ?? false)
-                {
-                    if (WarehouseTransferInvoice.IngredientsTransfers.Any(x => x.IngredientId == 0))
-                        throw new NullReferenceException("Ingredient not found");
-                    var warehouse = _unitOfWork.WarehouseRepository
-                        .Query(x => x.Id == WarehouseTransferInvoice.WarehouseId)
-                        .Include(x => x.IngredientWarehouseRels).First();
-
-                    var ingredientWareRel = WarehouseTransferInvoice.IngredientsTransfers.Select(y => y.IngredientId)
-                        .Except(warehouse.IngredientWarehouseRels.Select(y => y.IngredientId)).ToList();
-
-                    if (ingredientWareRel?.Any() ?? false)
-                    {
-                        foreach (var ingredient in ingredientWareRel)
-                        {
-                            warehouse.IngredientWarehouseRels.Add(new IngredientWarehouseRel()
-                            {
-                                IngredientId = ingredient,
-                                WarehouseId = warehouse.Id,
-                                Quantity = 0
-                            });
-                        }
-
-                        _unitOfWork.WarehouseRepository.Update(warehouse);
-                        _unitOfWork.Save();
-                    }
-                }
-
-                WarehouseTransferInvoice.TotalAmount = 0;
-                foreach (var ingredientsExport in WarehouseTransferInvoice.IngredientsTransfers)
-                {
-                    WarehouseTransferInvoice.TotalAmount +=
-                        ingredientsExport.Quantity * _ingredientService.CalculateAveragePrice(
-                            ingredientsExport.IngredientId,
-                            WarehouseTransferInvoice.WarehouseId);
-                }
 
                 var warehouseTransferInvoice =
                     _unitOfWork.WarehouseTransferInvoiceRepository.Insert(WarehouseTransferInvoice);
-                _ingredientService.DecreaseIngredientQuantity(WarehouseTransferInvoice.IngredientsTransfers.Select(x =>
+                _ingredientService.DecreaseIngredientQuantity(new List<IngredientWarehouseRel>()
+                {
                     new IngredientWarehouseRel()
                     {
-                        IngredientId = x.IngredientId,
-                        WarehouseId = x.WarehouseTransferInvoice.WarehouseId,
-                        Quantity = x.Quantity
+                        IngredientId = warehouseTransferInvoice.IngredientId,
+                        WarehouseId = warehouseTransferInvoice.AcceptorWarehouseId,
+                        Quantity = warehouseTransferInvoice.Quantity
                     }
-                ));
+                });
+
+                _ingredientService.IncreaseIngredientQuantity(new List<IngredientWarehouseRel>
+                {
+                    new IngredientWarehouseRel()
+                    {
+                        IngredientId = warehouseTransferInvoice.IngredientId,
+                        WarehouseId = warehouseTransferInvoice.RequesterWarehouseId,
+                        Quantity = warehouseTransferInvoice.Quantity
+                    }
+                });
+                
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
 

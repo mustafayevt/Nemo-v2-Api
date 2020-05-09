@@ -238,6 +238,41 @@ namespace Nemo_v2_Service.Services
             }
         }
 
+        public IEnumerable<Ingredient> IncreaseIngredientQuantity(IEnumerable<IngredientWarehouseRel> ingredientWarehouseRels)
+        {
+            try
+            {
+                _unitOfWork.CreateTransaction();
+                var warehouses = ingredientWarehouseRels.GroupBy(x => x.WarehouseId);
+                var ingredients = new List<Ingredient>();
+                foreach (var warehouse in warehouses)
+                {
+                    ingredients.AddRange(_unitOfWork.IngredientRepository
+                        .Query(x => x.IngredientWarehouseRels.Count(y => y.WarehouseId == warehouse.Key) > 0)
+                        .Include(x => x.IngredientWarehouseRels));
+                }
+
+                foreach (var ingredientsExport in ingredientWarehouseRels)
+                {
+                    var ingredient = ingredients.AsQueryable().FirstOrDefault(x =>
+                        x.Id == ingredientsExport.IngredientId).IngredientWarehouseRels.First(x =>
+                        x.WarehouseId == ingredientsExport.WarehouseId);
+
+                    ingredient.Quantity += ingredientsExport.Quantity;
+                }
+
+                var result =  _unitOfWork.IngredientRepository.UpdateMany(ingredients);
+                _unitOfWork.Save();
+                _unitOfWork.Commit();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _unitOfWork.Rollback();
+                throw ;
+            }
+        }
+
         public IEnumerable<Ingredient> DecreaseIngredientQuantity(IEnumerable<IngredientWarehouseRel> ingredientsExports)
         {
             try

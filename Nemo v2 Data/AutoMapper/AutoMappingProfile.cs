@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Nemo_v2_Api.Hubs.Models;
 using Nemo_v2_Data.Entities;
 
 namespace Nemo_v2_Data.AutoMapper
@@ -112,6 +113,11 @@ namespace Nemo_v2_Data.AutoMapper
             
             //Invoice
             CreateMap<Invoice, InvoiceDto>().ReverseMap();
+
+            CreateMap<Invoice, InvoiceModel>().ForMember(x => x.Tables, opt => opt.MapFrom(y => y.InvoiceTableRels)).ReverseMap();
+            
+            CreateMap<Invoice, InvoiceModel>().ForMember(x => x.InvoiceFoodViewModels, opt => opt.MapFrom(y => y.Foods)).ReverseMap();
+            
             
             //InvoiceTableRel
             CreateMap<TableDto,InvoiceTableRel>()
@@ -120,6 +126,7 @@ namespace Nemo_v2_Data.AutoMapper
                 ForMember(x=>x.TableId,opt=>opt
                     .MapFrom(y=>y.Id))
                 .ReverseMap();
+            
             
             //Printer
             CreateMap<Printer, PrinterDto>().ReverseMap();
@@ -142,7 +149,6 @@ namespace Nemo_v2_Data.AutoMapper
             
             //WarehouseExportInvoice
             CreateMap<WarehouseExportInvoice, WarehouseExportInvoiceDto>().ReverseMap();
-            
             
             //Profit
             CreateMap<Profit, ProfitDto>().ReverseMap();

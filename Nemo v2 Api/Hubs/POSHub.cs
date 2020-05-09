@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Nemo_v2_Api.Hubs.Models;
+using Nemo_v2_Data;
+using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Repo.Helper;
 using Nemo_v2_Service.Abstraction;
@@ -72,7 +74,22 @@ namespace Nemo_v2_Api.Hubs
 
             try
             {
-                //_invoiceService.InsertInvoice(closedInvoice)
+                _invoiceService.InsertInvoice(new Invoice()
+                {
+                    Amount = closedInvoice.Amount,
+                    Discount = closedInvoice.Discount,
+                    RestaurantId = closedInvoice.RestaurantId,
+                    SectionId = closedInvoice.SectionId,
+                    ClosedUserId = closedInvoice.ClosedUser.Id,
+                    OpenedUserId = closedInvoice.OpenedUser.Id,
+                    InvoiceType = closedInvoice.InvoiceType,
+                    PeopleCount = closedInvoice.PeopleCount,
+                    ServiceCharge = closedInvoice.ServiceCharge,
+                    TotalAmount = closedInvoice.TotalAmount,
+                    Foods =
+                        closedInvoice.InvoiceFoodViewModels.Select(y => new FoodInvoiceRel {FoodId = y.Id}).ToList(),
+                    InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
+                });
                 
                 var currentInvoice = _invoiceModels.FirstOrDefault(x => x.Id == closedInvoice.Id);
                 if (currentInvoice != null)

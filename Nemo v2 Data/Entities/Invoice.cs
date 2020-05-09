@@ -16,18 +16,30 @@ namespace Nemo_v2_Data.Entities
         
         
         [Required,ForeignKey(nameof(User))]
-        public long UserId { get; set; }
-        public virtual User User { get; set; }
+        public long OpenedUserId { get; set; }
+        public virtual User OpenedUser { get; set; }
+        
+        [Required,ForeignKey(nameof(User))]
+        public long ClosedUserId { get; set; }
+        public virtual User ClosedUser { get; set; }
 
 
+        [Required,ForeignKey(nameof(Section))]
+        public long SectionId { get; set; }
+        public virtual Section Section { get; set; }
+        
+        
         public virtual List<InvoiceTableRel> InvoiceTableRels { get; set; }
-
         
         public List<FoodInvoiceRel> Foods { get; set; }
+        
+        public short PeopleCount { get; set; }
+        
         [DefaultValue(false)]
-        public bool IsIngredientReducted { get; set; }
-        public decimal TotalAmount { get; set; }
+        public bool IsIngredientReduced { get; set; }
         public decimal Discount { get; set; }
         public decimal ServiceCharge { get; set; }
+        public decimal Amount { get; set; }
+        public decimal TotalAmount { get; set; }
     }
 }

@@ -139,19 +139,21 @@ namespace Nemo_v2_Api
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-            app.UseSignalR(x => x.MapHub<POSHub>("/POSHub", options =>
+            app.UseSignalR(x =>
             {
-                options.Transports =
-                    HttpTransportType.WebSockets |
-                    HttpTransportType.LongPolling;
-            }));
-            
-            app.UseSignalR(x => x.MapHub<WarehouseHub>("/WarehouseHub", options =>
-            {
-                options.Transports =
-                    HttpTransportType.WebSockets |
-                    HttpTransportType.LongPolling;
-            }));
+                x.MapHub<POSHub>("/POSHub", options =>
+                {
+                    options.Transports =
+                        HttpTransportType.WebSockets |
+                        HttpTransportType.LongPolling;
+                });
+                x.MapHub<WarehouseHub>("/WarehouseHub", options =>
+                {
+                    options.Transports =
+                        HttpTransportType.WebSockets |
+                        HttpTransportType.LongPolling;
+                });
+            });
         }
     }
 }

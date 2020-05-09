@@ -24,7 +24,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<IngredientsInsert> IngredientsInserts { get; set; }
         public DbSet<IngredientsExport> IngredientsExports { get; set; }
-        public DbSet<IngredientsTransfer> IngredientsTransfers { get; set; }
+        // public DbSet<IngredientsTransfer> IngredientsTransfers { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodGroup> FoodGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
