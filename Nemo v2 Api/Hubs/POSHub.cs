@@ -82,12 +82,12 @@ namespace Nemo_v2_Api.Hubs
 
             try
             {
-                _invoiceService.InsertInvoice(new Invoice()
+                var invoice = new Invoice()
                 {
                     Amount = closedInvoice.Amount,
                     Discount = closedInvoice.Discount,
                     RestaurantId = closedInvoice.RestaurantId,
-                    SectionId = closedInvoice.SectionId,
+                    SectionId = closedInvoice.Tables.First().SectionId,
                     ClosedUserId = closedInvoice.ClosedUser.Id,
                     OpenedUserId = closedInvoice.OpenedUser.Id,
                     InvoiceType = closedInvoice.InvoiceType,
@@ -97,7 +97,8 @@ namespace Nemo_v2_Api.Hubs
                     Foods =
                         closedInvoice.InvoiceFoodViewModels.Select(y => new FoodInvoiceRel {FoodId = y.Id}).ToList(),
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
-                });
+                };
+                _invoiceService.InsertInvoice(invoice);
                 
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
                     .FirstOrDefault(x => x.InvoiceId == closedInvoice.Id);
@@ -107,7 +108,7 @@ namespace Nemo_v2_Api.Hubs
                     {
                         _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice); 
                          await _hubTemporaryDataContext.SaveChangesAsync();
-                        await Clients.OthersInGroup(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
+                        await Clients.Group(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
                     }
                     catch (Exception e)
                     {
