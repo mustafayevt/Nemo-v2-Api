@@ -33,7 +33,7 @@ namespace Nemo_v2_Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult>  GetIngredient(long id)
+        public async Task<IActionResult> GetIngredient(long id)
         {
             try
             {

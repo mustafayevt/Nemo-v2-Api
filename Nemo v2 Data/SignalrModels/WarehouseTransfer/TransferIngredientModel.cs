@@ -12,9 +12,15 @@ namespace Nemo_v2_Data.SignalrModels.WarehouseTransfer
         public string RequestTime { get; set; }
         public string AcceptedTime { get; set; }
         public long RequestedWareHouseId { get; set; }
+        public string RequestedWareHouseName { get; set; }
         public long AcceptedWareHouseId { get; set; }
+        public string AcceptedWareHouseName { get; set; }
+
         public long RequestedByUserId { get; set; }
+        public string RequestedUserName { get; set; }
+
         public long AcceptedByUserId { get; set; }
+        public string AcceptedUserName { get; set; }
         public bool IsAccepted { get; set; }
         public Unit Unit { get; set; }
     }

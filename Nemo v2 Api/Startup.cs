@@ -36,10 +36,7 @@ namespace Nemo_v2_Api
             {
                 x.UseNpgsql(Configuration.GetConnectionString("Npgsql"), e => e.MigrationsAssembly("Nemo v2 Api"));
             });
-            services.AddDbContext<HubTemporaryDataContext>(x =>
-            {
-                x.UseSqlite(@"Data Source=HubTemporaryData.db;");
-            });
+            services.AddDbContext<HubTemporaryDataContext>(x => { x.UseSqlite(@"Data Source=HubTemporaryData.db;"); });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
 
 
@@ -78,7 +75,7 @@ namespace Nemo_v2_Api
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            
+
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 
             services.AddTransient<IUserService, UserService>();
@@ -124,13 +121,13 @@ namespace Nemo_v2_Api
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
-            
+
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<HubTemporaryDataContext>();
                 context.Database.EnsureCreated();
             }
-            
+
             app.UseSignalR(x =>
             {
                 x.MapHub<POSHub>("/POSHub", options =>

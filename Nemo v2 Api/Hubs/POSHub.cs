@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Api.Hubs.Models;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
@@ -31,7 +32,8 @@ namespace Nemo_v2_Api.Hubs
         public async Task BranchConnected(long branchId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, branchId.ToString());
-            var invoices = _hubTemporaryDataContext.InvoiceModels.Where(x => x.RestaurantId == branchId);
+            var invoices = _hubTemporaryDataContext.InvoiceModels.Where(x => x.BranchId == branchId)
+                .Select(x => JsonConvert.DeserializeObject<InvoiceModel>(x.JsonData));
             if(invoices.Any())
             await Clients.Caller.SendAsync("ReciveInvoices", JsonConvert.SerializeObject(invoices));
         }
@@ -40,12 +42,12 @@ namespace Nemo_v2_Api.Hubs
         {
             var newInvoice = JsonConvert.DeserializeObject<InvoiceModel>(InvoiceModel);
 
-            if (_hubTemporaryDataContext.InvoiceModels.AsQueryable().All(x => x.Id != newInvoice.Id))
+            if (_hubTemporaryDataContext.InvoiceModels.AsQueryable().All(x => x.InvoiceId != newInvoice.Id))
             {
-                _hubTemporaryDataContext.InvoiceModels.Add(newInvoice);
-                _hubTemporaryDataContext.SaveChangesAsync();
                 try
                 {
+                _hubTemporaryDataContext.InvoiceModels.Add(new InvoiceDbMoel(newInvoice.Id,newInvoice.RestaurantId,InvoiceModel));
+                await _hubTemporaryDataContext.SaveChangesAsync();
                     await Clients.OthersInGroup(newInvoice.RestaurantId.ToString()).SendAsync("NewInvoice",InvoiceModel);
                 }
                 catch (Exception e)
@@ -58,10 +60,11 @@ namespace Nemo_v2_Api.Hubs
         {
             var updatedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(InvoiceModel);
 
-            var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable().FirstOrDefault(x => x.Id == updatedInvoice.Id);
+            var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
+                .FirstOrDefault(x => x.InvoiceId == updatedInvoice.Id);
             if (currentInvoice != null)
             {
-                currentInvoice = updatedInvoice;
+                currentInvoice.JsonData = InvoiceModel;
                 _hubTemporaryDataContext.SaveChanges();
                 try
                 {
@@ -96,13 +99,14 @@ namespace Nemo_v2_Api.Hubs
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 });
                 
-                var currentInvoice = _hubTemporaryDataContext.InvoiceModels.FirstOrDefault(x => x.Id == closedInvoice.Id);
+                var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
+                    .FirstOrDefault(x => x.InvoiceId == closedInvoice.Id);
                 if (currentInvoice != null)
                 {
-                    _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice);
-                    _hubTemporaryDataContext.SaveChanges();
                     try
                     {
+                        _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice); 
+                         await _hubTemporaryDataContext.SaveChangesAsync();
                         await Clients.OthersInGroup(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
                     }
                     catch (Exception e)

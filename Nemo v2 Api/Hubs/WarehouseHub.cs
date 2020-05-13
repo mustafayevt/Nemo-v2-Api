@@ -33,9 +33,12 @@ namespace Nemo_v2_Api.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, warehouseId.ToString());
 
             var warehouse = _warehouseService.GetWarehouse(warehouseId);
-            var warehouseTransferIngredients = _hubTemporaryDataContext.TransferIngredientModels.Where(x =>
-                warehouse.IngredientWarehouseRels.Count(y => y.IngredientId == x.IngredientId) > 0 && 
-                    x.RequestedWareHouseId != warehouseId);
+            var warehouseTransferIngredients =
+                _hubTemporaryDataContext.TransferIngredientModels.Select(x =>
+                    JsonConvert.DeserializeObject<TransferIngredientModel>(x.JsonData)).Where(x=>
+                    warehouse.IngredientWarehouseRels.Count(y=>y.IngredientId == x.IngredientId)>0 &&
+                    x.RequestedWareHouseId !=warehouseId);
+            
 
             if (warehouseTransferIngredients.Any())
             {
@@ -49,9 +52,13 @@ namespace Nemo_v2_Api.Hubs
                 JsonConvert.DeserializeObject <List<TransferIngredientModel>>(transferIngredientModel);
             
             TransferIngredientModel.ForEach(x => { x.Id = Guid.NewGuid().ToString(); });
-            
-            _hubTemporaryDataContext.TransferIngredientModels.AddRange(TransferIngredientModel);
-            _hubTemporaryDataContext.SaveChangesAsync();
+
+            foreach (var ingredientModel in TransferIngredientModel)
+            {
+                _hubTemporaryDataContext.TransferIngredientModels.Add(
+                    new WarehouseTransferDbModel(ingredientModel.Id,JsonConvert.SerializeObject(ingredientModel)));
+            }
+            await _hubTemporaryDataContext.SaveChangesAsync();
             
             
             var restaurantWarehouses = _warehouseService.GetWarehousesByRestaurantId(restaurantId);
@@ -72,8 +79,8 @@ namespace Nemo_v2_Api.Hubs
 
             TransferIngredientModel.ForEach(x => 
                 _hubTemporaryDataContext.TransferIngredientModels.Remove(
-                    _hubTemporaryDataContext.TransferIngredientModels.First(y=>y.Id==x.Id)));
-            _hubTemporaryDataContext.SaveChangesAsync();
+                    _hubTemporaryDataContext.TransferIngredientModels.First(y=>y.TransferId == x.Id)));
+            await _hubTemporaryDataContext.SaveChangesAsync();
             
             //todo:database insert
 
