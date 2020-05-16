@@ -7,7 +7,8 @@ namespace Nemo_v2_Data.Mapping
     {
         public FoodInvoiceRelMap(EntityTypeBuilder<FoodInvoiceRel> entityBuilder)  
         {  
-            entityBuilder.HasKey(t => new {t.FoodId, t.InvoiceId});
+             entityBuilder.HasKey(t => new {t.FoodId, t.InvoiceId});
+             
         }
     }
 }

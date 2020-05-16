@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Nemo_v2_Data.Currency;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Data.Mapping;
 using Npgsql;

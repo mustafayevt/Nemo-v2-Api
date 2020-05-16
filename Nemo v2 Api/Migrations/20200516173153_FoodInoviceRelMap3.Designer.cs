@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200516173153_FoodInoviceRelMap3")]
+    partial class FoodInoviceRelMap3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,15 +102,15 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceRel", b =>
                 {
-                    b.Property<long>("FoodId");
-
                     b.Property<long>("InvoiceId");
 
                     b.Property<int>("Count");
 
-                    b.HasKey("FoodId", "InvoiceId");
+                    b.Property<long>("FoodId");
 
-                    b.HasIndex("InvoiceId");
+                    b.HasKey("InvoiceId");
+
+                    b.HasIndex("FoodId");
 
                     b.ToTable("FoodInvoiceRel");
                 });

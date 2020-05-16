@@ -13,5 +13,7 @@ namespace Nemo_v2_Data.Entities
 
         public virtual Food Food { get; set; }
         public virtual Invoice Invoice { get; set; }
+
+        public int Count { get; set; }
     }
 }

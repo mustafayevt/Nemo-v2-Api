@@ -34,8 +34,8 @@ namespace Nemo_v2_Api.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, branchId.ToString());
             var invoices = _hubTemporaryDataContext.InvoiceModels.Where(x => x.BranchId == branchId)
                 .Select(x => JsonConvert.DeserializeObject<InvoiceModel>(x.JsonData));
-            if(invoices.Any())
-            await Clients.Caller.SendAsync("ReciveInvoices", JsonConvert.SerializeObject(invoices));
+            if (invoices.Any())
+                await Clients.Caller.SendAsync("ReciveInvoices", JsonConvert.SerializeObject(invoices));
         }
 
         public async Task OpenInvoice(string InvoiceModel)
@@ -46,9 +46,11 @@ namespace Nemo_v2_Api.Hubs
             {
                 try
                 {
-                _hubTemporaryDataContext.InvoiceModels.Add(new InvoiceDbMoel(newInvoice.Id,newInvoice.RestaurantId,InvoiceModel));
-                await _hubTemporaryDataContext.SaveChangesAsync();
-                    await Clients.OthersInGroup(newInvoice.RestaurantId.ToString()).SendAsync("NewInvoice",InvoiceModel);
+                    _hubTemporaryDataContext.InvoiceModels.Add(new InvoiceDbMoel(newInvoice.Id, newInvoice.RestaurantId,
+                        InvoiceModel));
+                    await _hubTemporaryDataContext.SaveChangesAsync();
+                    await Clients.OthersInGroup(newInvoice.RestaurantId.ToString())
+                        .SendAsync("NewInvoice", InvoiceModel);
                 }
                 catch (Exception e)
                 {
@@ -68,14 +70,26 @@ namespace Nemo_v2_Api.Hubs
                 _hubTemporaryDataContext.SaveChanges();
                 try
                 {
-                    await Clients.OthersInGroup(updatedInvoice.RestaurantId.ToString()).SendAsync("UpdateInvoice", InvoiceModel);
+                    await Clients.OthersInGroup(updatedInvoice.RestaurantId.ToString())
+                        .SendAsync("UpdateInvoice", InvoiceModel);
                 }
                 catch (Exception e)
                 {
                 }
             }
         }
-        
+
+        public async Task RemoveInvoice(string invoiceId)
+        {
+            var removeInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
+                .FirstOrDefault(x => x.InvoiceId == invoiceId);
+            if (removeInvoice != null)
+            {
+                _hubTemporaryDataContext.InvoiceModels.Remove(removeInvoice);
+                _hubTemporaryDataContext.SaveChanges();
+            }
+        }
+
         public async Task CloseInvoice(string InvoiceModel)
         {
             var closedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(InvoiceModel);
@@ -99,16 +113,17 @@ namespace Nemo_v2_Api.Hubs
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 };
                 _invoiceService.InsertInvoice(invoice);
-                
+
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
                     .FirstOrDefault(x => x.InvoiceId == closedInvoice.Id);
                 if (currentInvoice != null)
                 {
                     try
                     {
-                        _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice); 
-                         await _hubTemporaryDataContext.SaveChangesAsync();
-                        await Clients.Group(closedInvoice.RestaurantId.ToString()).SendAsync("CloseInvoice", InvoiceModel);
+                        _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice);
+                        await _hubTemporaryDataContext.SaveChangesAsync();
+                        await Clients.Group(closedInvoice.RestaurantId.ToString())
+                            .SendAsync("CloseInvoice", InvoiceModel);
                     }
                     catch (Exception e)
                     {
@@ -120,7 +135,6 @@ namespace Nemo_v2_Api.Hubs
                 Console.WriteLine(e);
                 throw;
             }
-
         }
     }
 }

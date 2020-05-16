@@ -43,24 +43,21 @@ namespace Nemo_v2_Service.Services
                 _unitOfWork.CreateTransaction();
                 if (invoice.Foods?.Any() ?? false)
                 {
-                    if (invoice.Foods.Any(x => x.Food.Id == 0))
+                    if (invoice.Foods.Any(x => x.FoodId == 0))
                         throw new NullReferenceException("Food not found");
 
-                    var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
+                    var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
                     if (foodIds.Any())
                     {
-                        var foods = _unitOfWork.FoodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
-
-                        if (foods.Count() != invoice.Foods.Count())
-                            throw new NullReferenceException("Food Not Found");
+                        
                         //invoice.Ingredients.Clear();
                         var foodInvoiceRels = new List<FoodInvoiceRel>();
-                        for (int i = 0; i < foods.Count(); i++)
+                        foreach (var foodId in foodIds)
                         {
                             foodInvoiceRels.Add(new FoodInvoiceRel()
                             {
-                                InvoiceId = invoice.Id,
-                                FoodId = foods[i].Id,
+                                FoodId = foodId.Key,
+                                Count = foodId.Count()
                             });
                         }
 
@@ -115,24 +112,21 @@ namespace Nemo_v2_Service.Services
                 _unitOfWork.CreateTransaction();
                 if (invoice.Foods?.Any() ?? false)
                 {
-                    if (invoice.Foods.Any(x => x.Food.Id == 0))
+                    if (invoice.Foods.Any(x => x.FoodId == 0))
                         throw new NullReferenceException("Food not found");
 
-                    var foodIds = invoice.Foods.Select(y => y.Food.Id).ToList();
+                    var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
                     if (foodIds.Any())
                     {
-                        var foods = _unitOfWork.FoodRepository.Query(x => foodIds.Contains(x.Id)).ToList();
-
-                        if (foods.Count() != invoice.Foods.Count())
-                            throw new NullReferenceException("Food Not Found");
+                      
                         //invoice.Ingredients.Clear();
                         var foodInvoiceRels = new List<FoodInvoiceRel>();
-                        for (int i = 0; i < foods.Count(); i++)
+                        foreach (var foodId in foodIds)
                         {
                             foodInvoiceRels.Add(new FoodInvoiceRel()
                             {
-                                InvoiceId = invoice.Id,
-                                FoodId = foods[i].Id,
+                                FoodId = foodId.Key,
+                                Count = foodId.Count()
                             });
                         }
 
