@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200516162339_FoodInoviceRelMapUpdate2")]
-    partial class FoodInoviceRelMapUpdate2
+    [Migration("20200517172820_FoodInvoicePropertis")]
+    partial class FoodInvoicePropertis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,15 +100,37 @@ namespace Nemo_v2_Repo.Migrations
                     b.ToTable("FoodGroupRel");
                 });
 
+            modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceProperties", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("ChangedPrice");
+
+                    b.Property<long?>("FoodInvoiceRelFoodId");
+
+                    b.Property<long?>("FoodInvoiceRelInvoiceId");
+
+                    b.Property<int>("FoodSaleType");
+
+                    b.Property<decimal>("OriginalPrice");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodInvoiceRelFoodId", "FoodInvoiceRelInvoiceId");
+
+                    b.ToTable("FoodInvoiceProperties");
+                });
+
             modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceRel", b =>
                 {
-                    b.Property<long>("InvoiceId");
-
                     b.Property<long>("FoodId");
 
-                    b.HasKey("InvoiceId");
+                    b.Property<long>("InvoiceId");
 
-                    b.HasIndex("FoodId");
+                    b.HasKey("FoodId", "InvoiceId");
+
+                    b.HasIndex("InvoiceId");
 
                     b.ToTable("FoodInvoiceRel");
                 });
@@ -295,8 +317,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.Property<long>("ClosedUserId");
 
                     b.Property<decimal>("Discount");
-
-                    b.Property<int>("InvoiceType");
 
                     b.Property<bool>("IsIngredientReduced");
 
@@ -802,6 +822,13 @@ namespace Nemo_v2_Repo.Migrations
                         .WithMany("FoodGroups")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceProperties", b =>
+                {
+                    b.HasOne("Nemo_v2_Data.Entities.FoodInvoiceRel")
+                        .WithMany("FoodInvoiceProperties")
+                        .HasForeignKey("FoodInvoiceRelFoodId", "FoodInvoiceRelInvoiceId");
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceRel", b =>

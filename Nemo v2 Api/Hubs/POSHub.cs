@@ -104,14 +104,27 @@ namespace Nemo_v2_Api.Hubs
                     SectionId = closedInvoice.Tables.First().SectionId,
                     ClosedUserId = closedInvoice.ClosedUser.Id,
                     OpenedUserId = closedInvoice.OpenedUser.Id,
-                    InvoiceType = closedInvoice.InvoiceType,
                     PeopleCount = closedInvoice.PeopleCount,
                     ServiceCharge = closedInvoice.ServiceCharge,
                     TotalAmount = closedInvoice.TotalAmount,
-                    Foods =
-                        closedInvoice.InvoiceFoodViewModels.Select(y => new FoodInvoiceRel {FoodId = y.Id}).ToList(),
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 };
+                invoice.Foods = new List<FoodInvoiceRel>();
+                foreach (var invoiceFoodModel in closedInvoice.InvoiceFoodViewModels.GroupBy(y=>y.Id))
+                {
+                    invoice.Foods.Add(new FoodInvoiceRel()
+                    {
+                        FoodId = invoiceFoodModel.Key,
+                        FoodInvoiceProperties = closedInvoice.InvoiceFoodViewModels
+                            .Where(x=>x.Id == invoiceFoodModel.Key)
+                            .Select(y=>new FoodInvoiceProperties()
+                            {
+                                ChangedPrice = y.ChangedPrice,
+                                OriginalPrice = y.OriginalPrice
+                            }).ToList()
+                    });
+                }
+                
                 _invoiceService.InsertInvoice(invoice);
 
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()

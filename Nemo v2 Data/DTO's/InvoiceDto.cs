@@ -9,8 +9,6 @@ namespace Nemo_v2_Data
     public class InvoiceDto
     {
         public long Id { get; set; }
-        [Required]
-        public InvoiceType InvoiceType { get; set; }
         
         [Required]
         public long RestaurantId { get; set; }

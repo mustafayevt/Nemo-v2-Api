@@ -21,7 +21,7 @@ namespace Nemo_v2_Api.Hubs.Models
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
-        public InvoiceType InvoiceType { get; set; }
+        public FoodSaleType InvoiceType { get; set; }
 
         private ObservableCollection<InvoiceFoodModel> invoiceFoodViewModels = new ObservableCollection<InvoiceFoodModel>();
 

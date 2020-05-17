@@ -46,23 +46,21 @@ namespace Nemo_v2_Service.Services
                     if (invoice.Foods.Any(x => x.FoodId == 0))
                         throw new NullReferenceException("Food not found");
 
-                    var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
-                    if (foodIds.Any())
-                    {
-                        
-                        //invoice.Ingredients.Clear();
-                        var foodInvoiceRels = new List<FoodInvoiceRel>();
-                        foreach (var foodId in foodIds)
-                        {
-                            foodInvoiceRels.Add(new FoodInvoiceRel()
-                            {
-                                FoodId = foodId.Key,
-                                Count = foodId.Count()
-                            });
-                        }
-
-                        invoice.Foods = foodInvoiceRels;
-                    }
+                    // var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
+                    // if (foodIds.Any())
+                    // {
+                    //     //invoice.Ingredients.Clear();
+                    //     var foodInvoiceRels = new List<FoodInvoiceRel>();
+                    //     foreach (var foodId in foodIds)
+                    //     {
+                    //         foodInvoiceRels.Add(new FoodInvoiceRel()
+                    //         {
+                    //             FoodId = foodId.Key
+                    //         });
+                    //     }
+                    //
+                    //     invoice.Foods = foodInvoiceRels;
+                    // }
                 }
                 
                 if (invoice.InvoiceTableRels?.Any() ?? false)
@@ -115,23 +113,23 @@ namespace Nemo_v2_Service.Services
                     if (invoice.Foods.Any(x => x.FoodId == 0))
                         throw new NullReferenceException("Food not found");
 
-                    var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
-                    if (foodIds.Any())
-                    {
-                      
-                        //invoice.Ingredients.Clear();
-                        var foodInvoiceRels = new List<FoodInvoiceRel>();
-                        foreach (var foodId in foodIds)
-                        {
-                            foodInvoiceRels.Add(new FoodInvoiceRel()
-                            {
-                                FoodId = foodId.Key,
-                                Count = foodId.Count()
-                            });
-                        }
-
-                        invoice.Foods = foodInvoiceRels;
-                    }
+                    // var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
+                    // if (foodIds.Any())
+                    // {
+                    //   
+                    //     //invoice.Ingredients.Clear();
+                    //     var foodInvoiceRels = new List<FoodInvoiceRel>();
+                    //     foreach (var foodId in foodIds)
+                    //     {
+                    //         foodInvoiceRels.Add(new FoodInvoiceRel()
+                    //         {
+                    //             FoodId = foodId.Key,
+                    //             Count = foodId.Count()
+                    //         });
+                    //     }
+                    //
+                    //     invoice.Foods = foodInvoiceRels;
+                    // }
                 }
                 
                 if (invoice.InvoiceTableRels?.Any() ?? false)

@@ -2,7 +2,7 @@
 
 namespace Nemo_v2_Data.Entities
 {
-    public enum InvoiceType
+    public enum FoodSaleType
     {
         Normal,
         Gift,
