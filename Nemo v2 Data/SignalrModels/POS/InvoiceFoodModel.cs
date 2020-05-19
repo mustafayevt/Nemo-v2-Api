@@ -11,6 +11,7 @@ namespace Nemo_v2_Api.Hubs.Models
         private bool confrimed;
         private bool isNew;
         private bool isGift;
+        private bool isNonPayable;
         private UserDto user;
         private decimal originalPrice;
         private decimal changedPrice;
@@ -18,16 +19,25 @@ namespace Nemo_v2_Api.Hubs.Models
         public decimal OriginalPrice
         {
             get => originalPrice;
+            set
+            {
+                originalPrice = value;
+            }
         }
 
         public decimal ChangedPrice
         {
             get => changedPrice;
+            set
+            {
+                changedPrice = value;
+            }
         }
 
         public long Id
         {
-            get => id; set
+            get => id; 
+            set
             {
                 id = value;
             }
@@ -75,10 +85,29 @@ namespace Nemo_v2_Api.Hubs.Models
                 isGift = value;
             }
         }
+        public bool IsNonPayable
+        {
+            get => isNonPayable;
+            set
+            {
+                isNonPayable = value;
+            }
+        }
+        public string IsGiftOrNewOrConfrimed
+        {
+            get
+            {
+                return IsNonPayable ? "Non-Payable" : IsGift ? "Gift" : IsNew ? "New" : "Confrimed";
+            }
+        }
 
         public UserDto User
         {
             get { return this.user; }
+            set
+            {
+                user = value;
+            }
         }
     }
 }

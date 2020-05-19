@@ -37,6 +37,7 @@ namespace Nemo_v2_Repo.DbContexts
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Profit> Profits { get; set; }
+        public DbSet<ManualCurrencyModel> ManualCurrencyModel { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)

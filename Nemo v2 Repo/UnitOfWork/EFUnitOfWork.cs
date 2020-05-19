@@ -37,6 +37,7 @@ namespace Nemo_v2_Repo.UnitOfWork
             WarehouseExportInvoiceRepository = new EFWarehouseExportInvoiceRepository(_context);
             ProfitRepository = new EFProfitRepository(_context);
             WarehouseTransferInvoiceRepository = new EFWarehouseTransferInvoiceRepository(_context);
+            ManualCurrencyModelRepository = new  EFManualCurrencyModelRepository(_context);
         }
 
 
@@ -61,6 +62,7 @@ namespace Nemo_v2_Repo.UnitOfWork
         public IWarehouseTransferInvoiceRepository WarehouseTransferInvoiceRepository { get; set; }
         public IWarehouseRepository WarehouseRepository { get; set; }
         public IProfitRepository ProfitRepository { get; set; }
+        public IManualCurrencyModelRepository ManualCurrencyModelRepository { get; set; }
 
         public IDbContextTransaction CreateTransaction()
         {

@@ -153,6 +153,8 @@ namespace Nemo_v2_Data.AutoMapper
             //Profit
             CreateMap<Profit, ProfitDto>().ReverseMap();
             
+            //ManualCurrencyModel
+            CreateMap<ManualCurrencyModel, ManualCurrencyModelDto>().ReverseMap();
         }
     }
 }

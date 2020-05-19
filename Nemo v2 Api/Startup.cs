@@ -97,6 +97,7 @@ namespace Nemo_v2_Api
             services.AddTransient<IWarehouseExportInvoiceService, WarehouseExportInvoiceService>();
             services.AddTransient<IWarehouseTransferInvoiceService, WarehouseTransferInvoiceService>();
             services.AddTransient<IProfitService, ProfitService>();
+            services.AddTransient<IManualCurrencyModelService, ManualCurrencyModelService>();
 
             services.AddSignalR();
         }
