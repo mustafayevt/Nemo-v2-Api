@@ -120,7 +120,8 @@ namespace Nemo_v2_Api.Hubs
                             .Select(y=>new FoodInvoiceProperties()
                             {
                                 ChangedPrice = y.ChangedPrice,
-                                OriginalPrice = y.OriginalPrice
+                                OriginalPrice = y.OriginalPrice,
+                                TableId = y.OwnerTable.Id
                             }).ToList()
                     });
                 }

@@ -15,5 +15,7 @@ namespace Nemo_v2_Data.Entities
         public FoodSaleType FoodSaleType { get; set; }
         public decimal OriginalPrice { get; set; }
         public decimal ChangedPrice { get; set; }
+        [ForeignKey(nameof(Table))]
+        public decimal TableId { get; set; }
     }
 }

@@ -4,6 +4,7 @@ namespace Nemo_v2_Api.Hubs.Models
 {
     public class InvoiceFoodModel
     {
+        private string localId;
         private long id;
         private string name;
         private int count;
@@ -15,6 +16,32 @@ namespace Nemo_v2_Api.Hubs.Models
         private UserDto user;
         private decimal originalPrice;
         private decimal changedPrice;
+
+        private TableDto ownerTable;
+
+        public TableDto OwnerTable
+        {
+            get
+            {
+                return ownerTable;
+            }
+            set
+            {
+                ownerTable = value;
+            }
+        }
+        
+        public string LocalId 
+        {
+            get
+            {
+                return localId;
+            }
+            set
+            {
+                localId = value;
+            }
+        }
 
         public decimal OriginalPrice
         {
