@@ -5,6 +5,8 @@ using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Services;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.ReturnsExtensions;
 using Xunit;
 
 namespace ApiTest.ServiceTests
@@ -43,6 +45,18 @@ namespace ApiTest.ServiceTests
 
             //Assert
             Assert.Equal(buyers,result);
+        }
+
+        [Fact]
+        public async Task GetBuyers_ShouldThrowNullReferenceException_WhenBuyerNotExists()
+        {
+            //Arrange
+            _unitOfWork.BuyerRepository.Get().Throws(new NullReferenceException());
+
+            //Act
+
+            //Assert
+            Assert.Throws<NullReferenceException>(() => { _buyerService.GetBuyers();});
         }
     }
 }
