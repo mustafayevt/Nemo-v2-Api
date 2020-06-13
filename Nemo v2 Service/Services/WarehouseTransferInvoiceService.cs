@@ -13,6 +13,12 @@ namespace Nemo_v2_Service.Services
         private readonly IUnitOfWork _unitOfWork;
         private IIngredientService _ingredientService;
 
+        public WarehouseTransferInvoiceService(IUnitOfWork unitOfWork, IIngredientService ingredientService)
+        {
+            _unitOfWork = unitOfWork;
+            _ingredientService = ingredientService;
+        }
+
         public IEnumerable<WarehouseTransferInvoice> Get()
         {
             return _unitOfWork.WarehouseTransferInvoiceRepository.Get();
@@ -38,26 +44,27 @@ namespace Nemo_v2_Service.Services
 
                 var warehouseTransferInvoice =
                     _unitOfWork.WarehouseTransferInvoiceRepository.Insert(WarehouseTransferInvoice);
-                _ingredientService.DecreaseIngredientQuantity(new List<IngredientWarehouseRel>()
-                {
-                    new IngredientWarehouseRel()
-                    {
-                        IngredientId = warehouseTransferInvoice.IngredientId,
-                        WarehouseId = warehouseTransferInvoice.AcceptorWarehouseId,
-                        Quantity = warehouseTransferInvoice.Quantity
-                    }
-                });
 
-                _ingredientService.IncreaseIngredientQuantity(new List<IngredientWarehouseRel>
-                {
+                var degreaseIngredients = WarehouseTransferInvoice.Ingredients;
+
+                _ingredientService.DecreaseIngredientQuantity(degreaseIngredients.Select(y =>
                     new IngredientWarehouseRel()
                     {
-                        IngredientId = warehouseTransferInvoice.IngredientId,
-                        WarehouseId = warehouseTransferInvoice.RequesterWarehouseId,
-                        Quantity = warehouseTransferInvoice.Quantity
+                        IngredientId = y.IngredientId,
+                        WarehouseId = warehouseTransferInvoice.AcceptorWarehouseId,
+                        Quantity = y.Quantity
                     }
-                });
-                
+                ));
+
+                _ingredientService.IncreaseIngredientQuantity(degreaseIngredients.Select(y =>
+                    new IngredientWarehouseRel
+                    {
+                        IngredientId = y.IngredientId,
+                        WarehouseId = warehouseTransferInvoice.RequesterWarehouseId,
+                        Quantity = y.Quantity
+                    }
+                ));
+
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
 

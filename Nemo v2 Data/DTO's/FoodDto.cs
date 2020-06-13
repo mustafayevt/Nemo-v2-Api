@@ -14,7 +14,7 @@ namespace Nemo_v2_Data
 
         public  List<FoodGroupDto> FoodGroups { get; set; }
 
-        public List<KeyValuePair<long,decimal>> Ingredients { get; set; }
+        public List<FoodIngredientRelDto> Ingredients { get; set; }
 
         public List<KeyValuePair<SectionDto,PrinterDto>> SectionToPrinter { get; set; }
         

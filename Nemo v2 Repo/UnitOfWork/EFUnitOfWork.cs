@@ -71,7 +71,6 @@ namespace Nemo_v2_Repo.UnitOfWork
 
         public void Commit()
         {
-            
             _context.Database.CommitTransaction();
         }
 

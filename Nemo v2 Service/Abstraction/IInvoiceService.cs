@@ -8,7 +8,7 @@ namespace Nemo_v2_Service.Abstraction
         IEnumerable<Invoice> Get();  
         IEnumerable<Invoice> GetInvoicesByRestaurantId(long RestId);  
         Invoice GetInvoice(long id);  
-        Invoice InsertInvoice(Invoice invoice);  
+        Invoice InsertInvoice(Invoice invoice,bool decreaseIngredients);  
         Invoice UpdateInvoice(Invoice invoice);  
         void DeleteInvoice(long id);  
     }

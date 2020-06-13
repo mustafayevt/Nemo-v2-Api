@@ -60,10 +60,11 @@ namespace Nemo_v2_Service.Services
                         var ingredientFoodRels = new List<IngredientFoodRel>();
                         for (int i = 0; i < ingredients.Count(); i++)
                         {
-                            ingredientFoodRels.Add(new IngredientFoodRel()
+                            ingredientFoodRels.Add(new IngredientFoodRel
                             {
                                 FoodId = Food.Id,
                                 IngredientId = ingredients[i].Id,
+                                WarehouseId = Food.Ingredients[i].WarehouseId,
                                 Quantity = Food.Ingredients[i].Quantity,
                                 Unit = Food.Ingredients[i].Unit
                             });

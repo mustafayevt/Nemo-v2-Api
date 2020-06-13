@@ -8,13 +8,15 @@ using Nemo_v2_Service.Abstraction;
 
 namespace Nemo_v2_Service.Services
 {
-    public class InvoiceService:IInvoiceService
+    public class InvoiceService : IInvoiceService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IIngredientService _ingredientService;
 
-        public InvoiceService(IUnitOfWork unitOfWork)
+        public InvoiceService(IUnitOfWork unitOfWork, IIngredientService ingredientService)
         {
             _unitOfWork = unitOfWork;
+            _ingredientService = ingredientService;
         }
 
         public IEnumerable<Invoice> Get()
@@ -26,80 +28,112 @@ namespace Nemo_v2_Service.Services
         {
             return _unitOfWork.InvoiceRepository.Query(x => x.RestaurantId == RestId)
                 .Include(x => x.Foods)
-                .ThenInclude(x=>x.Food);
+                .ThenInclude(x => x.Food);
         }
 
         public Invoice GetInvoice(long id)
         {
             return _unitOfWork.InvoiceRepository.Query(x => x.Id == id)
                 .Include(x => x.Foods)
-                .ThenInclude(x=>x.Food).First();
+                .ThenInclude(x => x.Food).First();
         }
 
-        public Invoice InsertInvoice(Invoice invoice)
+        public Invoice InsertInvoice(Invoice invoice, bool decreaseIngredients)
         {
-            try
+            using (var transaction = _unitOfWork.CreateTransaction())
             {
-                _unitOfWork.CreateTransaction();
-                if (invoice.Foods?.Any() ?? false)
+                try
                 {
-                    if (invoice.Foods.Any(x => x.FoodId == 0))
-                        throw new NullReferenceException("Food not found");
-
-                    // var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
-                    // if (foodIds.Any())
-                    // {
-                    //     //invoice.Ingredients.Clear();
-                    //     var foodInvoiceRels = new List<FoodInvoiceRel>();
-                    //     foreach (var foodId in foodIds)
-                    //     {
-                    //         foodInvoiceRels.Add(new FoodInvoiceRel()
-                    //         {
-                    //             FoodId = foodId.Key
-                    //         });
-                    //     }
-                    //
-                    //     invoice.Foods = foodInvoiceRels;
-                    // }
-                }
-                
-                if (invoice.InvoiceTableRels?.Any() ?? false)
-                {
-                    if (invoice.InvoiceTableRels.Any(x => x.TableId == 0))
-                        throw new NullReferenceException("Table not found");
-
-                    var tableIds = invoice.InvoiceTableRels.Select(y => y.TableId).ToList();
-                    if (tableIds.Any())
+                    if (invoice.Foods?.Any() ?? false)
                     {
-                        var tables = _unitOfWork.TableRepository.Query(x => tableIds.Contains(x.Id)).ToList();
+                        if (invoice.Foods.Any(x => x.FoodId == 0))
+                            throw new NullReferenceException("Food not found");
 
-                        if (tables.Count() != invoice.InvoiceTableRels.Count())
-                            throw new NullReferenceException("Table Not Found");
-                        //invoice.Ingredients.Clear();
-                        var invoiceTableRels = new List<InvoiceTableRel>();
-                        for (int i = 0; i < tables.Count(); i++)
+                        // var foodIds = invoice.Foods.Select(y => y.FoodId).GroupBy(x=>x);
+                        // if (foodIds.Any())
+                        // {
+                        //     //invoice.Ingredients.Clear();
+                        //     var foodInvoiceRels = new List<FoodInvoiceRel>();
+                        //     foreach (var foodId in foodIds)
+                        //     {
+                        //         foodInvoiceRels.Add(new FoodInvoiceRel()
+                        //         {
+                        //             FoodId = foodId.Key
+                        //         });
+                        //     }
+                        //
+                        //     invoice.Foods = foodInvoiceRels;
+                        // }
+                    }
+
+                    if (invoice.InvoiceTableRels?.Any() ?? false)
+                    {
+                        if (invoice.InvoiceTableRels.Any(x => x.TableId == 0))
+                            throw new NullReferenceException("Table not found");
+
+                        var tableIds = invoice.InvoiceTableRels.Select(y => y.TableId).ToList();
+                        if (tableIds.Any())
                         {
-                            invoiceTableRels.Add(new InvoiceTableRel()
+                            var tables = _unitOfWork.TableRepository.Query(x => tableIds.Contains(x.Id)).ToList();
+
+                            if (tables.Count() != invoice.InvoiceTableRels.Count())
+                                throw new NullReferenceException("Table Not Found");
+                            //invoice.Ingredients.Clear();
+                            var invoiceTableRels = new List<InvoiceTableRel>();
+                            for (int i = 0; i < tables.Count(); i++)
                             {
-                                InvoiceId = invoice.Id,
-                                TableId = tables[i].Id,
-                            });
+                                invoiceTableRels.Add(new InvoiceTableRel()
+                                {
+                                    InvoiceId = invoice.Id,
+                                    TableId = tables[i].Id,
+                                });
+                            }
+
+                            invoice.InvoiceTableRels = invoiceTableRels;
+                        }
+                    }
+
+
+                    var result = _unitOfWork.InvoiceRepository.Insert(invoice);
+
+                    if (decreaseIngredients)
+                    {
+                        var ingredients = new List<IngredientWarehouseRel>();
+                        foreach (var food in invoice.Foods.ToList())
+                        {
+                            foreach (var foodInvoiceProperties in food.FoodInvoiceProperties)
+                            {
+                                for (int i = 0; i < foodInvoiceProperties.Count; i++)
+                                {
+                                    var ingredientsInFoods = _unitOfWork.FoodRepository
+                                        .Query(y => y.Id == food.FoodId).Include(h=>h.Ingredients)
+                                        .SelectMany(y => y.Ingredients);
+                                    
+                                    foreach (var ingredient in ingredientsInFoods)
+                                    {
+                                        ingredients.Add(new IngredientWarehouseRel()
+                                        {
+                                            IngredientId = ingredient.IngredientId,
+                                            Quantity = ingredient.Quantity * (decimal) foodInvoiceProperties.Portion,
+                                            WarehouseId = ingredient.WarehouseId
+                                        });
+                                    }
+                                }
+                            }
                         }
 
-                        invoice.InvoiceTableRels = invoiceTableRels;
+                        _ingredientService.DecreaseIngredientQuantity(ingredients);
                     }
+
+                    _unitOfWork.Save();
+                    transaction.Commit();
+                    return result;
                 }
-                
-            
-                var result = _unitOfWork.InvoiceRepository.Insert(invoice);
-                _unitOfWork.Save();
-                _unitOfWork.Commit();
-                return result;
-            }
-            catch (Exception e)
-            {
-                _unitOfWork.Rollback();
-                throw ;
+                catch (Exception e)
+                {
+                    _unitOfWork.Rollback();
+                    throw;
+                }
             }
         }
 
@@ -131,7 +165,7 @@ namespace Nemo_v2_Service.Services
                     //     invoice.Foods = foodInvoiceRels;
                     // }
                 }
-                
+
                 if (invoice.InvoiceTableRels?.Any() ?? false)
                 {
                     if (invoice.InvoiceTableRels.Any(x => x.TableId == 0))
@@ -158,7 +192,7 @@ namespace Nemo_v2_Service.Services
                         invoice.InvoiceTableRels = invoiceTableRels;
                     }
                 }
-            
+
                 var result = _unitOfWork.InvoiceRepository.Update(invoice);
                 _unitOfWork.Save();
                 _unitOfWork.Commit();
@@ -167,7 +201,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
 
@@ -183,7 +217,7 @@ namespace Nemo_v2_Service.Services
             catch (Exception e)
             {
                 _unitOfWork.Rollback();
-                throw ;
+                throw;
             }
         }
     }

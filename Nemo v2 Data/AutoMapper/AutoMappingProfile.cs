@@ -77,15 +77,12 @@ namespace Nemo_v2_Data.AutoMapper
                     .ForMember(x => x.Value, opt => opt.MapFrom(src => src.Printer));
 
 
-                CreateMap<KeyValuePair<long, decimal>, IngredientFoodRel>()
-                    .ForMember(x => x.IngredientId, opt => opt.MapFrom(src => src.Key))
-                    .ForMember(x => x.Quantity, opt => opt.MapFrom(src => src.Value));
+                CreateMap<FoodIngredientRelDto, IngredientFoodRel>()
+                    .ForMember(x => x.IngredientId, opt => opt.MapFrom(src => src.IngredientId))
+                    .ForMember(x=>x.WarehouseId,opt=>opt.MapFrom(src=>src.WareHouseId))
+                    .ForMember(x => x.Quantity, opt => opt.MapFrom(src => src.Quantity))
+                    .ReverseMap();
                 
-                //reverse
-                CreateMap<IngredientFoodRel,KeyValuePair<long, decimal>>()
-                    .ForMember(x => x.Key, opt => opt.MapFrom(src => src.IngredientId))
-                    .ForMember(x => x.Value, opt => opt.MapFrom(src => src.Quantity));
-
 
             CreateMap<Food, FoodDto>()
                 .ForMember(x=>x.SectionToPrinter,opt=>opt.MapFrom(y=>y.FoodPrinterAndSectionRels)).ReverseMap();
@@ -155,6 +152,41 @@ namespace Nemo_v2_Data.AutoMapper
             
             //ManualCurrencyModel
             CreateMap<ManualCurrencyModel, ManualCurrencyModelDto>().ReverseMap();
+            
+            //IngredientsTransfer
+            CreateMap<WarehouseTransferInvoiceDto, IngredientsTransfer>()
+                .ForMember(x => x.IngredientId, opt => opt
+                    .MapFrom(d => d.IngredientId))
+                .ForMember(x => x.RestaurantId, opt => opt
+                    .MapFrom(d => d.RestaurantId))
+                .ForMember(x => x.Quantity, opt => opt
+                    .MapFrom(d => d.Quantity))
+                .ForMember(x => x.Unit, opt => opt
+                    .MapFrom(d => d.Unit))
+                .ForMember(x => x.PriceForEach, opt => opt
+                    .MapFrom(d => d.PriceForEach)).ReverseMap();
+                
+            
+            //WarehouseTransferInvoice
+            CreateMap<WarehouseTransferInvoiceDto, WarehouseTransferInvoice>()
+                .ForMember(x => x.RestaurantId, opt => opt
+                    .MapFrom(d => d.RestaurantId))
+                .ForMember(x => x.AcceptedTime, opt => opt
+                    .MapFrom(d => d.AcceptedTime))
+                .ForMember(x => x.AcceptorUserId, opt => opt
+                    .MapFrom(d => d.AcceptedByUserId))
+                .ForMember(x => x.AcceptorWarehouseId, opt => opt
+                    .MapFrom(d => d.AcceptedWareHouseId))
+                .ForMember(x => x.InvoiceNumber, opt => opt
+                    .MapFrom(d => d.TransferId))
+                .ForMember(x => x.IsPayed, opt => opt
+                    .MapFrom(d => d.IsPayed))
+                .ForMember(x => x.RequestedTime, opt => opt
+                    .MapFrom(d => d.RequestTime))
+                .ForMember(x => x.RequesterUserId, opt => opt
+                    .MapFrom(d => d.RequestedByUserId))
+                .ForMember(x => x.RequesterWarehouseId, opt => opt
+                    .MapFrom(d => d.RequestedWareHouseId)).ReverseMap();
         }
     }
 }

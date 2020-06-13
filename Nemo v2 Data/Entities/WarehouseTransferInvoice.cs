@@ -9,12 +9,7 @@ namespace Nemo_v2_Data.Entities
     {
         [Required]
         public string InvoiceNumber { get; set; }
-        
-        [Required,ForeignKey(nameof(Ingredient))]
-        public long IngredientId { get; set; }
-        public virtual Ingredient Ingredient { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal PriceForEach { get; set; }
+        public ICollection<IngredientsTransfer> Ingredients { get; set; }
         public DateTime RequestedTime { get; set; }
         public DateTime AcceptedTime { get; set; }
         public bool IsPayed { get; set; }

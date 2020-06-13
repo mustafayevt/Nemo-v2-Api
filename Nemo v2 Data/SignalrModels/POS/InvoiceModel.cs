@@ -21,6 +21,10 @@ namespace Nemo_v2_Api.Hubs.Models
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
+        public string Printer { get; set; }
+        public decimal CardPayment { get; set; }
+        public decimal CashPayment { get; set; }
+
         private string openedTime;
 
         public string OpenedTime

@@ -90,9 +90,9 @@ namespace Nemo_v2_Api.Hubs
             }
         }
 
-        public async Task CloseInvoice(string InvoiceModel)
+        public async Task CloseInvoice(string invoiceModel,bool decreaseIngredients)
         {
-            var closedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(InvoiceModel);
+            var closedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(invoiceModel);
 
             try
             {
@@ -100,6 +100,8 @@ namespace Nemo_v2_Api.Hubs
                 {
                     Amount = closedInvoice.Amount,
                     Discount = closedInvoice.Discount,
+                    CardPayment = closedInvoice.CardPayment,
+                    CashPayment = closedInvoice.CashPayment,
                     RestaurantId = closedInvoice.RestaurantId,
                     SectionId = closedInvoice.Tables.First().SectionId,
                     ClosedUserId = closedInvoice.ClosedUser.Id,
@@ -119,6 +121,8 @@ namespace Nemo_v2_Api.Hubs
                             .Where(x=>x.Id == invoiceFoodModel.Key)
                             .Select(y=>new FoodInvoiceProperties()
                             {
+                                Portion = y.Size,
+                                Count = y.Count,
                                 ChangedPrice = y.ChangedPrice,
                                 OriginalPrice = y.OriginalPrice,
                                 TableId = y.OwnerTable.Id
@@ -126,7 +130,7 @@ namespace Nemo_v2_Api.Hubs
                     });
                 }
                 
-                _invoiceService.InsertInvoice(invoice);
+                _invoiceService.InsertInvoice(invoice,decreaseIngredients);
 
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
                     .FirstOrDefault(x => x.InvoiceId == closedInvoice.Id);
@@ -137,7 +141,7 @@ namespace Nemo_v2_Api.Hubs
                         _hubTemporaryDataContext.InvoiceModels.Remove(currentInvoice);
                         await _hubTemporaryDataContext.SaveChangesAsync();
                         await Clients.Group(closedInvoice.RestaurantId.ToString())
-                            .SendAsync("CloseInvoice", InvoiceModel);
+                            .SendAsync("CloseInvoice", invoiceModel);
                     }
                     catch (Exception e)
                     {

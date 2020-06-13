@@ -38,5 +38,7 @@ namespace Nemo_v2_Data.Entities
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal CardPayment { get; set; }
+        public decimal CashPayment { get; set; }
     }
 }

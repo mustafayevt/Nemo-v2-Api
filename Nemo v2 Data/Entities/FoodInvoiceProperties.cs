@@ -7,12 +7,9 @@ namespace Nemo_v2_Data.Entities
     {
         public long Id { get; set; }
 
-        // [Required, ForeignKey(nameof(FoodInvoiceRel))]
-        // public long FoodInvoiceRelId { get; set; }
-        //
-        // public virtual FoodInvoiceRel FoodInvoiceRel { get; set; }
-
         public FoodSaleType FoodSaleType { get; set; }
+        public int Count { get; set; }
+        public float Portion { get; set; }
         public decimal OriginalPrice { get; set; }
         public decimal ChangedPrice { get; set; }
         [ForeignKey(nameof(Table))]

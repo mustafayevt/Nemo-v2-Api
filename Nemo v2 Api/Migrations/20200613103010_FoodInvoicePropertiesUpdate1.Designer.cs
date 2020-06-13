@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200613103010_FoodInvoicePropertiesUpdate1")]
+    partial class FoodInvoicePropertiesUpdate1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,8 +106,6 @@ namespace Nemo_v2_Repo.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("ChangedPrice");
-
-                    b.Property<int>("Count");
 
                     b.Property<long?>("FoodInvoiceRelFoodId");
 
@@ -223,13 +223,9 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<int>("Unit");
 
-                    b.Property<long>("WarehouseId");
-
                     b.HasKey("FoodId", "IngredientId");
 
                     b.HasIndex("IngredientId");
-
-                    b.HasIndex("WarehouseId");
 
                     b.ToTable("IngredientFoodRel");
                 });
@@ -937,11 +933,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.Ingredient", "Ingredient")
                         .WithMany()
                         .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nemo_v2_Data.Entities.Warehouse", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

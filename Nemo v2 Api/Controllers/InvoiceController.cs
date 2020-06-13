@@ -67,12 +67,12 @@ namespace Nemo_v2_Api.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> AddInvoice([FromBody]InvoiceDto invoiceDto)
+        public async Task<IActionResult> AddInvoice([FromBody]InvoiceDto invoiceDto,bool decreaseIngredients)
         {
             try
             {
                 var invoice = _mapper.Map<Invoice>(invoiceDto);
-                var addedInvoice = _invoiceService.InsertInvoice(invoice);
+                var addedInvoice = _invoiceService.InsertInvoice(invoice,decreaseIngredients);
                 _logger.LogInformation($"Invoice Added {invoice.Id}");
                 return Ok(_mapper.Map<InvoiceDto>(addedInvoice));
             }
