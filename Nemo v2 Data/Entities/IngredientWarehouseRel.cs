@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nemo_v2_Data.Entities
@@ -13,6 +14,7 @@ namespace Nemo_v2_Data.Entities
 
         public virtual Warehouse Warehouse { get; set; }
         public virtual Ingredient Ingredient { get; set; }
-        [Required] public decimal Quantity { get; set; }
+        [DefaultValue(0)]
+        public decimal? Quantity { get; set; }
     }
 }

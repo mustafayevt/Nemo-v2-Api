@@ -247,8 +247,22 @@ namespace Nemo_v2_Service.Services
         {
             try
             {
+                //add ingredient to warehouse
+                var ingredientNotIncludeWarehouseRels = ingredientInserts.Where(x =>
+                    !_applicationContext.IngredientWarehouseRels.Any(y => x.IngredientId == y.IngredientId
+                                                                          && x.WarehouseId == y.WarehouseId));
+                _applicationContext.IngredientWarehouseRels.AddRange(ingredientNotIncludeWarehouseRels.Select(y=> new IngredientWarehouseRel
+                {
+                    IngredientId = y.IngredientId,
+                    WarehouseId = y.WarehouseId,
+                    Quantity = 0
+                }));
+                _unitOfWork.Save();
+                //
+                
+                
                 var ingredientWarehouseRels = _applicationContext.IngredientWarehouseRels.Where(x =>
-                    ingredientInserts.Any(y => x.IngredientId == y.IngredientId 
+                    ingredientInserts.Any(y => x.IngredientId == y.IngredientId
                                                && x.WarehouseId == y.WarehouseId));
                 foreach (var ingredientsExport in ingredientInserts)
                 {
@@ -260,7 +274,7 @@ namespace Nemo_v2_Service.Services
                 }
 
                 _unitOfWork.Save();
-                return ingredientWarehouseRels.Select(x=>x.Ingredient);
+                return ingredientWarehouseRels.Select(x => x.Ingredient);
             }
             catch (Exception e)
             {
@@ -274,7 +288,7 @@ namespace Nemo_v2_Service.Services
             try
             {
                 var ingredientWarehouseRels = _applicationContext.IngredientWarehouseRels.Where(x =>
-                    ingredientsExports.Any(y => x.IngredientId == y.IngredientId 
+                    ingredientsExports.Any(y => x.IngredientId == y.IngredientId
                                                 && x.WarehouseId == y.WarehouseId));
                 foreach (var ingredientsExport in ingredientsExports)
                 {
@@ -286,7 +300,7 @@ namespace Nemo_v2_Service.Services
                 }
 
                 _unitOfWork.Save();
-                return ingredientWarehouseRels.Select(x=>x.Ingredient);
+                return ingredientWarehouseRels.Select(x => x.Ingredient);
             }
             catch (Exception e)
             {
