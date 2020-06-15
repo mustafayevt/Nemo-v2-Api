@@ -46,6 +46,23 @@ namespace Nemo_v2_Service.Services
                     _unitOfWork.WarehouseTransferInvoiceRepository.Insert(WarehouseTransferInvoice);
 
                 var degreaseIngredients = WarehouseTransferInvoice.Ingredients;
+                foreach (var ingredientsTransfer in degreaseIngredients)
+                {
+                    switch (ingredientsTransfer.Unit)
+                    {
+                        case Unit.Kq:
+                        case Unit.Lt:
+                        {
+                            ingredientsTransfer.Quantity = ingredientsTransfer.Quantity * 1000;
+                            break;
+                        }
+                        default:
+                        {
+                            ingredientsTransfer.Quantity = ingredientsTransfer.Quantity;
+                            break;
+                        }
+                    }
+                }
 
                 _ingredientService.DecreaseIngredientQuantity(degreaseIngredients.Select(y =>
                     new IngredientWarehouseRel()

@@ -4,6 +4,7 @@ namespace Nemo_v2_Data
 {
     public class ManualCurrencyModelDto
     {
+        public long Id { get; set; }
         [Required]
         public long RestaurantId { get; set; }
         [Required]
