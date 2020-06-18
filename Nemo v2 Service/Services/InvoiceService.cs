@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
 using Nemo_v2_Service.Abstraction;
@@ -38,7 +40,7 @@ namespace Nemo_v2_Service.Services
                 .ThenInclude(x => x.Food).First();
         }
 
-        public Invoice InsertInvoice(Invoice invoice, bool decreaseIngredients)
+        public Invoice InsertInvoice(Invoice invoice)
         {
             using (var transaction = _unitOfWork.CreateTransaction())
             {
@@ -96,33 +98,12 @@ namespace Nemo_v2_Service.Services
 
                     var result = _unitOfWork.InvoiceRepository.Insert(invoice);
 
-                    if (decreaseIngredients)
+                    if (invoice.IsIngredientReduced)
                     {
-                        var ingredients = new List<IngredientWarehouseRel>();
-                        foreach (var food in invoice.Foods.ToList())
+                        ReduceIngredientsInInvoices(new List<Invoice>
                         {
-                            foreach (var foodInvoiceProperties in food.FoodInvoiceProperties)
-                            {
-                                for (int i = 0; i < foodInvoiceProperties.Count; i++)
-                                {
-                                    var ingredientsInFoods = _unitOfWork.FoodRepository
-                                        .Query(y => y.Id == food.FoodId).Include(h=>h.Ingredients)
-                                        .SelectMany(y => y.Ingredients);
-                                    
-                                    foreach (var ingredient in ingredientsInFoods)
-                                    {
-                                        ingredients.Add(new IngredientWarehouseRel()
-                                        {
-                                            IngredientId = ingredient.IngredientId,
-                                            Quantity = ingredient.Quantity * (decimal) foodInvoiceProperties.Portion,
-                                            WarehouseId = ingredient.WarehouseId
-                                        });
-                                    }
-                                }
-                            }
-                        }
-
-                        _ingredientService.DecreaseIngredientQuantity(ingredients);
+                            invoice
+                        });
                     }
 
                     _unitOfWork.Save();
@@ -132,6 +113,71 @@ namespace Nemo_v2_Service.Services
                 catch (Exception e)
                 {
                     _unitOfWork.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public void ReduceIngredientsInInvoices(ICollection<Invoice> invoices)
+        {
+            foreach (var invoice in invoices)
+            {
+                var ingredients = new List<IngredientWarehouseRel>();
+                foreach (var food in invoice.Foods.ToList())
+                {
+                    foreach (var foodInvoiceProperties in food.FoodInvoiceProperties)
+                    {
+                        for (int i = 0; i < foodInvoiceProperties.Count; i++)
+                        {
+                            var ingredientsInFoods = _unitOfWork.FoodRepository
+                                .Query(y => y.Id == food.FoodId).Include(h => h.Ingredients)
+                                .SelectMany(y => y.Ingredients);
+
+                            foreach (var ingredient in ingredientsInFoods)
+                            {
+                                ingredients.Add(new IngredientWarehouseRel()
+                                {
+                                    IngredientId = ingredient.IngredientId,
+                                    Quantity = ingredient.Quantity * (decimal) foodInvoiceProperties.Portion,
+                                    WarehouseId = ingredient.WarehouseId
+                                });
+                            }
+                        }
+                    }
+                }
+
+                _ingredientService.DecreaseIngredientQuantity(ingredients);
+            }
+        }
+
+        public async Task<int> ReduceIngredientsInInvoiceByDate(long restId, DateTime startDate, DateTime endDate)
+        {
+            using (var transaction = _unitOfWork.CreateTransaction())
+            {
+                try
+                {
+                    var invoices = _unitOfWork.InvoiceRepository.Query(x =>
+                        x.RestaurantId == restId &&
+                        x.IsIngredientReduced == false &&
+                        x.AddedDate.Date >= startDate.Date &&
+                        x.AddedDate <= endDate.Date).Include(y =>
+                        y.Foods).ThenInclude(y =>
+                        y.FoodInvoiceProperties);
+
+                    var mustUpdateList = invoices.ToList();
+                    
+                    ReduceIngredientsInInvoices(mustUpdateList);
+
+                    await invoices.ForEachAsync(x => x.IsIngredientReduced = true);
+
+                    _unitOfWork.Save();
+                    transaction.Commit();
+                    
+                    return mustUpdateList.Count();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
                     throw;
                 }
             }

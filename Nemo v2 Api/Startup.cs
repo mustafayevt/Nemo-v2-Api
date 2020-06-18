@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Nemo_v2_Api.Hubs;
+using Nemo_v2_Api.Middlewares;
 using Nemo_v2_Data.AutoMapper;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Abstraction;
@@ -112,6 +114,7 @@ namespace Nemo_v2_Api
             {
                 app.UseHsts();
             }
+            app.UseMiddleware(typeof(ExceptionHandlingMiddleware));
 
             loggerFactory.AddFile("Logs/Errors/{Date}.txt", LogLevel.Error);
             loggerFactory.AddFile("Logs/Info/{Date}.txt");

@@ -109,6 +109,7 @@ namespace Nemo_v2_Api.Hubs
                     PeopleCount = closedInvoice.PeopleCount,
                     ServiceCharge = closedInvoice.ServiceCharge,
                     TotalAmount = closedInvoice.TotalAmount,
+                    IsIngredientReduced = decreaseIngredients,
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 };
                 invoice.Foods = new List<FoodInvoiceRel>();
@@ -130,7 +131,7 @@ namespace Nemo_v2_Api.Hubs
                     });
                 }
                 
-                _invoiceService.InsertInvoice(invoice,decreaseIngredients);
+                _invoiceService.InsertInvoice(invoice);
 
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()
                     .FirstOrDefault(x => x.InvoiceId == closedInvoice.Id);

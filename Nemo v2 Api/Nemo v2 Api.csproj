@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Nemo v2 Service\Nemo v2 Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CustomExceptions" />
+  </ItemGroup>
+
 </Project>

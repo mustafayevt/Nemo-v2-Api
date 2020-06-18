@@ -245,7 +245,7 @@ namespace Nemo_v2_Service.Services
         public IEnumerable<Ingredient> IncreaseIngredientQuantity(
             IEnumerable<IngredientWarehouseRel> ingredientInserts)
         {
-            try
+            try 
             {
                 //add ingredient to warehouse
                 var ingredientNotIncludeWarehouseRels = ingredientInserts.Where(x =>

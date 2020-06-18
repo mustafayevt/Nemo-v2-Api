@@ -21,6 +21,7 @@ namespace Nemo_v2_Api.Controllers
         private readonly IInvoiceService _invoiceService;
         private readonly ILogger<InvoiceController> _logger;
         private readonly IMapper _mapper;
+
         public InvoiceController(IInvoiceService invoiceService,
             ILogger<InvoiceController> logger,
             IMapper mapper)
@@ -29,7 +30,7 @@ namespace Nemo_v2_Api.Controllers
             this._logger = logger;
             this._mapper = mapper;
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInvoice(long id)
         {
@@ -47,7 +48,7 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.GetAllMessages());
             }
         }
-        
+
         [HttpGet("RestId/{RestaurantId}")]
         public async Task<IActionResult> GetInvoiceByRestaurantId(long RestaurantId)
         {
@@ -55,7 +56,7 @@ namespace Nemo_v2_Api.Controllers
             {
                 var invoices = _invoiceService.GetInvoicesByRestaurantId(RestaurantId);
                 if (invoices == null) throw new NullReferenceException("Invoice Not Found");
-                var invoicesDto =_mapper.Map<List<Invoice>,List<InvoiceDto>>(invoices.ToList());
+                var invoicesDto = _mapper.Map<List<Invoice>, List<InvoiceDto>>(invoices.ToList());
                 _logger.LogInformation($"Invoices Get By Restaurant Id:{RestaurantId}");
                 return Ok(invoicesDto);
             }
@@ -65,14 +66,15 @@ namespace Nemo_v2_Api.Controllers
                 return NotFound(e.GetAllMessages());
             }
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> AddInvoice([FromBody]InvoiceDto invoiceDto,bool decreaseIngredients)
+        public async Task<IActionResult> AddInvoice([FromBody] InvoiceDto invoiceDto, bool decreaseIngredients)
         {
             try
             {
                 var invoice = _mapper.Map<Invoice>(invoiceDto);
-                var addedInvoice = _invoiceService.InsertInvoice(invoice,decreaseIngredients);
+                invoice.IsIngredientReduced = decreaseIngredients;
+                var addedInvoice = _invoiceService.InsertInvoice(invoice);
                 _logger.LogInformation($"Invoice Added {invoice.Id}");
                 return Ok(_mapper.Map<InvoiceDto>(addedInvoice));
             }
@@ -82,14 +84,23 @@ namespace Nemo_v2_Api.Controllers
                 return BadRequest(e.GetAllMessages());
             }
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> ReduceIngredientsInInvoiceByDate(long restId, DateTime startDate,
+            DateTime endDate)
+        {
+            _logger.LogInformation($"Reduce ingredients in invoice by restaurandId:{restId}, startDate:{startDate.Date}, endDate:{endDate.Date}");
+            var reducedInvoiceCount = await _invoiceService.ReduceIngredientsInInvoiceByDate(restId, startDate, endDate);
+            return Ok($"Reduced Invoice count : {reducedInvoiceCount}");
+        }
+
         [HttpPut]
-        public async Task<IActionResult> UpdateInvoice([FromBody]InvoiceDto invoiceDto)
+        public async Task<IActionResult> UpdateInvoice([FromBody] InvoiceDto invoiceDto)
         {
             try
             {
                 var updatedInvoice = _mapper.Map<Invoice>(invoiceDto);
-                var result =_invoiceService.UpdateInvoice(updatedInvoice);
+                var result = _invoiceService.UpdateInvoice(updatedInvoice);
                 _logger.LogInformation($"Invoice Updated Id: {updatedInvoice.Id}");
                 return Ok(_mapper.Map<InvoiceDto>(result));
             }
