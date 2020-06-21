@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,5 +28,13 @@ namespace Nemo_v2_Data.Entities
         public virtual List<RestSupplierRel> Supplliers { get; set; }
         public virtual List<ManualCurrencyModel> ManualCurrencyModels { get; set; }
 
+        [DefaultValue(1)]
+        public ulong LastInvoiceNumber { get; set; }
+        [DefaultValue(1)]
+        public ulong LastWarehouseExportInvoiceNumber { get; set; }
+        [DefaultValue(1)]
+        public ulong LastWarehouseInsertInvoiceNumber { get; set; }
+        [DefaultValue(1)]
+        public ulong LastWarehouseTransferInvoiceNumber { get; set; }
     }
 }
