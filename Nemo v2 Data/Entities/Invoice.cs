@@ -7,6 +7,7 @@ namespace Nemo_v2_Data.Entities
 {
     public class Invoice:BaseEntity
     {
+        public string InvoiceNumber { get; set; }
         [Required,ForeignKey(nameof(Restaurant))]
         public long RestaurantId { get; set; }
         public virtual Restaurant Restaurant { get; set; }
@@ -26,7 +27,7 @@ namespace Nemo_v2_Data.Entities
         public virtual Section Section { get; set; }
         
         
-        public virtual List<InvoiceTableRel> InvoiceTableRels { get; set; }
+        public virtual IEnumerable<InvoiceTableRel> InvoiceTableRels { get; set; }
         
         public List<FoodInvoiceRel> Foods { get; set; }
         
@@ -38,7 +39,6 @@ namespace Nemo_v2_Data.Entities
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
-        public decimal CardPayment { get; set; }
-        public decimal CashPayment { get; set; }
+        public IEnumerable<PaymentTypeInvoiceRel> PaymentTypeInvoiceRels { get; set; }
     }
 }

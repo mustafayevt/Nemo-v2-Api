@@ -101,6 +101,7 @@ namespace Nemo_v2_Api
             services.AddTransient<IProfitService, ProfitService>();
             services.AddTransient<IManualCurrencyModelService, ManualCurrencyModelService>();
             services.AddTransient<IInvoiceNumberManagerService, InvoiceNumberManagerService>();
+            services.AddTransient<IPaymentTypeService, PaymentTypeService>();
 
             services.AddSignalR();
         }

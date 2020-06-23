@@ -17,5 +17,6 @@ namespace Nemo_v2_Data.Entities
         public long RestaurantId { get; set; }
 
         public Restaurant Restaurant { get; set; }
+        public Unit Unit { get; set; }
     }
 }

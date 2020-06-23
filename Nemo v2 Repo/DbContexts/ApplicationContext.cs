@@ -62,7 +62,8 @@ namespace Nemo_v2_Repo.DbContexts
             new ProfitMap(modelBuilder.Entity<Profit>());
             new FoodPrinterAndSectionRelsMap(modelBuilder.Entity<FoodPrinterAndSectionRel>());
             new InvoiceTableRelMap(modelBuilder.Entity<InvoiceTableRel>());
-            
+            new PaymentTypeInvoiceRelMap(modelBuilder.Entity<PaymentTypeInvoiceRel>());
+
         }
 
         public override int SaveChanges()

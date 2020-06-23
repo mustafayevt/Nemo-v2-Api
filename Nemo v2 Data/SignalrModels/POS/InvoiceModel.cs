@@ -8,6 +8,7 @@ namespace Nemo_v2_Api.Hubs.Models
     public class InvoiceModel
     {
         public string Id { get; set; }
+        public string InvoiceNumber { get; set; }
         public long RestaurantId { get; set; }
         public long SectionId { get; set; }
         public long TableId { get; set; }
@@ -22,8 +23,7 @@ namespace Nemo_v2_Api.Hubs.Models
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Printer { get; set; }
-        public decimal CardPayment { get; set; }
-        public decimal CashPayment { get; set; }
+        public List<PaymentTypeInvoiceRelDto> FoodTypeInvoiceRels { get; set; }
 
         private string openedTime;
 

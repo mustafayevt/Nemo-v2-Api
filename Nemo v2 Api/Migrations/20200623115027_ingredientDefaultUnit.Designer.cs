@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200623115027_ingredientDefaultUnit")]
+    partial class ingredientDefaultUnit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,11 +358,13 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<decimal>("Amount");
 
+                    b.Property<decimal>("CardPayment");
+
+                    b.Property<decimal>("CashPayment");
+
                     b.Property<long>("ClosedUserId");
 
                     b.Property<decimal>("Discount");
-
-                    b.Property<string>("InvoiceNumber");
 
                     b.Property<bool>("IsIngredientReduced");
 
@@ -426,41 +430,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("ManualCurrencyModel");
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.PaymentType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<long>("RestaurantId");
-
-                    b.Property<string>("TypeName");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("PaymentType");
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.PaymentTypeInvoiceRel", b =>
-                {
-                    b.Property<long>("PaymentTypeId");
-
-                    b.Property<long>("InvoiceId");
-
-                    b.Property<decimal>("Amount");
-
-                    b.HasKey("PaymentTypeId", "InvoiceId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("PaymentTypeInvoiceRel");
                 });
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.Printer", b =>
@@ -1124,27 +1093,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.HasOne("Nemo_v2_Data.Entities.Restaurant")
                         .WithMany("ManualCurrencyModels")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.PaymentType", b =>
-                {
-                    b.HasOne("Nemo_v2_Data.Entities.Restaurant", "Restaurant")
-                        .WithMany("PaymentTypes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Nemo_v2_Data.Entities.PaymentTypeInvoiceRel", b =>
-                {
-                    b.HasOne("Nemo_v2_Data.Entities.Invoice", "Invoice")
-                        .WithMany("PaymentTypeInvoiceRels")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nemo_v2_Data.Entities.PaymentType", "PaymentType")
-                        .WithMany()
-                        .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

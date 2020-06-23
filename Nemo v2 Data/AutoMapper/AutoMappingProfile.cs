@@ -187,6 +187,14 @@ namespace Nemo_v2_Data.AutoMapper
                     .MapFrom(d => d.RequestedByUserId))
                 .ForMember(x => x.RequesterWarehouseId, opt => opt
                     .MapFrom(d => d.RequestedWareHouseId)).ReverseMap();
+
+            //PaymentTypeInvoiceRel
+            CreateMap<PaymentTypeInvoiceRelDto, PaymentTypeInvoiceRel>()
+                .ForMember(x=>x.PaymentTypeId,opt=>opt
+                    .MapFrom(y=>y.PaymentType.Id)).ReverseMap();
+            
+            //PaymentType
+            CreateMap<PaymentType, PaymentTypeDto>().ReverseMap();
         }
     }
 }

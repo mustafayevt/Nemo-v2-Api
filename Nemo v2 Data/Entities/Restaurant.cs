@@ -24,6 +24,7 @@ namespace Nemo_v2_Data.Entities
         public virtual List<Section> Sections { get; set; }
         public virtual List<Table> Tables { get; set; }
         public virtual List<User> Users { get; set; }
+        public virtual List<PaymentType> PaymentTypes { get; set; }
         public virtual List<WarehouseInvoice> WarehouseInvoices { get; set; }
         public virtual List<RestSupplierRel> Supplliers { get; set; }
         public virtual List<ManualCurrencyModel> ManualCurrencyModels { get; set; }

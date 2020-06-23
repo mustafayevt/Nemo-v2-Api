@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Nemo_v2_Api.Hubs.Models;
@@ -21,12 +22,17 @@ namespace Nemo_v2_Api.Hubs
         // private static List<InvoiceModel> _invoiceModels = new List<InvoiceModel>();
 
         private readonly IInvoiceService _invoiceService;
+        private readonly IInvoiceNumberManagerService _invoiceNumberManager;
         private readonly HubTemporaryDataContext _hubTemporaryDataContext;
+        private readonly IMapper _mapper;
 
-        public POSHub(IInvoiceService invoiceService, HubTemporaryDataContext hubTemporaryDataContext)
+        public POSHub(IInvoiceService invoiceService, HubTemporaryDataContext hubTemporaryDataContext, IMapper mapper,
+            IInvoiceNumberManagerService invoiceNumberManager)
         {
             _invoiceService = invoiceService;
             _hubTemporaryDataContext = hubTemporaryDataContext;
+            _mapper = mapper;
+            _invoiceNumberManager = invoiceNumberManager;
         }
 
         public async Task BranchConnected(long branchId)
@@ -34,8 +40,8 @@ namespace Nemo_v2_Api.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, branchId.ToString());
             var invoices = _hubTemporaryDataContext.InvoiceModels.Where(x => x.BranchId == branchId)
                 .Select(x => JsonConvert.DeserializeObject<InvoiceModel>(x.JsonData));
-            if (invoices.Any())
-                await Clients.Caller.SendAsync("ReciveInvoices", JsonConvert.SerializeObject(invoices));
+
+            await Clients.Caller.SendAsync("ReceiveInvoices", JsonConvert.SerializeObject(invoices));
         }
 
         public async Task OpenInvoice(string InvoiceModel)
@@ -46,9 +52,12 @@ namespace Nemo_v2_Api.Hubs
             {
                 try
                 {
+                    var invoiceNumber = _invoiceNumberManager.GetNewInvoiceNumber(newInvoice.RestaurantId);
+                    newInvoice.InvoiceNumber = invoiceNumber;
                     _hubTemporaryDataContext.InvoiceModels.Add(new InvoiceDbMoel(newInvoice.Id, newInvoice.RestaurantId,
-                        InvoiceModel));
+                        JsonConvert.SerializeObject(newInvoice)));
                     await _hubTemporaryDataContext.SaveChangesAsync();
+                    await Clients.Caller.SendAsync("ReceiveInvoiceNumber", newInvoice.Id, invoiceNumber);
                     await Clients.OthersInGroup(newInvoice.RestaurantId.ToString())
                         .SendAsync("NewInvoice", InvoiceModel);
                 }
@@ -90,18 +99,18 @@ namespace Nemo_v2_Api.Hubs
             }
         }
 
-        public async Task CloseInvoice(string invoiceModel,bool decreaseIngredients)
+        public async Task CloseInvoice(string invoiceModel, bool decreaseIngredients)
         {
             var closedInvoice = JsonConvert.DeserializeObject<InvoiceModel>(invoiceModel);
-
             try
             {
                 var invoice = new Invoice()
                 {
                     Amount = closedInvoice.Amount,
                     Discount = closedInvoice.Discount,
-                    CardPayment = closedInvoice.CardPayment,
-                    CashPayment = closedInvoice.CashPayment,
+                    InvoiceNumber = closedInvoice.InvoiceNumber,
+                    PaymentTypeInvoiceRels =
+                        closedInvoice.FoodTypeInvoiceRels.Select(y => _mapper.Map<PaymentTypeInvoiceRel>(y)),
                     RestaurantId = closedInvoice.RestaurantId,
                     SectionId = closedInvoice.Tables.First().SectionId,
                     ClosedUserId = closedInvoice.ClosedUser.Id,
@@ -110,17 +119,17 @@ namespace Nemo_v2_Api.Hubs
                     ServiceCharge = closedInvoice.ServiceCharge,
                     TotalAmount = closedInvoice.TotalAmount,
                     IsIngredientReduced = decreaseIngredients,
-                    InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
+                    InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id})
                 };
                 invoice.Foods = new List<FoodInvoiceRel>();
-                foreach (var invoiceFoodModel in closedInvoice.InvoiceFoodViewModels.GroupBy(y=>y.Id))
+                foreach (var invoiceFoodModel in closedInvoice.InvoiceFoodViewModels.GroupBy(y => y.Id))
                 {
                     invoice.Foods.Add(new FoodInvoiceRel()
                     {
                         FoodId = invoiceFoodModel.Key,
                         FoodInvoiceProperties = closedInvoice.InvoiceFoodViewModels
-                            .Where(x=>x.Id == invoiceFoodModel.Key)
-                            .Select(y=>new FoodInvoiceProperties()
+                            .Where(x => x.Id == invoiceFoodModel.Key)
+                            .Select(y => new FoodInvoiceProperties()
                             {
                                 Portion = y.Size,
                                 Count = y.Count,
@@ -130,7 +139,7 @@ namespace Nemo_v2_Api.Hubs
                             }).ToList()
                     });
                 }
-                
+
                 _invoiceService.InsertInvoice(invoice);
 
                 var currentInvoice = _hubTemporaryDataContext.InvoiceModels.AsQueryable()

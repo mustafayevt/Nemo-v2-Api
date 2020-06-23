@@ -95,6 +95,11 @@ namespace Nemo_v2_Service.Services
                         }
                     }
 
+                    if (invoice.PaymentTypeInvoiceRels?.Any() ?? false)
+                    {
+                        if(invoice.PaymentTypeInvoiceRels.Any(x=>x.PaymentTypeId == 0))
+                            throw new ArgumentException("Payment not found");
+                    }
 
                     var result = _unitOfWork.InvoiceRepository.Insert(invoice);
 
