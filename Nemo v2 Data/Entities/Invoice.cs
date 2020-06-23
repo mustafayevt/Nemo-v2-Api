@@ -27,7 +27,7 @@ namespace Nemo_v2_Data.Entities
         public virtual Section Section { get; set; }
         
         
-        public virtual IEnumerable<InvoiceTableRel> InvoiceTableRels { get; set; }
+        public virtual ICollection<InvoiceTableRel> InvoiceTableRels { get; set; }
         
         public List<FoodInvoiceRel> Foods { get; set; }
         
@@ -39,6 +39,6 @@ namespace Nemo_v2_Data.Entities
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
-        public IEnumerable<PaymentTypeInvoiceRel> PaymentTypeInvoiceRels { get; set; }
+        public ICollection<PaymentTypeInvoiceRel> PaymentTypeInvoiceRels { get; set; }
     }
 }

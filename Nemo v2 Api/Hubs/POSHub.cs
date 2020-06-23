@@ -110,7 +110,7 @@ namespace Nemo_v2_Api.Hubs
                     Discount = closedInvoice.Discount,
                     InvoiceNumber = closedInvoice.InvoiceNumber,
                     PaymentTypeInvoiceRels =
-                        closedInvoice.FoodTypeInvoiceRels.Select(y => _mapper.Map<PaymentTypeInvoiceRel>(y)),
+                        closedInvoice.Payments.Select(y => _mapper.Map<PaymentTypeInvoiceRel>(y)).ToList(),
                     RestaurantId = closedInvoice.RestaurantId,
                     SectionId = closedInvoice.Tables.First().SectionId,
                     ClosedUserId = closedInvoice.ClosedUser.Id,
@@ -119,7 +119,7 @@ namespace Nemo_v2_Api.Hubs
                     ServiceCharge = closedInvoice.ServiceCharge,
                     TotalAmount = closedInvoice.TotalAmount,
                     IsIngredientReduced = decreaseIngredients,
-                    InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id})
+                    InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 };
                 invoice.Foods = new List<FoodInvoiceRel>();
                 foreach (var invoiceFoodModel in closedInvoice.InvoiceFoodViewModels.GroupBy(y => y.Id))

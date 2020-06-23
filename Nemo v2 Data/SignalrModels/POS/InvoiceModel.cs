@@ -23,7 +23,7 @@ namespace Nemo_v2_Api.Hubs.Models
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
         public string Printer { get; set; }
-        public List<PaymentTypeInvoiceRelDto> FoodTypeInvoiceRels { get; set; }
+        public List<PaymentTypeInvoiceRelDto> Payments { get; set; }
 
         private string openedTime;
 
