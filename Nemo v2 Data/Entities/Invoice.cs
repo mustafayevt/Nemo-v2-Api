@@ -39,6 +39,8 @@ namespace Nemo_v2_Data.Entities
         public decimal ServiceCharge { get; set; }
         public decimal Amount { get; set; }
         public decimal TotalAmount { get; set; }
+        public string OpenedTime { get; set; }
+        public string ClosedTime { get; set; }
         public ICollection<PaymentTypeInvoiceRel> PaymentTypeInvoiceRels { get; set; }
     }
 }

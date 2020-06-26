@@ -13,6 +13,13 @@ namespace Nemo_v2_Data.Entities
         public decimal OriginalPrice { get; set; }
         public decimal ChangedPrice { get; set; }
         [ForeignKey(nameof(Table))]
-        public decimal TableId { get; set; }
+        public long TableId { get; set; }
+
+        public Table Table { get; set; }
+        
+        [Required,ForeignKey(nameof(User))]
+        public long UserId { get; set; }
+
+        public User User { get; set; }
     }
 }

@@ -52,12 +52,12 @@ namespace Nemo_v2_Api.Hubs
             {
                 try
                 {
-                    var invoiceNumber = _invoiceNumberManager.GetNewInvoiceNumber(newInvoice.RestaurantId);
-                    newInvoice.InvoiceNumber = invoiceNumber;
+                    // var invoiceNumber = _invoiceNumberManager.GetNewInvoiceNumber(newInvoice.RestaurantId);
+                    // newInvoice.InvoiceNumber = invoiceNumber;
                     _hubTemporaryDataContext.InvoiceModels.Add(new InvoiceDbMoel(newInvoice.Id, newInvoice.RestaurantId,
                         JsonConvert.SerializeObject(newInvoice)));
                     await _hubTemporaryDataContext.SaveChangesAsync();
-                    await Clients.Caller.SendAsync("ReceiveInvoiceNumber", newInvoice.Id, invoiceNumber);
+                    // await Clients.Caller.SendAsync("ReceiveInvoiceNumber", newInvoice.Id, invoiceNumber);
                     await Clients.OthersInGroup(newInvoice.RestaurantId.ToString())
                         .SendAsync("NewInvoice", InvoiceModel);
                 }
@@ -119,23 +119,27 @@ namespace Nemo_v2_Api.Hubs
                     ServiceCharge = closedInvoice.ServiceCharge,
                     TotalAmount = closedInvoice.TotalAmount,
                     IsIngredientReduced = decreaseIngredients,
+                    ClosedTime = closedInvoice.ClosedTime,
+                    OpenedTime = closedInvoice.OpenedTime,
                     InvoiceTableRels = closedInvoice.Tables.Select(y => new InvoiceTableRel {TableId = y.Id}).ToList()
                 };
                 invoice.Foods = new List<FoodInvoiceRel>();
                 foreach (var invoiceFoodModel in closedInvoice.InvoiceFoodViewModels.GroupBy(y => y.Id))
                 {
-                    invoice.Foods.Add(new FoodInvoiceRel()
+                    invoice.Foods.Add(new FoodInvoiceRel
                     {
                         FoodId = invoiceFoodModel.Key,
                         FoodInvoiceProperties = closedInvoice.InvoiceFoodViewModels
                             .Where(x => x.Id == invoiceFoodModel.Key)
-                            .Select(y => new FoodInvoiceProperties()
+                            .Select(y => new FoodInvoiceProperties
                             {
                                 Portion = y.Size,
                                 Count = y.Count,
                                 ChangedPrice = y.ChangedPrice,
                                 OriginalPrice = y.OriginalPrice,
-                                TableId = y.OwnerTable.Id
+                                TableId = y.OwnerTable.Id,
+                                UserId = y.User.Id,
+                                FoodSaleType = y.IsGift ? FoodSaleType.Gift : y.IsNonPayable ? FoodSaleType.NotPaid : FoodSaleType.Normal
                             }).ToList()
                     });
                 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nemo_v2_Repo.DbContexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nemo_v2_Repo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200626115856_FoodInvoicePropertiesAddUser")]
+    partial class FoodInvoicePropertiesAddUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,13 +119,11 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<float>("Portion");
 
-                    b.Property<long>("TableId");
+                    b.Property<decimal>("TableId");
 
                     b.Property<long>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TableId");
 
                     b.HasIndex("UserId");
 
@@ -362,8 +362,6 @@ namespace Nemo_v2_Repo.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<string>("ClosedTime");
-
                     b.Property<long>("ClosedUserId");
 
                     b.Property<decimal>("Discount");
@@ -373,8 +371,6 @@ namespace Nemo_v2_Repo.Migrations
                     b.Property<bool>("IsIngredientReduced");
 
                     b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("OpenedTime");
 
                     b.Property<long>("OpenedUserId");
 
@@ -943,11 +939,6 @@ namespace Nemo_v2_Repo.Migrations
 
             modelBuilder.Entity("Nemo_v2_Data.Entities.FoodInvoiceProperties", b =>
                 {
-                    b.HasOne("Nemo_v2_Data.Entities.Table", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Nemo_v2_Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

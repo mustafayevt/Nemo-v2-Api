@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Nemo_v2_Api.Filters;
+using Nemo_v2_Api.Hubs.Models;
 using Nemo_v2_Data;
 using Nemo_v2_Data.Entities;
 using Nemo_v2_Repo.Helper;
@@ -67,6 +71,63 @@ namespace Nemo_v2_Api.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetInvoiceByDate(long restaurantId, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var invoices = _invoiceService.GetInvoicesByDate(restaurantId, startDate, endDate);
+                if (invoices == null) throw new ArgumentException("Invoice Not Found");
+                var invoicesDto = invoices.Select(y => new InvoiceModel
+                {
+                    Payments = y.PaymentTypeInvoiceRels.Select(h => _mapper.Map<PaymentTypeInvoiceRelDto>(h)).ToList(),
+                    Tables = y.InvoiceTableRels.Select(h => _mapper.Map<TableDto>(h.Table)).ToList(),
+                    Amount = y.Amount,
+                    Discount = y.Discount,
+                    Id = y.InvoiceNumber,
+                    ClosedUser = _mapper.Map<UserDto>(y.ClosedUser),
+                    InvoiceNumber = y.InvoiceNumber,
+                    OpenedTime = y.OpenedTime,
+                    ClosedTime = y.ClosedTime,
+                    OpenedUser = _mapper.Map<UserDto>(y.OpenedUser),
+                    PeopleCount = y.PeopleCount,
+                    RestaurantId = y.RestaurantId,
+                    SectionId = y.SectionId,
+                    ServiceCharge = y.ServiceCharge,
+                    TotalAmount = y.TotalAmount
+                }).ToList();
+                for (int i = 0; i < invoices.Count; i++)
+                {
+                    var invoiceFoodModels = new List<InvoiceFoodModel>();
+                    foreach (var foodInvoice in invoices[i].Foods) 
+                    {
+                        invoiceFoodModels.AddRange(foodInvoice.FoodInvoiceProperties.Select(y=>new InvoiceFoodModel
+                        {
+                            Count = y.Count,
+                            IsGift = y.FoodSaleType == FoodSaleType.Gift,
+                            IsNonPayable = y.FoodSaleType == FoodSaleType.NotPaid,
+                            ChangedPrice = y.ChangedPrice,
+                            Size = y.Portion,
+                            User = _mapper.Map<UserDto>(y.User),
+                            Name = foodInvoice.Food.Name,
+                            Id = foodInvoice.FoodId,
+                            OriginalPrice = y.OriginalPrice,
+                            OwnerTable = _mapper.Map<TableDto>(y.Table)
+                        }));   
+                    }
+                    invoicesDto[i].InvoiceFoodViewModels = new ObservableCollection<InvoiceFoodModel>(invoiceFoodModels);
+                }
+                _logger.LogInformation(
+                    $"Invoices Get By Restaurant Id:{restaurantId}, startDate:{startDate.Date}, endDate:{endDate.Date}");
+                return Ok(invoicesDto);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.GetAllMessages());
+                return NotFound(e.GetAllMessages());
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddInvoice([FromBody] InvoiceDto invoiceDto, bool decreaseIngredients)
         {
@@ -89,8 +150,10 @@ namespace Nemo_v2_Api.Controllers
         public async Task<IActionResult> ReduceIngredientsInInvoiceByDate(long restId, DateTime startDate,
             DateTime endDate)
         {
-            _logger.LogInformation($"Reduce ingredients in invoice by restaurandId:{restId}, startDate:{startDate.Date}, endDate:{endDate.Date}");
-            var reducedInvoiceCount = await _invoiceService.ReduceIngredientsInInvoiceByDate(restId, startDate, endDate);
+            _logger.LogInformation(
+                $"Reduce ingredients in invoice by restaurandId:{restId}, startDate:{startDate.Date}, endDate:{endDate.Date}");
+            var reducedInvoiceCount =
+                await _invoiceService.ReduceIngredientsInInvoiceByDate(restId, startDate, endDate);
             return Ok($"Reduced Invoice count : {reducedInvoiceCount}");
         }
 

@@ -202,6 +202,21 @@ namespace Nemo_v2_Service.Services
             }
         }
 
+        public List<Invoice> GetInvoicesByDate(long restId, DateTime startDate, DateTime endDate)
+        {
+            var invoices = _unitOfWork.InvoiceRepository.Query(x =>
+                x.RestaurantId == restId &&
+                x.AddedDate.Date >= startDate.Date &&
+                x.AddedDate <= endDate.Date).Include(y =>
+                y.Foods).ThenInclude(y =>
+                y.Food).Include(h=>h.Foods).ThenInclude(h=>h.FoodInvoiceProperties).Include(InvoiceTableRel=>InvoiceTableRel.InvoiceTableRels).ThenInclude(j=>j.Table)
+                .Include(u=>u.OpenedUser)
+                .Include(u=>u.ClosedUser)
+                .Include(p=>p.PaymentTypeInvoiceRels).ThenInclude(t=>t.PaymentType);
+
+            return invoices.ToList();
+        }
+
         public Invoice UpdateInvoice(Invoice invoice)
         {
             try

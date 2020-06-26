@@ -13,6 +13,7 @@ namespace Nemo_v2_Service.Abstraction
         Invoice InsertInvoice(Invoice invoice);
         void ReduceIngredientsInInvoices(ICollection<Invoice> invoices);
         Task<int> ReduceIngredientsInInvoiceByDate(long restId,DateTime startDate, DateTime endDate);
+        List<Invoice> GetInvoicesByDate(long restId, DateTime startDate, DateTime endDate);
         Invoice UpdateInvoice(Invoice invoice);  
         void DeleteInvoice(long id);  
     }
