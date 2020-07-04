@@ -212,7 +212,8 @@ namespace Nemo_v2_Service.Services
                 y.Food).Include(h=>h.Foods).ThenInclude(h=>h.FoodInvoiceProperties).Include(InvoiceTableRel=>InvoiceTableRel.InvoiceTableRels).ThenInclude(j=>j.Table)
                 .Include(u=>u.OpenedUser)
                 .Include(u=>u.ClosedUser)
-                .Include(p=>p.PaymentTypeInvoiceRels).ThenInclude(t=>t.PaymentType);
+                .Include(p=>p.PaymentTypeInvoiceRels).ThenInclude(t=>t.PaymentType)
+                .Include(s=>s.Section);
 
             return invoices.ToList();
         }

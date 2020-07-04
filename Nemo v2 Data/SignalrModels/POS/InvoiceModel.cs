@@ -11,6 +11,7 @@ namespace Nemo_v2_Api.Hubs.Models
         public string InvoiceNumber { get; set; }
         public long RestaurantId { get; set; }
         public long SectionId { get; set; }
+        public SectionDto Section { get; set; }
         public long TableId { get; set; }
         public short PeopleCount { get; set; }
 

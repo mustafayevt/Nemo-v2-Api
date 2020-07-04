@@ -93,6 +93,7 @@ namespace Nemo_v2_Api.Controllers
                     PeopleCount = y.PeopleCount,
                     RestaurantId = y.RestaurantId,
                     SectionId = y.SectionId,
+                    Section = _mapper.Map<SectionDto>(y.Section),
                     ServiceCharge = y.ServiceCharge,
                     TotalAmount = y.TotalAmount
                 }).ToList();
