@@ -107,6 +107,7 @@ namespace Nemo_v2_Api.Controllers
                             Count = y.Count,
                             IsGift = y.FoodSaleType == FoodSaleType.Gift,
                             IsNonPayable = y.FoodSaleType == FoodSaleType.NotPaid,
+                            Confrimed = y.FoodSaleType == FoodSaleType.Normal,
                             ChangedPrice = y.ChangedPrice,
                             Size = y.Portion,
                             User = _mapper.Map<UserDto>(y.User),
